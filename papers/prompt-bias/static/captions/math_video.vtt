@@ -1,0 +1,49 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.750
+The detector, step by step.
+
+2
+00:00:03.800 --> 00:00:09.750
+Each CrowS-Pairs example is a minimal pair: two sentences that differ only in the group they mention. The label y says whether a sentence expresses a stereotype.
+
+3
+00:00:09.800 --> 00:00:16.150
+Byte-pair encoding maps the lower-cased sentence to a sequence of subword tokens from a fixed vocabulary. A rare word is split into frequent pieces.
+
+4
+00:00:16.200 --> 00:00:22.050
+RoBERTa turns the token sequence into one vector per token. Each vector depends on the whole sentence, so the same word gets different vectors in different contexts.
+
+5
+00:00:22.100 --> 00:00:28.450
+A plain recurrent network updates one hidden state per token. The whole state is rewritten at every step, so information from early tokens fades.
+
+6
+00:00:28.500 --> 00:00:35.150
+The LSTM adds a memory cell c and three sigmoid gates: forget, input and output. Because the cell is updated by addition, information can travel far.
+
+7
+00:00:35.200 --> 00:00:44.250
+The GRU keeps gating but drops the separate cell. The update gate z mixes the old state with a proposed new one; the reset gate r decides how much of the past the proposal uses.
+
+8
+00:00:44.300 --> 00:00:49.850
+After the last token, the state h_T is mapped through a sigmoid to a probability. The prompt is flagged when the probability passes one half.
+
+9
+00:00:49.900 --> 00:00:56.450
+Training adjusts all weights to reduce the loss between predictions and labels, with learning rates between 1e-5 and 5e-5 and dropout between 0.1 and 0.5. The split is 80, 10, 10.
+
+10
+00:00:56.500 --> 00:01:03.050
+On the test split, every prediction lands in one cell of the confusion matrix. Precision asks how many flags were right; recall asks how many stereotypes were caught.
+
+11
+00:01:03.100 --> 00:01:10.450
+The F1 score is the harmonic mean of precision and recall. It is high only when both are high: for the RNN, 0.87 and 0.89 give 0.88.
+
+12
+00:01:10.500 --> 00:01:16.050
+Putting it together: RoBERTa with a GRU has the best accuracy, precision and F1; the plain RNN has the best recall.

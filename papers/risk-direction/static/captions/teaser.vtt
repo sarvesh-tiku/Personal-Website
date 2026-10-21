@@ -1,0 +1,45 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.650
+Decodable, steerable, but used? We look for a risk direction inside Qwen2.5-1.5B and test whether the model actually uses it.
+
+2
+00:00:03.700 --> 00:00:10.850
+The input: a firm's last 20 daily returns and an earnings-call disclosure. The same firm appears in a calm period (daily sigma 0.8%) and a turbulent one (3.0%).
+
+3
+00:00:10.900 --> 00:00:20.050
+Inside the model, we average the activations at block 27 over the reasoning steps, subtract calm from turbulent for each firm, and average. The result is the candidate risk direction b.
+
+4
+00:00:20.100 --> 00:00:26.750
+Decodable. Fit b without the firm being scored, and compare against pairs from the same regime. The regime separates at every one of the 28 blocks: Cohen's d = 1.12 at block 27.
+
+5
+00:00:26.800 --> 00:00:32.950
+Steerable. Adding alpha times b to the activations moves the model's risk language, while random directions of the same size do nothing.
+
+6
+00:00:33.000 --> 00:00:38.850
+But how hard? The regime itself moves the activations along b by only g = 0.38. The steering strength alpha = 8 is about 21 times that.
+
+7
+00:00:38.900 --> 00:00:44.750
+Used? Run the model on the calm input, but give it the turbulent input's coordinate along b. The full switch moves the answer by +0.043; the b-coordinate alone moves it by +0.004.
+
+8
+00:00:44.800 --> 00:00:48.550
+Erasing the regime from block 27 altogether (LEACE) still leaves 86% of the response.
+
+9
+00:00:48.600 --> 00:00:55.450
+Refitting the direction at every block does not help: it never carries more than about a seventh of the response, while the whole residual at the same positions carries more.
+
+10
+00:00:55.500 --> 00:01:02.450
+The same holds in all 16 runs with a natural effect, from 1.5B to 32B parameters: at most 29% through the direction, and erasure leaves at least 64%.
+
+11
+00:01:02.500 --> 00:01:06.950
+Decodable: yes. Steerable: yes, if pushed hard at the answer. Used: no.

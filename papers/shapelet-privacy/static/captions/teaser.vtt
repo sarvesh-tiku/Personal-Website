@@ -1,0 +1,41 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:04.350
+Interpretable by construction, identifiable by construction: privacy leakage of shapelet-based anti-money-laundering models.
+
+2
+00:00:04.400 --> 00:00:09.650
+An AML alert must be explained. A shapelet classifier explains it by pointing to a short pattern in the account's weekly activity.
+
+3
+00:00:09.700 --> 00:00:16.650
+But for most shapelet methods the pattern is cut straight out of a training customer's history. The strongest method, RDST, also stores its mean, standard deviation and the customer's label.
+
+4
+00:00:16.700 --> 00:00:22.350
+The model leaves the bank: shared with a vendor, auditor or partner, or stolen. A party holding transaction histories compares each shapelet against every account it has.
+
+5
+00:00:22.400 --> 00:00:27.750
+For RDST, 86% of released shapelets match exactly one account: about 827 customers per model. Each carries its label, so 217 of them are revealed as flagged.
+
+6
+00:00:27.800 --> 00:00:33.450
+A bigger customer base does not hide anyone: with 249,946 candidate accounts, every shapelet that was unique stays unique. Real customers are even easier to single out.
+
+7
+00:00:33.500 --> 00:00:38.550
+The standard membership audit sees nothing: its AUC is 0.52, chance level. Testing each explanation instead flags 5.5% of training members at 0.1% false positives.
+
+8
+00:00:38.600 --> 00:00:43.750
+A realistic adversary with noisy amounts still succeeds; what stops it is missing much of an account's activity.
+
+9
+00:00:43.800 --> 00:00:49.150
+The fix: learned shapelets are optimised, not copied. They single out no customer, and on SAML-D they are as accurate as RDST (0.957 vs 0.948 PR-AUC). On AMLworld they cost accuracy.
+
+10
+00:00:49.200 --> 00:00:52.950
+Example-based explanations need their own privacy review, and their own audit.

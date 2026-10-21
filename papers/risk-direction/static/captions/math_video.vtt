@@ -1,0 +1,61 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:04.050
+The mathematics of the audit, built up from pictures. Example: Qwen2.5-1.5B-Instruct reading 20 daily returns.
+
+2
+00:00:04.100 --> 00:00:08.050
+Each prompt gives a firm's recent returns and an earnings-call disclosure, followed by eight reasoning-step markers and a question: is the downside risk High or Low?
+
+3
+00:00:08.100 --> 00:00:14.050
+We read the answer from the model's own next-token probabilities: the log-odds of High over Low. Positive means the model leans towards High.
+
+4
+00:00:14.100 --> 00:00:23.250
+Inside the model, every token carries a vector at every block: the residual stream. We take the vectors at the eight reasoning-step markers and average them.
+
+5
+00:00:23.300 --> 00:00:35.550
+Each firm appears twice, calm and turbulent. The difference between its two activation vectors is delta i. Averaging over the 16 firms and normalising gives the direction b.
+
+6
+00:00:35.600 --> 00:00:42.950
+Which block? The pipeline picks the block where the average difference is largest: block 27 of 28.
+
+7
+00:00:43.000 --> 00:00:52.650
+Is the regime really represented? Project each firm's difference onto a direction fit without that firm, and compare with pairs from the same regime. Held-out Cohen's d = 1.12, p < .001.
+
+8
+00:00:52.700 --> 00:00:57.850
+Steering adds alpha times b to the activations, so every later block sees a shifted vector. At alpha = 8 the High/Low answer moves by +0.098.
+
+9
+00:00:57.900 --> 00:01:06.250
+But how far does the regime itself move the activations along b? On average only g = 0.38. So alpha = 8 is about 21 times the natural shift, and steering by g moves the answer by just +0.005.
+
+10
+00:01:06.300 --> 00:01:14.750
+Does the model use b? Compare three runs. The calm input; the turbulent input, which moves the answer by the total effect TE = +0.043; and the calm input with only its b-coordinate replaced by the turbulent value.
+
+11
+00:01:14.800 --> 00:01:19.750
+The b-coordinate carries +0.004 of the +0.043: about a tenth. The rest, the direct effect NDE = +0.039, flows around it.
+
+12
+00:01:19.800 --> 00:01:29.450
+Two checks bound this. Swapping the whole residual at the same positions carries +0.014: more than b, but still not everything. And erasing every linearly readable trace of the regime with LEACE leaves 86% of the effect.
+
+13
+00:01:29.500 --> 00:01:36.950
+Perhaps block 27 was the wrong place. Refitting b at every block and repeating the swap: the direction never carries more than about a seventh of the effect.
+
+14
+00:01:37.000 --> 00:01:44.150
+Across all 16 runs with a natural effect, the direction carries at most 29% at any block, and erasure leaves at least 64%.
+
+15
+00:01:44.200 --> 00:01:51.750
+So: the regime is represented, and steering along b moves the answer when pushed hard. But b is not how the model reaches its risk judgement.

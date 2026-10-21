@@ -1,0 +1,45 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.150
+The benchmark, step by step.
+
+2
+00:00:03.200 --> 00:00:09.050
+The library is a graph. Each node is a paper with its title, abstract, tag set and note; edges come from collections, shared tags and related-item links.
+
+3
+00:00:09.100 --> 00:00:15.250
+Edge weights combine how similar two abstracts are, measured by the cosine of their embeddings, with how many tags the papers share.
+
+4
+00:00:15.300 --> 00:00:20.850
+A retrieval query is a paraphrased abstract or a cluster centroid turned back into text. Its correct answers are the target paper's neighbours in the graph.
+
+5
+00:00:20.900 --> 00:00:26.850
+Top-3 accuracy counts a query as solved when any of the model's first three papers is a correct neighbour. There are 50 queries per domain.
+
+6
+00:00:26.900 --> 00:00:32.850
+For tagging, the predicted set is compared with the curated set: Jaccard overlap, and F1 averaged over tags.
+
+7
+00:00:32.900 --> 00:00:38.850
+For clustering, the adjusted Rand index measures how well the model's grouping matches the collections, corrected so that a random grouping scores zero.
+
+8
+00:00:38.900 --> 00:00:44.650
+A summary sentence that is far, in embedding space, from everything in the abstract and notes is flagged for review; annotators label fabrication, omission and drift.
+
+9
+00:00:44.700 --> 00:00:50.350
+Two systems are compared on the same queries with a paired t-test on their per-query differences.
+
+10
+00:00:50.400 --> 00:00:56.250
+The ablation measures how much accuracy each piece of metadata carries: the drop when it is removed.
+
+11
+00:00:56.300 --> 00:01:01.650
+Putting it together: GPT-4 is best on every task; BioMuse-RAG is close on hallucination-free summaries with far fewer parameters.

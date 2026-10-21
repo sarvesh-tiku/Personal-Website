@@ -1,0 +1,49 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.950
+The attack and the audit, step by step.
+
+2
+00:00:04.000 --> 00:00:09.750
+Each account becomes a weekly time series with six channels: amounts and counts in and out, cross-border amounts and cash.
+
+3
+00:00:09.800 --> 00:00:17.880
+A shapelet S is a short multichannel pattern. Its distance to an account is the best match over every position t, comparing every delta-th week: delta is the dilation.
+
+4
+00:00:17.930 --> 00:00:24.380
+The classifier sees only these distances, one per shapelet, so each decision can be explained by the shapelet that matched.
+
+5
+00:00:24.430 --> 00:00:30.680
+Where do the shapelets come from? Selection-based methods, including the classic transform and RDST, cut them from training accounts. Learned shapelets are free parameters optimised by gradient descent from a random start.
+
+6
+00:00:30.730 --> 00:00:37.780
+RDST normalises each shapelet but stores the mean and standard deviation it used, and the class of the source account. Anyone holding the model can undo the normalisation and read exact weekly amounts: a median of 13 non-zero cells per identifying shapelet.
+
+7
+00:00:37.830 --> 00:00:50.080
+Re-identification: count the candidate accounts within epsilon = 0.001 of a released shapelet. If exactly one account matches, the shapelet singles out its source. For RDST on SAML-D that is 86% of shapelets, about 827 customers per model.
+
+8
+00:00:50.130 --> 00:00:55.180
+Does a larger customer base hide the source? Adding 220,000 further accounts, every shapelet that was unique among 29,946 stays unique among 249,946.
+
+9
+00:00:55.230 --> 00:01:02.680
+A realistic adversary has a noisy, partial copy of the data. It only claims an identity when the nearest account is at least twice as close as the runner-up. Amount noise barely matters; missing transactions are what stop it.
+
+10
+00:01:02.730 --> 00:01:10.580
+Why the standard audit misses this. The aggregate membership AUC asks whether members score higher than non-members on average; only a few hundred source accounts out of about 15,000 members are exposed, so it stays at 0.52. A per-explanation audit asks about each shapelet, and flags 5.5% of members with no false positives at 0.1%.
+
+11
+00:01:10.630 --> 00:01:18.080
+Mitigations. Adding Gaussian noise removes exact matches at no accuracy cost, but the source stays the nearest account until sigma reaches 0.5. Learned shapelets copy no one.
+
+12
+00:01:18.130 --> 00:01:25.080
+Treat released shapelets and their labels as personal data, do not rely on normalisation, prefer learned shapelets, and audit each explanation.

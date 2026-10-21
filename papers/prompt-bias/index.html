@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Generated from page/index.template.html by tools/build_page.py using site_config.json.
+       Edit the template or the config, not index.html. -->
+  <meta name="description" content="A detector for stereotyped user prompts: RoBERTa tokens feed an RNN, LSTM or GRU classifier trained on CrowS-Pairs. RoBERTa + GRU reaches 93% accuracy, 0.92 precision and an F1 score of 0.90.">
+  <meta name="keywords" content="bias detection, stereotypes, large language models, user prompts, RoBERTa, GRU, LSTM, CrowS-Pairs, NLP">
+  <meta name="author" content="Sarvesh Tiku">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mitigation of User-Prompt Bias in Large Language Models: A Natural Language Processing and Deep Learning Based Framework">
+  <meta property="og:description" content="A detector for stereotyped user prompts: RoBERTa tokens feed an RNN, LSTM or GRU classifier trained on CrowS-Pairs. RoBERTa + GRU reaches 93% accuracy, 0.92 precision and an F1 score of 0.90.">
+  <meta property="og:image" content="static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Accuracy, precision, recall and F1 of RoBERTa with RNN, LSTM and GRU classifiers">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mitigation of User-Prompt Bias in Large Language Models: A Natural Language Processing and Deep Learning Based Framework">
+  <meta name="twitter:description" content="A detector for stereotyped user prompts: RoBERTa tokens feed an RNN, LSTM or GRU classifier trained on CrowS-Pairs. RoBERTa + GRU reaches 93% accuracy, 0.92 precision and an F1 score of 0.90.">
+  <meta name="twitter:image" content="static/images/social_preview.png">
+
+  <!-- Scholarly metadata (Google Scholar / Highwire) -->
+  <meta name="citation_title" content="Mitigation of User-Prompt Bias in Large Language Models: A Natural Language Processing and Deep Learning Based Framework">
+  <meta name="citation_author" content="Sarvesh Tiku">
+  <meta name="citation_publication_date" content="2024">
+  <meta name="citation_conference_title" content="2024 IEEE 3rd International Conference on Computing and Machine Intelligence (ICMI)">
+  <meta name="citation_doi" content="10.1109/ICMI60790.2024.10585628">
+  <title>Mitigation of User-Prompt Bias in Large Language Models</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], tags: 'none' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+      chtml: { scale: 1.0 }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "Mitigation of User-Prompt Bias in Large Language Models: A Natural Language Processing and Deep Learning Based Framework",
+  "description": "A detector for stereotyped user prompts: RoBERTa tokens feed an RNN, LSTM or GRU classifier trained on CrowS-Pairs. RoBERTa + GRU reaches 93% accuracy, 0.92 precision and an F1 score of 0.90.",
+  "datePublished": "2024",
+  "keywords": [
+    "bias detection",
+    "stereotypes",
+    "large language models",
+    "RoBERTa",
+    "GRU",
+    "CrowS-Pairs",
+    "natural language processing"
+  ],
+  "isAccessibleForFree": true,
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Sarvesh Tiku",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Front Range Community College"
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Mitigation of User-Prompt Bias in Large Language Models: A Natural Language Processing and Deep Learning Based Framework</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Sarvesh Tiku</span>
+            </div>
+            <div class="is-size-5 publication-authors affil">
+              <span class="author-block">Front Range Community College</span>
+            </div>
+            <div class="publication-venue-line">2024 IEEE 3rd International Conference on Computing and Machine Intelligence (ICMI)</div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://doi.org/10.1109/ICMI60790.2024.10585628" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></span>
+                    <span>Paper (IEEE)</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://ssrn.com/abstract=4561423" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-alt" aria-hidden="true"></i></span>
+                    <span>Preprint (SSRN)</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#presentation" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-video" aria-hidden="true"></i></span>
+                    <span>Video</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-quote-right" aria-hidden="true"></i></span>
+                    <span>BibTeX</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Teaser video -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" poster="static/videos/teaser_poster.jpg" data-autoplay muted loop playsinline controls
+               preload="metadata" aria-describedby="teaser-caption">
+          <source src="static/videos/teaser.webm" type="video/webm">
+          <source src="static/videos/teaser.mp4" type="video/mp4">
+          <track kind="captions" src="static/captions/teaser.vtt" srclang="en" label="English">
+        </video>
+        <h2 class="subtitle has-text-centered" id="teaser-caption">
+          A stereotype can enter a language model through the prompt. We tokenise each prompt with RoBERTa, read it
+          with a recurrent network, and flag it before the model answers. With a GRU, the detector reaches 93%
+          accuracy on CrowS-Pairs.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Abstract -->
+  <section class="section hero is-light" id="abstract">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Large language models have opened new frontiers in automated text generation, and with them a
+              vulnerability: a model can amplify the bias carried by a user&rsquo;s prompt, reinforcing harmful
+              stereotypes and misinformation. We present a framework that combines natural language processing and
+              deep learning to detect bias in user prompts in real time, so that it can be neutralised before the
+              model responds. Prompts are tokenised with RoBERTa and classified by a recurrent network; we compare a
+              simple recurrent network (RNN), a long short-term memory network (LSTM) and a gated recurrent unit
+              (GRU). The models are trained, validated and tested on CrowS-Pairs, a dataset of minimally different
+              sentence pairs built to measure U.S. stereotypical biases across nine categories. RoBERTa with a GRU
+              performs best, with 93% accuracy, a precision of 0.92 and an F1 score of 0.90.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Motivation -->
+  <section class="section" id="problem">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Bias That Arrives in the Prompt</h2>
+      <div class="prose">
+        <p>
+          Most work on bias in language models looks at what the model learned from its training data. But the model
+          also takes direction from the person typing. A prompt that presupposes a stereotype (&ldquo;why are poor
+          people so bad with money?&rdquo;) invites an answer that accepts it, and a fluent, confident answer gives the
+          stereotype the weight of an authority. Because these models now sit behind search, writing tools and
+          decision support, a stereotype accepted once can be repeated to many people.
+        </p>
+        <p>
+          We treat this as a detection problem placed in front of the model. Before a prompt reaches the language
+          model, a lightweight classifier decides whether it expresses a stereotype. A flagged prompt can then be
+          rewritten, answered with care, or sent back to the user. Earlier detectors cover one or two kinds of bias,
+          usually gender or race, and are rarely designed to run on live prompts. We aim for a detector that:
+        </p>
+        <ul class="claim-defs">
+          <li><strong>Covers many kinds of bias.</strong> Nine categories, from race and gender to age, disability,
+            physical appearance and socioeconomic status.</li>
+          <li><strong>Reads context, not keywords.</strong> The same word can be neutral or stereotyping depending on
+            the sentence around it, so the model must read the whole prompt in order.</li>
+          <li><strong>Is cheap enough to run on every prompt.</strong> A pretrained encoder does the heavy lifting; a
+            small recurrent head makes the decision.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Data -->
+  <section class="section hero is-light" id="setting">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Minimal Pairs: The CrowS-Pairs Data</h2>
+      <div class="prose">
+        <p>
+          We train and evaluate on <strong>CrowS-Pairs</strong> (Nangia et al., EMNLP 2020), 1,508 sentence pairs
+          written by crowd workers in the United States. The two sentences in each pair differ only in the group they
+          mention: one is about a historically disadvantaged group, the other about a contrasting advantaged group.
+          For example:
+        </p>
+        <div class="pair-example">
+          <p><span class="pair-tag more">more stereotyping</span> The <strong>poor</strong> are really ignorant about
+            how to handle the money they do have.</p>
+          <p><span class="pair-tag less">less stereotyping</span> The <strong>rich</strong> are really ignorant about
+            how to handle the money they do have.</p>
+        </div>
+        <p>
+          Because everything else is held fixed, any difference in how a model treats the two sentences comes from
+          the group alone. Unlike template datasets, the sentences are natural and varied, and they cover nine bias
+          categories that follow a narrowed version of the U.S. Equal Employment Opportunity Commission&rsquo;s list
+          of protected categories.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig1">
+        <picture><source srcset="static/figures/fig1_dataset.webp" type="image/webp"><img src="static/figures/fig1_dataset.png" width="2024" height="744" loading="lazy"
+             alt="A: CrowS-Pairs sentence pairs per bias category: race or colour 516, gender 262, socioeconomic status 172, nationality 159, religion 105, age 87, sexual orientation 84, physical appearance 63, disability 60. B: the final dataset is 55 percent stereotype and 45 percent anti-stereotype."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 1.</span>
+          (A) The nine bias categories of CrowS-Pairs, counted from the public release. (B) The balance of
+          stereotype and anti-stereotype examples in our final, preprocessed dataset.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          We observe that the categories are uneven: race accounts for about a third of the pairs, while disability
+          and physical appearance have about 60 each. These are also the categories that earlier bias datasets most
+          often leave out. After cleaning, the final dataset is close to balanced between stereotype (55%) and
+          anti-stereotype (45%) examples, so accuracy is not inflated by always predicting the majority class.
+        </p>
+        <p>
+          Preprocessing removes incomplete entries, standardises sentence formats and lower-cases the text. We also
+          checked the bias-type annotation and the direction of the stereotype by hand for a subset of pairs. The
+          data is split <strong>80% / 10% / 10%</strong> into training, validation and held-out test sets.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Method -->
+  <section class="section" id="method">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">From Tokens to a Verdict</h2>
+      <div class="prose">
+        <p>
+          The framework has three stages, and only the middle one changes between the models we compare.
+        </p>
+        <ol class="claim-defs">
+          <li><strong>Tokenise and encode.</strong> RoBERTa&rsquo;s byte-pair-encoding tokenizer splits the prompt
+            into subword units, so unfamiliar words still map to known pieces (&ldquo;teenagers&rdquo; becomes
+            <code>teen</code> + <code>agers</code>). The pretrained RoBERTa encoder turns each token into a
+            context-aware vector \(x_t\).</li>
+          <li><strong>Read the sequence.</strong> A recurrent network reads \(x_1, \dots, x_T\) in order and carries
+            a hidden state \(h_t\) that summarises what it has read so far.</li>
+          <li><strong>Decide.</strong> The final state \(h_T\) is mapped to a probability that the prompt is
+            stereotyped: \(\hat p = \sigma(w^\top h_T + b)\).</li>
+        </ol>
+        <p>
+          The three recurrent readers differ in how they update \(h_t\). A plain <strong>RNN</strong> overwrites its
+          state at every token, which makes early words hard to remember:
+        </p>
+        <div class="equation-block">
+          \[ h_t = \tanh\!\big(W x_t + U h_{t-1} + b\big). \]
+        </div>
+        <p>
+          An <strong>LSTM</strong> adds a separate memory cell \(c_t\) and three gates (forget, input, output) that
+          decide what to erase, what to write and what to reveal:
+        </p>
+        <div class="equation-block">
+          \[
+            c_t = f_t \odot c_{t-1} + i_t \odot \tanh\!\big(W_c x_t + U_c h_{t-1}\big),
+            \qquad h_t = o_t \odot \tanh(c_t).
+          \]
+        </div>
+        <p>
+          A <strong>GRU</strong> keeps the gating but drops the separate cell. An update gate \(z_t\) decides how
+          much of the past to carry forward, and a reset gate \(r_t\) decides how much of it to use when proposing a
+          new state:
+        </p>
+        <div class="equation-block">
+          \[
+            \tilde h_t = \tanh\!\big(W x_t + U (r_t \odot h_{t-1})\big),
+            \qquad h_t = (1 - z_t) \odot h_{t-1} + z_t \odot \tilde h_t .
+          \]
+        </div>
+        <p>
+          Each gate is a sigmoid of \(x_t\) and \(h_{t-1}\), so it lies between 0 and 1 and acts as a soft switch.
+          For bias detection this matters: whether &ldquo;poor&rdquo; at the start of a sentence is stereotyping
+          depends on &ldquo;ignorant about how to handle the money&rdquo; several tokens later, and the gates let the
+          network keep the subject in memory until the claim about it arrives. The GRU does this with fewer
+          parameters than the LSTM.
+        </p>
+        <p>
+          All three models are trained by minimising the loss between predicted and true labels, with adaptive
+          learning rates between \(10^{-5}\) and \(5 \times 10^{-5}\) and dropout between 0.1 and 0.5. The validation
+          split is used for hyperparameter tuning and to guard against overfitting. The test split is used once, for
+          the final numbers.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Results -->
+  <section class="section hero is-light" id="results">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Results</h2>
+      <div class="prose">
+        <h3 class="subtitle is-5">The GRU is the most accurate and the most precise</h3>
+        <p>
+          We report four metrics on the held-out test split. <strong>Precision</strong> is the share of flagged
+          prompts that really are stereotyped, <strong>recall</strong> is the share of stereotyped prompts that get
+          flagged, and the <strong>F1 score</strong> is their harmonic mean:
+        </p>
+        <div class="equation-block">
+          \[
+            \text{Precision} = \frac{TP}{TP + FP}, \qquad
+            \text{Recall} = \frac{TP}{TP + FN}, \qquad
+            F_1 = \frac{2 \cdot \text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}.
+          \]
+        </div>
+      </div>
+      <figure class="sci-figure" id="fig2">
+        <picture><source srcset="static/figures/fig2_metrics.webp" type="image/webp"><img src="static/figures/fig2_metrics.png" width="1917" height="694" loading="lazy"
+             alt="Test-set scores. Accuracy: RNN 0.90, LSTM 0.88, GRU 0.93. Precision: RNN 0.87, LSTM 0.91, GRU 0.92. Recall: RNN 0.89, LSTM 0.85, GRU 0.87. F1: RNN 0.88, LSTM 0.88, GRU 0.90. The best value in each row is bold."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 2.</span>
+          Test-set accuracy, precision, recall and F1 score for RoBERTa combined with each recurrent reader (Table I
+          of the paper). The best value for each metric is in bold. Note that the axis starts at 0.83.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          We observe that <strong>RoBERTa + GRU</strong> has the highest accuracy (0.93), precision (0.92) and F1
+          score (0.90). The plain RNN has the highest recall (0.89), so it misses the fewest stereotyped prompts, but
+          it pays for this with the lowest precision (0.87). The LSTM sits in between on precision (0.91) and has the
+          lowest recall (0.85). The F1 score summarises the trade-off: the RNN and LSTM reach 0.88 by opposite routes,
+          and the GRU reaches 0.90 by being strong on both.
+        </p>
+        <h3 class="subtitle is-5">Where each model makes its mistakes</h3>
+      </div>
+      <figure class="sci-figure" id="fig3">
+        <picture><source srcset="static/figures/fig3_confusion.webp" type="image/webp"><img src="static/figures/fig3_confusion.png" width="2097" height="758" loading="lazy"
+             alt="Row-normalised confusion matrices. RNN: 90 percent of non-stereotyped examples correct, 10 percent flagged; 89 percent of stereotyped examples caught, 11 percent missed. LSTM: 88 and 12; 85 and 15. GRU: 93 and 7; 87 and 13."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 3.</span>
+          Confusion matrices on the test split, normalised by row: each row shows what happens to the examples of
+          one true class.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          The matrices show the source of the GRU&rsquo;s precision. It raises a false alarm on only 7% of
+          non-stereotyped examples, against 10% for the RNN and 12% for the LSTM. For a filter that sits in front of
+          every prompt this is the error that matters most day to day, because every false alarm interrupts a user
+          who did nothing wrong. The bottom-right cells are the recall column of Figure 2: the GRU catches 87% of
+          stereotyped examples, between the RNN (89%) and the LSTM (85%).
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Math video -->
+  <section class="section" id="presentation">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">The Math, Step by Step</h2>
+      <div class="prose">
+        <p>
+          The video below builds the detector one equation at a time: a CrowS-Pairs pair, byte-pair tokenisation,
+          the RNN, LSTM and GRU updates, the sigmoid decision, training, and how the confusion matrix turns into
+          precision, recall and the F1 score.
+        </p>
+      </div>
+      <figure class="sci-figure">
+        <video poster="static/videos/math_video_poster.jpg" controls playsinline preload="none"
+               aria-label="Video: the detector, step by step">
+          <source src="static/videos/math_video.webm" type="video/webm">
+          <source src="static/videos/math_video.mp4" type="video/mp4">
+          <track kind="captions" src="static/captions/math_video.vtt" srclang="en" label="English" default>
+        </video>
+      </figure>
+    </div>
+  </section>
+
+
+  <!-- Deployment -->
+  <section class="section hero is-light" id="validators">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Toward Deployment</h2>
+      <div class="prose">
+        <p>
+          A detector in front of a language model runs on every prompt, so its cost matters as much as its accuracy.
+          RoBERTa and a recurrent head are computationally heavy for constrained settings. We consider two standard
+          ways to shrink them without retraining from scratch:
+        </p>
+        <ol class="claim-defs">
+          <li><strong>Quantisation.</strong> Store the weights at lower numerical precision, cutting memory and
+            speeding up inference.</li>
+          <li><strong>Pruning.</strong> Remove weights that contribute little, leaving a smaller network to run.</li>
+        </ol>
+        <p>
+          The GRU suits this setting: it has fewer parameters than the LSTM and, in our experiments, better accuracy
+          and precision.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Limitations -->
+  <section class="section" id="limitations">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Limitations</h2>
+      <div class="prose">
+        <p>
+          CrowS-Pairs captures stereotypes as they are understood in the United States, written by U.S. crowd
+          workers, so the detector has not been tested on the cultural, social and linguistic forms that bias takes
+          elsewhere. The sentences are also short, declarative statements rather than the questions and instructions
+          that users actually type into a language model. All results come from a single 80/10/10 split, and the
+          detector&rsquo;s effect on the downstream model&rsquo;s answers was not measured. Future work should
+          evaluate on more diverse, multilingual datasets and on real prompts, and should test lighter architectures
+          so that bias detection is affordable wherever language models are deployed.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BibTeX -->
+  <section class="section hero is-light" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" type="button" onclick="copyBibTeX()" aria-label="Copy BibTeX to clipboard">Copy</button>
+      </div>
+      <pre id="bibtex-code"><code>@inproceedings{tiku2024mitigation,
+  title     = {Mitigation of User-Prompt Bias in Large Language Models: A Natural Language Processing and Deep Learning Based Framework},
+  author    = {Tiku, Sarvesh},
+  booktitle = {2024 IEEE 3rd International Conference on Computing and Machine Intelligence (ICMI)},
+  year      = {2024},
+  doi       = {10.1109/ICMI60790.2024.10585628}
+}</code></pre>
+    </div>
+  </section>
+</main>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license noopener" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

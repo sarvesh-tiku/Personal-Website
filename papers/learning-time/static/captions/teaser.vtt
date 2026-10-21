@@ -1,0 +1,29 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:02.650
+When Recognition Does Not Reach the Decision.
+
+2
+00:00:02.700 --> 00:00:06.510
+A transaction history x: eight transactions on a log time axis ending at the decision. Stem height shows the amount. Only one transaction falls in the final five-minute window.
+
+3
+00:00:06.560 --> 00:00:09.310
+The timing-only intervention T(x) compresses the last three gaps. Amounts, merchants and the decision time stay fixed.
+
+4
+00:00:09.360 --> 00:00:11.940
+The last gaps become 67, 61 and 66 seconds: four transactions in 194 seconds. The deterministic rules flip rapid burst, escalation and the synthetic fraud label from 0 to 1; the amount cue stays 0.
+
+5
+00:00:11.990 --> 00:00:13.180
+Jev answers seven yes/no questions in one request (no policy). Before the edit: rapid burst 0.02, fraud 0.20, action approve.
+
+6
+00:00:13.230 --> 00:00:17.420
+After the edit: rapid burst 0.95, escalation 0.88, fraud 0.24. Action: approve to approve.
+
+7
+00:00:17.470 --> 00:00:22.320
+Across 723 recognized edits, P(fraud) fails to respond in 71 percent; 32 percent even with the policy stated and the gaps given. Synthetic benchmark, one Jev snapshot, behavioral audit only.

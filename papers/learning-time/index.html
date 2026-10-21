@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Generated from page/index.template.html by tools/build_page.py using site_config.json.
+       Edit the template or the config, not index.html. -->
+  <meta name="description" content="A counterfactual audit of whether a typed financial decision model&#x27;s recognition of a fraud-relevant timing pattern is reflected in the fraud probability that drives its action. Case study of TypeSafe&#x27;s Jev on a synthetic payments benchmark and two real datasets.">
+  <meta name="keywords" content="fraud detection, financial AI safety, counterfactual auditing, shortcut learning, decision consistency, typed decision models">
+  <meta name="author" content="Sarvesh Tiku, Gauri Sharma">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Learning Time Before Trusting It: Auditing Recognition–Decision Consistency in a Typed Financial Decision Model">
+  <meta property="og:description" content="A counterfactual audit of whether a typed financial decision model&#x27;s recognition of a fraud-relevant timing pattern is reflected in the fraud probability that drives its action. Case study of TypeSafe&#x27;s Jev on a synthetic payments benchmark and two real datasets.">
+  <meta property="og:image" content="static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Signed concept response versus signed fraud response for every eligible counterfactual pair">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Learning Time Before Trusting It: Auditing Recognition–Decision Consistency in a Typed Financial Decision Model">
+  <meta name="twitter:description" content="A counterfactual audit of whether a typed financial decision model&#x27;s recognition of a fraud-relevant timing pattern is reflected in the fraud probability that drives its action. Case study of TypeSafe&#x27;s Jev on a synthetic payments benchmark and two real datasets.">
+  <meta name="twitter:image" content="static/images/social_preview.png">
+
+  <!-- Scholarly metadata (Google Scholar / Highwire) -->
+  <meta name="citation_title" content="Learning Time Before Trusting It: Auditing Recognition–Decision Consistency in a Typed Financial Decision Model">
+  <meta name="citation_author" content="Sarvesh Tiku">
+  <meta name="citation_author" content="Gauri Sharma">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="ACM ICAIF 2026 Workshop on Financial AI Security, Safety, and Privacy">
+  <title>Learning Time Before Trusting It</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], tags: 'none' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+      chtml: { scale: 1.0 }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "Learning Time Before Trusting It: Auditing Recognition–Decision Consistency in a Typed Financial Decision Model",
+  "description": "A counterfactual audit of whether a typed financial decision model's recognition of a fraud-relevant timing pattern is reflected in the fraud probability that drives its action. Case study of TypeSafe's Jev on a synthetic payments benchmark and two real datasets.",
+  "datePublished": "2026",
+  "keywords": [
+    "fraud detection",
+    "financial AI safety",
+    "counterfactual auditing",
+    "shortcut learning",
+    "decision consistency"
+  ],
+  "isAccessibleForFree": true,
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Sarvesh Tiku",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Georgia Institute of Technology"
+      }
+    },
+    {
+      "@type": "Person",
+      "name": "Gauri Sharma",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Georgia Institute of Technology"
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Learning Time Before Trusting It: Auditing Recognition–Decision Consistency in a Typed Financial Decision Model</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Sarvesh Tiku,</span>
+              <span class="author-block">Gauri Sharma</span>
+            </div>
+            <div class="is-size-5 publication-authors affil">
+              <span class="author-block">Georgia Institute of Technology</span>
+            </div>
+            <div class="publication-venue-line">ACM ICAIF 2026 Workshop on Financial AI Security, Safety, and Privacy</div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="static/pdfs/paper.pdf" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#presentation" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-video" aria-hidden="true"></i></span>
+                    <span>Video</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-quote-right" aria-hidden="true"></i></span>
+                    <span>BibTeX</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Teaser video -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" poster="static/videos/teaser_poster.jpg" data-autoplay muted loop playsinline controls
+               preload="metadata" aria-describedby="teaser-caption">
+          <source src="static/videos/teaser.webm" type="video/webm">
+          <source src="static/videos/teaser.mp4" type="video/mp4">
+          <track kind="captions" src="static/captions/teaser.vtt" srclang="en" label="English">
+        </video>
+        <h2 class="subtitle has-text-centered" id="teaser-caption">
+          Editing only the timestamps of a transaction history creates a card-testing burst. Jev's probability of a
+          rapid burst rises from 0.02 to 0.95, but its fraud probability moves only from 0.20 to 0.24, and the
+          transaction is still approved.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Abstract -->
+  <section class="section hero is-light" id="abstract">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Typed decision models return probabilities for several typed questions about the same state.
+              A fraud pipeline can ask &ldquo;did a card-testing burst just occur?&rdquo; and &ldquo;is this transaction
+              fraudulent?&rdquo;, then threshold the second answer. The output that names a risk factor and the output
+              that drives the action can disagree, which accuracy cannot reveal. We introduce a counterfactual audit of
+              recognition&ndash;decision consistency and apply it to TypeSafe&rsquo;s Jev as a case study. On a synthetic
+              payments benchmark with exact labels, we edit only timestamps to inject or remove card-testing bursts and ask
+              whether the model&rsquo;s own recognition of the change is matched by its fraud probability. Across 4,948
+              matched pairs, Jev recognizes the induced pattern in 87% of label-flipping edits (matched AUROC 0.992), yet
+              its fraud probability fails to respond in 71% of the changes it recognizes. Its fraud score tracks amount
+              instead (AUROC 0.944&rarr;0.448 when the shortcut is reversed). The inconsistency survives the obvious fix.
+              When the fraud question states the institution&rsquo;s policy that this exact pattern is fraud, and the time
+              gaps are given explicitly, Jev still recognizes 80% of induced patterns and its fraud probability still
+              fails to respond to 32% of them. Across 12 evaluated system/configuration conditions, the audit&rsquo;s
+              metrics rank deployment error under shortcut shift better than IID AUROC or calibration. They also identify
+              the fix: composing Jev&rsquo;s own recognized concept into a transparent rule cuts its deployment error by
+              90%. A second model, GPT-4o-mini, fails earlier: it rarely recognizes the timing at all. On real data the
+              gap persists but is smaller: on labelled card payments, Jev ignores the removal of naturally occurring
+              bursts in 68% of recognized cases, but responds to injected bursts more often than on synthetic data.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Recognition is not decision -->
+  <section class="section" id="problem">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Recognition Is Not Decision</h2>
+      <div class="prose">
+        <p>
+          A typed decision model answers several yes/no questions about the same transaction history with
+          probabilities. One answer can name a risk factor, such as a burst of three or more transactions within five
+          minutes, while another, \(P(\mathrm{fraud}\mid x)\), is thresholded into approve, review or block. Accuracy
+          evaluates the second answer on held-out data, but it does not check whether the two answers agree. A log that
+          shows \(P(\text{burst}) = 0.95\) next to an approval records a risk that was seen but not acted on.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig1">
+        <picture><source srcset="static/figures/fig1_concept.webp" type="image/webp"><img src="static/figures/fig1_concept.png" width="2178" height="933" loading="lazy"
+             alt="A transaction history x feeds one typed decision model that answers seven yes/no questions. Two parallel outputs leave the model: recognition, P(c|x), and decision, P(fraud|x), which is thresholded into approve, review or block. A bracket asks whether the two respond consistently to an intervention T(x)."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 1.</span>
+          One model returns several probabilities about the same history. The audit treats the recognition output
+          \(P(c\mid x)\) and the decision output \(P(\mathrm{fraud}\mid x)\) as parallel outputs of a black box. It asks
+          whether both respond when an intervention changes the risk factor. The bar values are Jev's answers for the
+          burst-injected history in Figure 3.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+
+  <!-- Audit -->
+  <section class="section hero is-light" id="framework">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">The Counterfactual Audit</h2>
+      <div class="prose">
+        <p>
+          A timing-only intervention \(T\) changes the timestamps of a history \(x\) and nothing else: amounts,
+          merchants and the decision time stay fixed. Because labels in the benchmark are a known function of \(x\), we
+          know whether the target concept \(c\) and the fraud label flip, and in which directions
+          \(s_c, s_f \in \{-1, +1\}\). The signed responses are
+        </p>
+        <div class="equation-block">
+          \[
+            r_c = s_c\,\big[\,P(c \mid T(x)) - P(c \mid x)\,\big],
+            \qquad
+            r_f = s_f\,\big[\,P(\mathrm{fraud} \mid T(x)) - P(\mathrm{fraud} \mid x)\,\big].
+          \]
+        </div>
+        <p>
+          On the 832 pairs where both the concept and the fraud label flip, a consistent model has
+          \(r_c \approx r_f \approx 1\). A change is <em>recognized</em> when \(r_c \ge \tau\). Recognition&ndash;decision
+          inconsistency (RDI) is the share of recognized changes whose fraud probability does not move by at least
+          \(\epsilon\) in the correct direction:
+        </p>
+        <div class="equation-block">
+          \[
+            \mathrm{RDI} = \Pr\!\big(r_f &lt; \epsilon \;\big|\; r_c \ge \tau\big), \qquad \tau = 0.4,\ \ \epsilon = 0.1 .
+          \]
+        </div>
+        <p>
+          \(\epsilon\) is twice the largest change in \(P(\mathrm{fraud})\) observed when identical requests are replayed.
+          Intervals are 95% bootstrap intervals that resample base histories.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig2">
+        <picture><source srcset="static/figures/fig2_geometry.webp" type="image/webp"><img src="static/figures/fig2_geometry.png" width="2097" height="757" loading="lazy"
+             alt="Three scatterplots of signed concept response against signed fraud response. Temporal model: points at (1, 1), RDI 0 percent. Decoupled control: points at (1, 0), RDI 100 percent. Jev without policy: a flat band near zero fraud response, RDI 71 percent."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 2.</span>
+          Each point is one eligible pair; the shaded region is RDI. (A) A temporal model lies on the diagonal.
+          (B) A decoupled control, with temporal concept heads and a fraud head that sees only static features,
+          recognizes every change and never acts on it. (C) Jev recognizes most changes, but its fraud response stays
+          flat: RDI = 516/723 = 71% [68, 75].
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+
+  <!-- Benchmark -->
+  <section class="section" id="benchmark">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Benchmark</h2>
+      <div class="prose">
+        <p>
+          A rapid burst is at least three transactions within five minutes. The synthetic fraud event is a burst ending
+          at the current transaction \(n\) whose amount is at least five times the median of the earlier burst
+          transactions:
+        </p>
+        <div class="equation-block">
+          \[
+            y(x) = \mathbf{1}\Big[\,|B(x)| \ge 3 \;\wedge\; a_n \ge 5\cdot\operatorname{median}\{a_i : i \in B(x),\ i &lt; n\}\,\Big],
+            \qquad B(x) = \{\,i : t_n - t_i \le 300\,\mathrm{s}\,\}.
+          \]
+        </div>
+        <p>
+          The absolute amount is not part of the rule. An amount of at least $1,000 is a deliberate shortcut: it
+          accompanies 84% of fraud and 4% of benign histories in the IID test split. In the shortcut-broken split these
+          shares are reversed to 6% and 50%, while the rule stays the same. The benchmark has 4,948 counterfactual pairs
+          built from 800 base histories.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig3">
+        <picture><source srcset="static/figures/fig3_intervention.webp" type="image/webp"><img src="static/figures/fig3_intervention.png" width="1692" height="974" loading="lazy"
+             alt="Two timelines with the same amounts and decision time. Original: last gaps of days and hours, one transaction in the final five minutes, label 0. Edited: last gaps of 67, 61 and 66 seconds, four transactions in the final five minutes, label 1."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 3.</span>
+          A burst-injection pair from the benchmark. Compressing the last three gaps to about a minute places four
+          transactions inside the final five minutes. The current $240.73 is more than five times the $5.33 median, so
+          the label flips to fraud, while the amount shortcut stays off.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+
+  <!-- Results -->
+  <section class="section hero is-light" id="results">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Results</h2>
+      <div class="prose">
+        <p>
+          Jev (<code>typesafe/jev-1.13-20260917</code>) was queried through its public API, and its outputs were cached
+          and never adjusted. It recognizes <strong>87% [84, 89]</strong> of label-flipping timing edits (matched AUROC
+          0.992), yet its fraud probability fails to respond in <strong>71% [68, 75]</strong> of recognized cases. The
+          median fraud response is 0.09 per unit of recognition response, and 78% of recognized changes leave the
+          approve/review/block action unchanged.
+        </p>
+
+        <h3 class="subtitle is-5">The amount shortcut</h3>
+        <p>
+          Amount edits that leave the label unchanged move Jev's fraud probability by 0.43; timing edits that flip the
+          label move it by 0.07. When Jev itself affirms card testing at an ordinary amount, it flags only 3% of 678
+          such states. When it denies the pattern but the amount exceeds $1,000, it flags 69% of 1,213 states, none of
+          which are fraud.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig4">
+        <picture><source srcset="static/figures/fig4_shortcut.webp" type="image/webp"><img src="static/figures/fig4_shortcut.png" width="2005" height="837" loading="lazy"
+             alt="Left: fraud AUROC from the IID to the shortcut-broken split for each system; Jev without policy falls from 0.944 to 0.448. Right: change in P(fraud) under amount edits versus timing edits; Jev without policy 0.43 versus 0.07."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 4.</span>
+          (A) Fraud AUROC on the IID split (hollow) and the shortcut-broken split (filled). (B) Mean change in
+          \(P(\mathrm{fraud})\) under label-preserving amount edits (solid) and label-flipping timing edits (hatched).
+        </figcaption>
+      </figure>
+
+      <div class="prose">
+        <h3 class="subtitle is-5">Does stating the policy help?</h3>
+        <p>
+          The same Jev snapshot was run with explicit time gaps in the state, with the fraud policy stated in the fraud
+          question, and with both. Stating the policy lowers RDI from 71% to 37%, and to <strong>32% [28, 36]</strong>
+          when the gaps are also given. Even then, a policy-defined pattern that Jev recognizes leaves its fraud
+          probability unmoved in a third of cases. Across \(\epsilon \in [0.05, 0.2]\) this RDI ranges from 21% to 40%,
+          compared with 42% to 96% without the policy.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig5">
+        <picture><source srcset="static/figures/fig5_policy.webp" type="image/webp"><img src="static/figures/fig5_policy.png" width="2098" height="744" loading="lazy"
+             alt="A: recognized share 87, 81, 85, 80 percent and RDI 71, 39, 37, 32 percent across four configurations. B: cumulative distributions of the signed fraud response. C: flag rates when Jev affirms card testing at an ordinary amount versus denies it at a large amount."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 5.</span>
+          One model under four input configurations. (A) Recognized share (hollow) and RDI (filled). (B) Distribution
+          of the signed fraud response over recognized pairs; RDI is the height of each curve just below \(\epsilon\).
+          (C) Flag rate when Jev affirms card testing at an ordinary amount, compared with when it denies the pattern at
+          $1,000 or more.
+        </figcaption>
+      </figure>
+
+      <div class="prose">
+        <h3 class="subtitle is-5">Composition rule</h3>
+        <p>
+          Flagging whenever Jev's own answer \(P(\text{escalation after burst}) \ge 0.5\) lowers its shortcut-broken
+          balanced error from <strong>0.62 to 0.06</strong>, a 90% reduction, compared with 0.17 from stating the policy
+          in the prompt. Because that question closely matches the benchmark's labelling rule, the result shows that Jev's
+          recognition is reliable enough to reconstruct the label. It has been evaluated on the synthetic shift only.
+          Across 12 related system and prompt conditions, audit metrics also rank error under this shift better than
+          IID AUROC does (\(\rho = 0.96\) for decision non-response vs. 0.80).
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig6">
+        <picture><source srcset="static/figures/fig7_composition.webp" type="image/webp"><img src="static/figures/fig7_composition.png" width="2094" height="875" loading="lazy"
+             alt="Left: shortcut-broken balanced error for three decision rules; Jev without policy 0.62, 0.18, 0.06. Right: Spearman correlations between metrics and shortcut-broken error."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 6.</span>
+          (A) Shortcut-broken balanced error when the flag uses \(P(\mathrm{fraud})\) (M0), \(P(\mathrm{fraud})\) or the
+          recognized pattern (M1), or the recognized pattern alone (M2). (B) Spearman correlation of each metric with
+          that error, with all 12 conditions (dots) and without the oracle and decoupled control (&times;).
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+
+  <!-- Real data -->
+  <section class="section" id="real-data">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Real Data</h2>
+      <div class="prose">
+        <p>
+          On UCI Online Retail purchase histories, which have no fraud labels, the benchmark rule serves as the label.
+          Jev's RDI there is 88% [78, 97], falling to 33% with the policy and gaps. On IEEE-CIS card payments, which
+          carry chargeback labels, rapid activity is a real fraud signal (risk ratio 2.06). Jev's RDI is
+          <strong>29% [24, 33]</strong> overall but <strong>68%</strong> for the 41 recognized removals of naturally
+          occurring bursts. Here the correct direction is inferred from aggregate association, and Jev's temporal answers
+          add little real-label signal beyond its fraud score (\(p = 0.09\)). The real-data gap is therefore smaller and
+          harder to interpret than the synthetic one.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig7">
+        <picture><source srcset="static/figures/fig8_real.webp" type="image/webp"><img src="static/figures/fig8_real.png" width="1843" height="1098" loading="lazy"
+             alt="RDI for Jev, Jev with policy and gaps, and GPT-4o-mini on the synthetic benchmark, UCI Online Retail and IEEE-CIS, with subgroups, plus fraud risk ratios for rapid same-card activity."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 7.</span>
+          RDI on (A) the synthetic benchmark, (B) UCI Online Retail and (C) IEEE-CIS, kept on separate axes because the
+          settings differ. (D) Fraud risk ratio for transactions preceded by same-card activity: across all fraud
+          labels and for each card's first fraud only.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+
+  <!-- Math video -->
+  <section class="hero is-small is-light" id="presentation">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">The Math, Step by Step</h2>
+        <figure class="sci-figure">
+          <video poster="static/videos/math_video_poster.jpg" controls playsinline preload="none"
+                 aria-describedby="math-video-caption">
+            <source src="static/videos/math_video.webm" type="video/webm">
+            <source src="static/videos/math_video.mp4" type="video/mp4">
+            <track kind="captions" src="static/captions/math_video.vtt" srclang="en" label="English" default>
+          </video>
+          <figcaption id="math-video-caption">
+            The labelling rule, the timing-only intervention, the signed responses and the RDI estimator, worked through
+            on the pair in Figure 3: \(r_c = 0.93 \ge \tau\) while \(r_f = 0.04 &lt; \epsilon\).
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Limitations -->
+  <section class="section" id="limitations">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Limitations</h2>
+      <div class="prose">
+        <ul>
+          <li>The audit is behavioral. It cannot tell whether the model fails to represent the burst or chooses to
+            weight an amount prior more heavily.</li>
+          <li>The study covers one Jev snapshot and one comparison model, GPT-4o-mini. The stated policy is looser than
+            the exact rule, and an exact-rule condition was not run.</li>
+          <li>The shortcut-broken split is a designed shift. The 12 conditions are related configurations, not
+            independent model families, and the composition rule has not been tested on real data.</li>
+          <li>The synthetic rule is not a general definition of fraud. On IEEE-CIS, removing a burst need not lower the
+            risk of an individual transaction, so a weak response there may be justified.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BibTeX -->
+  <section class="section hero is-light" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" type="button" onclick="copyBibTeX()" aria-label="Copy BibTeX to clipboard">Copy</button>
+      </div>
+      <pre id="bibtex-code"><code>@inproceedings{tiku2026learning,
+  title     = {Learning Time Before Trusting It: Auditing Recognition--Decision Consistency in a Typed Financial Decision Model},
+  author    = {Tiku, Sarvesh and Sharma, Gauri},
+  booktitle = {ACM ICAIF 2026 Workshop on Financial AI Security, Safety, and Privacy},
+  year      = {2026}
+}</code></pre>
+    </div>
+  </section>
+</main>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license noopener" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

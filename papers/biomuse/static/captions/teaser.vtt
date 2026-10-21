@@ -1,0 +1,45 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.450
+BioMuse: benchmarking LLMs for trustworthy retrieval in computational biology, using structured Zotero graphs.
+
+2
+00:00:03.500 --> 00:00:08.650
+A researcher's Zotero library records intent: collections, tags, notes, and links between related papers.
+
+3
+00:00:08.700 --> 00:00:14.250
+BioMuse parses the export into a graph: papers are nodes; edges join papers in the same collection, with shared tags, or linked as related.
+
+4
+00:00:14.300 --> 00:00:18.750
+Step 2: tasks are generated from the graph, so the library itself is the answer key.
+
+5
+00:00:18.800 --> 00:00:23.350
+Step 3: four systems answer the same tasks: GPT-4, Claude 2.1, a fine-tuned LLaMA 2, and BioMuse-RAG, a small model that retrieves over the graph. BM25 is the classical baseline.
+
+6
+00:00:23.400 --> 00:00:27.650
+GPT-4 leads all four tasks: 82.4% top-3 retrieval and 89% hallucination-free summaries.
+
+7
+00:00:27.700 --> 00:00:31.150
+But accuracy is not trust: Claude 2.1 is second on retrieval, yet only 73% of its summaries are hallucination-free, below the small BioMuse-RAG at 86.2%.
+
+8
+00:00:31.200 --> 00:00:35.550
+A fine-tuned LLaMA 2 retrieves no better than keyword search: 51.2% against BM25's 58.2%, p = 0.12.
+
+9
+00:00:35.600 --> 00:00:41.850
+Now strip the metadata away. Without related items, then without tags, then with titles alone, every model loses accuracy.
+
+10
+00:00:41.900 --> 00:00:45.850
+GPT-4 falls from 82.4% to 69.5% without related items and tags (p = 0.03); with titles alone, every model ends near or below BM25.
+
+11
+00:00:45.900 --> 00:00:51.150
+Evaluate LLMs against the researcher's own structure, report trust separately from accuracy, and pass the metadata in.

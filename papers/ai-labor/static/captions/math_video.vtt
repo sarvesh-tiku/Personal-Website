@@ -1,0 +1,37 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.950
+The mechanism, in equations. The paper argues in words; this video writes the argument as a simple illustrative model with toy numbers.
+
+2
+00:00:04.000 --> 00:00:09.950
+Model the ladder as two groups: juniors J and seniors S. Hiring E brings people in, promotion moves them up, and retirement after an average senior tenure tau takes them out.
+
+3
+00:00:10.000 --> 00:00:15.250
+If the number of senior roles is fixed, a promotion can only happen when someone retires. So the openings per year are S over tau, and a junior's chance of promotion each year is openings over J.
+
+4
+00:00:15.300 --> 00:00:21.350
+Raise the retirement age, so seniors stay five years longer. Openings fall from 4 to about 3.3 a year, and each junior's yearly promotion chance falls from 10% to about 8.3%.
+
+5
+00:00:21.400 --> 00:00:28.350
+Now let AI automate a share a of entry-level work, so hiring falls. Experienced workers are built from past hires, so the experienced pool shrinks with a delay of K years.
+
+6
+00:00:28.400 --> 00:00:33.450
+Pensions. A defined-benefit plan promises a pension set by a formula: an accrual rate times years of service times final salary. The employer carries the investment risk.
+
+7
+00:00:33.500 --> 00:00:40.050
+A defined-contribution plan, like a 401(k), only fixes what goes in. The final balance depends on uncertain returns, so the same saver can end up with very different amounts.
+
+8
+00:00:40.100 --> 00:00:45.750
+Under defined contribution, the employee's own choices, how much to save and how to invest, decide the outcome. That is why firms in all three countries are investing in financial literacy.
+
+9
+00:00:45.800 --> 00:00:51.450
+Two levers in the model match the paper's two policy debates: tau, the retirement age, and E, the entry points that AI removes.

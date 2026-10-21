@@ -1,0 +1,37 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.450
+The audit in equations, worked on one real benchmark pair.
+
+2
+00:00:03.500 --> 00:00:11.150
+A history x is a sequence of transactions with times t and amounts a; transaction n is the one under decision. A typed model returns a probability for each yes/no question about x.
+
+3
+00:00:11.200 --> 00:00:20.050
+The synthetic label: B(x) is the set of transactions within 300 seconds of the decision. Fraud means at least three of them and a current amount at least five times the median of the earlier ones. No term uses the absolute amount.
+
+4
+00:00:20.100 --> 00:00:29.550
+A timing-only intervention changes timestamps only, keeping amounts and the decision time. Here four transactions fall within the window and 240.73 is at least 5 times 5.33, so the label flips to 1. Both the concept and the label move up, so the correct directions are plus one.
+
+5
+00:00:29.600 --> 00:00:38.550
+Signed responses. The model's burst probability moves from 0.02 to 0.95, so r_c = 0.93. Its fraud probability moves from 0.20 to 0.24, so r_f = 0.04.
+
+6
+00:00:38.600 --> 00:00:47.550
+Thresholds. r_c = 0.93 is at least tau = 0.4, so the change is recognized; r_f = 0.04 is below epsilon = 0.1, so the decision did not respond. The action stays approve: P(fraud) is below 0.3 before and after.
+
+7
+00:00:47.600 --> 00:00:57.150
+Over all eligible pairs, RDI is the share of recognized pairs whose fraud response is below epsilon: 516 of 723, or 71 percent, with a 95 percent interval of 68 to 75 from resampling base histories. The median of r_f over r_c is 0.09; a coupled model scores 1.
+
+8
+00:00:57.200 --> 00:01:06.250
+With the policy stated and the gaps listed, the same pair's fraud probability moves from 0.13 to 0.75, so r_f = 0.62 and the action becomes block. Over the benchmark RDI falls to 213 of 667, 32 percent, and the median ratio rises to 0.55.
+
+9
+00:01:06.300 --> 00:01:11.150
+RDI measures behavioral consistency between two outputs of the same model. It does not identify the internal mechanism.

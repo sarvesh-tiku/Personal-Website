@@ -1,0 +1,338 @@
+/* ------------------------------------------------------------------
+   Academic Project Page Template (original-version / Nerfies styling),
+   adapted for "Learning Time Before Trusting It". The template rules are
+   kept first and unchanged in spirit; page-specific additions follow.
+   ------------------------------------------------------------------ */
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+  color: #363636;
+  background: #ffffff;
+}
+
+
+.footer .icon-link {
+    font-size: 25px;
+    color: #000;
+}
+
+.link-block a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dnerf {
+  font-variant: small-caps;
+}
+
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', 'Noto Sans', sans-serif;
+}
+
+
+.publication-banner video {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  object-fit: fit;
+}
+
+.publication-title {
+    font-family: 'Google Sans', 'Noto Sans', sans-serif;
+}
+
+.publication-authors {
+    font-family: 'Google Sans', 'Noto Sans', sans-serif;
+}
+
+.publication-venue {
+    color: #555;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.publication-authors a {
+   color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+    text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-video {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+.publication-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.results-carousel {
+  overflow: hidden;
+}
+
+.results-carousel .item {
+  margin: 5px;
+  overflow: hidden;
+  padding: 20px;
+  font-size: 0;
+}
+
+.results-carousel video {
+  margin: 0;
+}
+
+.slider-pagination .slider-page {
+  background: #000000;
+}
+
+.eql-cntrb {
+  font-size: smaller;
+}
+
+
+/* ------------------------------------------------------------------
+   Page-specific additions (restrained; no shadows, gradients or motion)
+   ------------------------------------------------------------------ */
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+.title, .subtitle { color: #222; }
+.title.is-3 { margin-bottom: 1.25rem; }
+
+.publication-title {
+  line-height: 1.22;
+  font-size: 2.35rem !important;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.publication-authors.affil { color: #4a4a4a; margin-top: 0.4rem; }
+.publication-venue-line {
+  font-family: 'Google Sans', 'Noto Sans', sans-serif;
+  color: #555;
+  font-size: 1.0rem;
+  margin-top: 0.35rem;
+}
+.status-note { font-size: 0.85rem; color: #6b6b6b; margin-top: 0.4rem; }
+
+/* section anchors stay clear of the top edge */
+section[id] { scroll-margin-top: 1rem; }
+
+.content.has-text-justified p,
+.prose p, .prose li {
+  font-size: 1.02rem;
+  line-height: 1.68;
+}
+.prose { text-align: left; }
+.prose h3.subtitle {
+  margin-top: 2.4rem;
+  margin-bottom: 0.9rem;
+  font-weight: 600;
+  font-family: 'Google Sans', 'Noto Sans', sans-serif;
+}
+.prose h3.subtitle .sub-num { color: #8a8a8a; font-weight: 400; margin-right: 0.35rem; }
+.prose p { margin-bottom: 1rem; }
+.prose ol, .prose ul { margin: 0.4rem 0 1.1rem 1.6rem; }
+.prose ol { list-style: decimal; }
+.prose ul { list-style: disc; }
+.prose li { margin-bottom: 0.35rem; }
+code {
+  color: #444;
+  background: #f3f3f3;
+  font-size: 0.86em;
+  padding: 0.05em 0.3em;
+}
+
+/* scientific figures */
+figure.sci-figure {
+  margin: 1.8rem auto 2.0rem;
+  text-align: center;
+}
+figure.sci-figure img,
+figure.sci-figure video {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  background: transparent;
+}
+figure.sci-figure.narrow { max-width: 760px; }
+figure.sci-figure figcaption {
+  text-align: left;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #444;
+  margin: 0.8rem auto 0;
+  max-width: 860px;
+}
+figure.sci-figure figcaption .fig-label { font-weight: 700; color: #222; }
+figure.sci-figure figcaption .source {
+  display: block;
+  margin-top: 0.35rem;
+  color: #777;
+  font-size: 0.84rem;
+}
+
+/* equations */
+.equation-block {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.35rem 0;
+  margin: 0.6rem 0 1rem;
+}
+.def-list { margin: 0.8rem 0 1.2rem; }
+.def-list dt { font-weight: 600; margin-top: 0.6rem; }
+.def-list dd { margin-left: 1.2rem; }
+
+/* plain academic tables */
+.table-wrap { overflow-x: auto; margin: 1.2rem 0 1.6rem; }
+table.sci-table {
+  border-collapse: collapse;
+  margin: 0 auto;
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+}
+table.sci-table caption {
+  caption-side: top;
+  text-align: left;
+  font-size: 0.9rem;
+  color: #444;
+  padding-bottom: 0.5rem;
+}
+table.sci-table th, table.sci-table td {
+  padding: 0.32rem 0.75rem;
+  text-align: right;
+  border: none;
+}
+table.sci-table th:first-child, table.sci-table td:first-child { text-align: left; }
+table.sci-table thead th { border-top: 1.5px solid #222; border-bottom: 1px solid #222; font-weight: 600; }
+table.sci-table tbody tr:last-child td { border-bottom: 1.5px solid #222; }
+table.sci-table td.hl { font-weight: 700; }
+
+/* callouts used sparingly for scope statements */
+.scope-note {
+  border-left: 3px solid #b5b5b5;
+  padding: 0.4rem 0 0.4rem 1rem;
+  margin: 1.2rem 0;
+  color: #444;
+  font-size: 0.97rem;
+}
+.scope-note strong { color: #222; }
+
+/* teaser video */
+.teaser video { width: 100%; height: auto; display: block; }
+.teaser .subtitle { font-size: 1.05rem; line-height: 1.55; margin-top: 0.9rem; }
+
+/* video gallery */
+.results-carousel .item .video-caption {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #444;
+  text-align: left;
+  margin-top: 0.75rem;
+}
+.results-carousel .item .video-caption strong { color: #222; }
+.results-carousel video { width: 100%; height: auto; display: block; }
+.video-links { font-size: 0.86rem; margin-top: 0.3rem; }
+
+/* BibTeX */
+.bibtex-header { display: flex; justify-content: space-between; align-items: center; }
+.copy-bibtex-btn {
+  font-size: 0.85rem;
+  border: 1px solid #bbb;
+  background: #fff;
+  border-radius: 4px;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  color: #333;
+}
+.copy-bibtex-btn:hover { border-color: #333; }
+pre, .content pre { white-space: pre-wrap; word-break: break-word; overflow-x: hidden; }
+
+/* accessibility */
+a:focus-visible, button:focus-visible, video:focus-visible {
+  outline: 2px solid #0072B2;
+  outline-offset: 2px;
+}
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: #fff;
+  padding: 0.5rem 1rem;
+  z-index: 100;
+}
+.skip-link:focus { left: 0.5rem; top: 0.5rem; }
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden; clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+/* responsive */
+h2.title, h3.subtitle { overflow-wrap: break-word; }
+/* .hero is a flex column in Bulma: let containers shrink below wide display math */
+.hero > .container, .hero-body > .container, .hero .container { min-width: 0; width: 100%; }
+.equation-block mjx-container[display="true"] { margin: 0.4em 0 !important; }
+
+@media screen and (max-width: 768px) {
+  .publication-title { font-size: 1.65rem !important; }
+  .title.is-3 { font-size: 1.5rem; }
+  .publication-authors { font-size: 1.05rem !important; }
+  .hero-body { padding: 2rem 1rem; }
+  .section { padding: 2.25rem 1rem; }
+  figure.sci-figure figcaption { font-size: 0.88rem; }
+  .content.has-text-justified p, .prose p, .prose li { font-size: 0.98rem; }
+  .results-carousel .item { padding: 6px; }
+  .link-block { display: inline-block; }
+  .publication-links .button { font-size: 0.9rem; }
+}
+
+@media print {
+  .publication-links, .teaser video, .results-carousel { display: none; }
+}
+
+/* Four-claims ledger */
+.claims { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.9rem; margin: 1.4rem 0 0.4rem; }
+.claim { border: 1px solid #d9d9d9; border-radius: 6px; padding: 0.9rem 1rem; text-align: left; }
+.claim .claim-letter { font-size: 1.5rem; font-weight: 700; color: #0072B2; line-height: 1; }
+.claim .claim-name { font-weight: 600; margin: 0.35rem 0 0.25rem; color: #222; }
+.claim p { font-size: 0.92rem; line-height: 1.5; color: #444; margin: 0; }
+.claim .verdict { display: inline-block; font-size: 0.85rem; font-weight: 600; margin-top: 0.6rem; }
+.verdict.yes { color: #00795a; }
+.verdict.part { color: #8a5a00; }
+.verdict.no { color: #b24a00; }
+.verdict.na { color: #6b6b6b; }
+@media (max-width: 900px) { .claims { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .claims { grid-template-columns: 1fr; } }
+figure.sci-figure.compact { max-width: 760px; }
+.prose ul.claim-defs { list-style: none; margin-left: 0.4rem; }
+.prose ol.claim-defs { margin-left: 1.4rem; }
+.prose .claim-defs li { margin-bottom: 0.55rem; }

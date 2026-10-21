@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Generated from page/index.template.html by tools/build_page.py using site_config.json.
+       Edit the template or the config, not index.html. -->
+  <meta name="description" content="Selection-based shapelet models for anti-money-laundering store copies of customers&#x27; transaction histories with their labels. A released RDST model singles out about 827 customers on SAML-D, the standard membership audit misses it, and learned shapelets remove the leak.">
+  <meta name="keywords" content="anti-money laundering, shapelets, time-series classification, privacy, membership inference, re-identification, explainable AI">
+  <meta name="author" content="Sarvesh Tiku, Gauri Sharma">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Interpretable by Construction, Identifiable by Construction: Privacy Leakage of Shapelet-Based Anti-Money-Laundering Models">
+  <meta property="og:description" content="Selection-based shapelet models for anti-money-laundering store copies of customers&#x27; transaction histories with their labels. A released RDST model singles out about 827 customers on SAML-D, the standard membership audit misses it, and learned shapelets remove the leak.">
+  <meta property="og:image" content="static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Share of shapelets that single out a customer against the aggregate membership audit AUC on SAML-D">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Interpretable by Construction, Identifiable by Construction: Privacy Leakage of Shapelet-Based Anti-Money-Laundering Models">
+  <meta name="twitter:description" content="Selection-based shapelet models for anti-money-laundering store copies of customers&#x27; transaction histories with their labels. A released RDST model singles out about 827 customers on SAML-D, the standard membership audit misses it, and learned shapelets remove the leak.">
+  <meta name="twitter:image" content="static/images/social_preview.png">
+
+  <!-- Scholarly metadata (Google Scholar / Highwire) -->
+  <meta name="citation_title" content="Interpretable by Construction, Identifiable by Construction: Privacy Leakage of Shapelet-Based Anti-Money-Laundering Models">
+  <meta name="citation_author" content="Sarvesh Tiku">
+  <meta name="citation_author" content="Gauri Sharma">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="ACM ICAIF 2026 Workshop on Financial AI Security, Safety, and Privacy">
+  <title>Interpretable by Construction, Identifiable by Construction</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], tags: 'none' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+      chtml: { scale: 1.0 }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "Interpretable by Construction, Identifiable by Construction: Privacy Leakage of Shapelet-Based Anti-Money-Laundering Models",
+  "description": "Selection-based shapelet models for anti-money-laundering store copies of customers' transaction histories with their labels. A released RDST model singles out about 827 customers on SAML-D, the standard membership audit misses it, and learned shapelets remove the leak.",
+  "datePublished": "2026",
+  "keywords": [
+    "anti-money laundering",
+    "shapelets",
+    "privacy",
+    "membership inference",
+    "re-identification",
+    "interpretable machine learning"
+  ],
+  "isAccessibleForFree": true,
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Sarvesh Tiku",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Georgia Institute of Technology"
+      }
+    },
+    {
+      "@type": "Person",
+      "name": "Gauri Sharma",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Georgia Institute of Technology"
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Interpretable by Construction, Identifiable by Construction: Privacy Leakage of Shapelet-Based Anti-Money-Laundering Models</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Sarvesh Tiku,</span>
+              <span class="author-block">Gauri Sharma</span>
+            </div>
+            <div class="is-size-5 publication-authors affil">
+              <span class="author-block">Georgia Institute of Technology</span>
+            </div>
+            <div class="publication-venue-line">ACM ICAIF 2026 Workshop on Financial AI Security, Safety, and Privacy</div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="static/pdfs/paper.pdf" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#presentation" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-video" aria-hidden="true"></i></span>
+                    <span>Video</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-quote-right" aria-hidden="true"></i></span>
+                    <span>BibTeX</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Teaser video -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" poster="static/videos/teaser_poster.jpg" data-autoplay muted loop playsinline controls
+               preload="metadata" aria-describedby="teaser-caption">
+          <source src="static/videos/teaser.webm" type="video/webm">
+          <source src="static/videos/teaser.mp4" type="video/mp4">
+          <track kind="captions" src="static/captions/teaser.vtt" srclang="en" label="English">
+        </video>
+        <h2 class="subtitle has-text-centered" id="teaser-caption">
+          A shapelet model explains an alert by pointing to a pattern, and that pattern is often a copy of one
+          customer's history. A released RDST model singles out about 827 customers and reveals which of them were
+          flagged.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Abstract -->
+  <section class="section hero is-light" id="abstract">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Supervisors expect anti-money-laundering (AML) alerts to be explainable, and example-based classifiers
+              such as shapelets offer explanations by construction: a decision is justified by a short pattern in an
+              account&rsquo;s activity. Most shapelet methods select these patterns by cutting them out of training
+              accounts; learned shapelets instead optimise them from random initialisation. We show that, for the
+              selection-based methods, including the state of the art, the explanatory pattern is often a specific
+              customer&rsquo;s own transaction history, together with the customer&rsquo;s label. Across two AML
+              benchmarks (SAML-D, AMLworld) and real bank data (Berka), we hand a fitted model to an adversary and
+              measure what it reveals. For the state-of-the-art Random Dilated Shapelet Transform (RDST), 86% of
+              released shapelets match exactly one of &sim;30k SAML-D accounts (&asymp;827 customers per model), and
+              each carries its source&rsquo;s class, so the model discloses who was flagged and lets anyone holding the
+              model reconstruct exact weekly amounts. Uniqueness persists against 249,946 candidate accounts (100% of
+              unique shapelets stay unique), on real customers (75% on Berka), when amounts are perturbed by &plusmn;5%
+              (96% precision), and when normalisation statistics are withheld (75%); it fails only when the adversary
+              misses much of an account&rsquo;s activity. The standard aggregate membership audit reports AUC
+              &asymp; 0.5, whereas a tailored per-explanation audit flags 5.5% of training members at 0.1%
+              false-positive rate. Learned shapelets, which never copy training data, single out no customer and resist
+              memorisation; they match RDST accuracy on SAML-D but cost accuracy on AMLworld. Example-based
+              explanations need their own privacy review.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Motivation -->
+  <section class="section" id="problem">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Explanations Made of Customers</h2>
+      <div class="prose">
+        <p>
+          Anti-money-laundering monitoring is high-stakes, regulated and increasingly machine-learned, and supervisors
+          expect every alert to come with a reason an investigator can act on. Deployed systems usually pair
+          gradient-boosted trees with post-hoc explanations. Example-based models offer a different route: the
+          explanation is built into the model. A <em>shapelet</em> is a short multichannel pattern, and a shapelet
+          classifier decides from how closely each pattern appears in an account's history. The pattern that matched is
+          the explanation. Laundering typologies such as structuring and fan-in/fan-out are shapes in time, which makes
+          shapelets a natural candidate wherever explanations are required.
+        </p>
+        <p>
+          Shapelet methods come in two families, and the difference between them is the subject of this paper:
+        </p>
+        <ul class="claim-defs">
+          <li><strong>Selected shapelets.</strong> The classic shapelet transform and the state-of-the-art Random
+            Dilated Shapelet Transform (RDST) keep subsequences cut directly from training accounts. RDST also stores,
+            for each shapelet, the mean and standard deviation used to normalise it and the class of the account it
+            came from.</li>
+          <li><strong>Learned shapelets.</strong> Free parameters optimised by gradient descent from a random start.
+            They need not resemble any single account.</li>
+        </ul>
+        <p>
+          That selected shapelets are copied subsequences is known. What has not been measured is how much a released
+          model exposes in practice, against which adversaries, and whether the standard audits notice. We find that
+          the answer is worse than the construction suggests.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Threat model and method -->
+  <section class="section hero is-light" id="setting">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Threat Model and Measurement</h2>
+      <div class="prose">
+        <p>
+          A bank trains a shapelet detector on labelled accounts, where the labels are past suspicious-activity
+          findings. The fitted model then leaves the bank: it is shared with a vendor, an auditor, a regulator sandbox
+          or a consortium partner, or it is stolen. We consider two adversaries.
+        </p>
+        <ul class="claim-defs">
+          <li><strong>A data-holding party</strong> (vendor, auditor, partner, insider) holds transaction histories for
+            many accounts, but not the bank's labels or training set. Matching shapelets against its accounts reveals
+            which customers were in the training set and, through the stored class, which were flagged. Disclosing the
+            latter conflicts with the confidentiality of suspicious-activity reports and with anti-tipping-off
+            rules.</li>
+          <li><strong>A model-only party</strong> (model theft, a model marketplace) holds no data. From RDST it can
+            undo the normalisation and read exact weekly amounts and counts of specific customers, which it can link to
+            them later.</li>
+        </ul>
+        <p>
+          Each account becomes a multichannel weekly series \(X\): outgoing and incoming amounts and counts,
+          cross-border amounts, and cash. A shapelet \(S\) of length \(\ell\) and dilation \(\delta\) is compared with
+          every window of the account, and a shapelet singles out a customer when exactly one candidate account lies
+          within \(\varepsilon\) of it:
+        </p>
+        <div class="equation-block">
+          \[
+            d(S, X) = \min_t \big\| S - X_{:,\,t,\ t+\delta,\ \dots,\ t+(\ell-1)\delta} \big\|,
+            \qquad
+            N_\varepsilon(S) = \#\{\, i : d(S, X_i) &lt; \varepsilon \,\} = 1, \quad \varepsilon = 10^{-3}.
+          \]
+        </div>
+        <p>
+          We measure this on two AML benchmarks, SAML-D (29,946 accounts over 46 weeks) and AMLworld (23,409 accounts
+          in 6-hour bins), and on Berka, 4,500 real anonymised accounts of a Czech bank, where a proxy task replaces
+          the missing laundering labels. Accounts are split 50/50 into training members and non-members, and every
+          result averages three seeds. We compare CatBoost and MiniRocket, which store no training subsequences, with
+          the shapelet transform, RDST, and learned shapelets.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Results -->
+  <section class="section" id="results">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">What a Released Model Reveals</h2>
+      <div class="prose">
+        <h3 class="subtitle is-5">Hundreds of customers per model, invisible to the standard audit</h3>
+        <p>
+          On SAML-D, <strong>86% of RDST shapelets match exactly one account</strong>, about 827 customers per model.
+          Each carries the class of its source, so a data-holding party learns which customers were flagged: 217 per
+          model. Even the classic shapelet transform, which stores no statistics, singles out its source in 15% of
+          cases from shape alone.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig1">
+        <picture><source srcset="static/figures/fig1_audit.webp" type="image/webp"><img src="static/figures/fig1_audit.png" width="2114" height="804" loading="lazy"
+             alt="A: PR-AUC on held-out SAML-D accounts: CatBoost 0.983, MiniRocket 0.955, shapelet transform 0.878, RDST 0.948, RDST normalised without statistics 0.925, learned shapelets 0.957. B: share of shapelets that single out a customer against aggregate membership AUC; RDST 86 percent at AUC 0.52, normalised RDST 75 percent at 0.51, shapelet transform 15 percent and learned shapelets 0 percent at 0.50."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 1.</span>
+          SAML-D, mean over three seeds. (A) Detection accuracy on held-out accounts. (B) The share of released
+          shapelets that single out one customer, against the aggregate membership-inference AUC that a standard audit
+          would report.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          We observe that the leak is large but concentrated. Only a few hundred source accounts among roughly 15,000
+          training members are exposed, so the aggregate membership AUC stays at 0.52, indistinguishable from chance
+          (Figure 1B). An audit that tests each explanation instead, flagging accounts matched by a shapelet and by no
+          other account, identifies 5.5% of members at a 0.1% false-positive rate: 827 members and no non-members. The
+          aggregate score finds about 0.1% at the same rate.
+        </p>
+        <p>
+          A model-only party learns something different but no less sensitive. Undoing RDST's normalisation recovers
+          exact windows: a median of 13 non-zero weekly amount and count cells per identifying shapelet, with a median
+          peak of about &pound;25k. Normalising every shapelet and withholding the statistics removes the amounts but
+          not the identity. 75% of shapelets still single out one customer, because a multi-channel dilated shape is
+          itself a fingerprint.
+        </p>
+
+        <h3 class="subtitle is-5">Bigger candidate lists and real customers do not help</h3>
+        <p>
+          One might hope that a bank's full customer base would hide the source among look-alikes. Adding 220,000
+          further SAML-D accounts to the adversary's list, every shapelet that was unique among 29,946 accounts stays
+          unique among 249,946. Nor is the effect an artifact of synthetic data.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig2">
+        <picture><source srcset="static/figures/fig2_datasets.webp" type="image/webp"><img src="static/figures/fig2_datasets.png" width="2097" height="770" loading="lazy"
+             alt="Share of shapelets that single out their source customer. SAML-D: shapelet transform 15, RDST 86, normalised RDST 75, learned 0 percent. AMLworld: 6, 64, 40, 0. Berka real data: 44, 75, 50, 0. RDST singles out 827, 621 and 637 customers per model."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 2.</span>
+          Re-identification on two synthetic AML benchmarks and on real bank accounts, mean and standard deviation over
+          three seeds. The numbers inside the RDST bars are customers singled out per model.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          On Berka's real accounts, 75% of RDST shapelets single out one customer, and even shape-only shapelets from
+          the classic transform do so 44% of the time, against 15% on SAML-D. Synthetic generators therefore understate
+          the problem rather than inflate it. AMLworld, with only 40 time steps per account, gives 64% for RDST.
+        </p>
+
+        <h3 class="subtitle is-5">What stops the attack</h3>
+        <p>
+          A real adversary's copy of the data will not be exact. We rebuild its view from raw transactions with
+          amounts perturbed by &plusmn;5%, drop a share of transactions, and give it only part of the account list. It
+          claims an identity only when the nearest account is at least twice as close as the runner-up.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig3">
+        <picture><source srcset="static/figures/fig3_adversary.webp" type="image/webp"><img src="static/figures/fig3_adversary.png" width="2107" height="743" loading="lazy"
+             alt="Realistic adversary on SAML-D per 300 RDST shapelets. Customers correctly re-identified with the full account list: exact copy 251, amounts plus or minus 5 percent 227, 80 percent of transactions 71, 50 percent of transactions 10; with half the accounts 125, 115, 36, 5. Precision: 94, 96, 78, 27 percent; with half the accounts 86, 86, 62, 17 percent."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 3.</span>
+          An imperfect adversary on SAML-D, per 300 sampled RDST shapelets. (A) Customers correctly re-identified with
+          the full account list (solid) and with half of it (dashed). (B) Share of the adversary's claims that are
+          correct.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          Amount noise barely matters: with every amount perturbed, the adversary still makes 227 correct
+          identifications at 96% precision, 62 of them flagged customers. With half the account list it finds about
+          half as many, mostly correctly. What stops it is missing activity. Seeing 80% of transactions, it still makes
+          71 correct identifications at 78% precision; with half the transactions, precision falls to 27%. The threat
+          is therefore real for parties that see an account's full activity, such as vendors and auditors given bank
+          data, insiders, or anyone holding breached data, and weak for outsiders with a partial view.
+        </p>
+        <p>
+          Conventional models leak differently. CatBoost and MiniRocket store no training subsequences and show no
+          membership signal on SAML-D, but on AMLworld and Berka they overfit (membership AUC 0.63 for CatBoost on
+          both). They reveal <em>whether</em> a customer was used. Shapelet models reveal <em>who</em> the customer is,
+          what they did, and how they were labelled.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Mitigations -->
+  <section class="section hero is-light" id="mitigations">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Mitigations</h2>
+      <div class="prose">
+        <p>
+          We compare three ways of releasing a safer model: adding Gaussian noise to the shapelet values, replacing
+          each shapelet by the mean of its \(k\) nearest training windows from distinct accounts, and learning the
+          shapelets instead of selecting them.
+        </p>
+      </div>
+      <figure class="sci-figure compact" id="fig4">
+        <picture><source srcset="static/figures/fig4_mitigations.webp" type="image/webp"><img src="static/figures/fig4_mitigations.png" width="1908" height="837" loading="lazy"
+             alt="Shapelet transform on SAML-D. Share of shapelets whose source is the nearest account: as trained 19.3, noise sigma 0.1 10.8, 0.25 3.2, 0.5 0.2, 1.0 0.0, k-anonymous means 13.5, 12.5, 10.7 percent. Share whose source is the only match: 15.0 as trained, 0 to 0.3 otherwise. PR-AUC stays between 0.870 and 0.879."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 4.</span>
+          Modified releases of the shapelet transform on SAML-D. Pale bars: the source customer is the nearest account.
+          Dark bars: the source is the only match. Accuracy is shown on the right.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          Gaussian noise removes exact fingerprints at no accuracy cost, but the source stays the nearest account until
+          \(\sigma \ge 0.5\). \(k\)-anonymous means stop unique matching but keep the source's neighbourhood linkable.
+          Learned shapelets copy no one: none lies within \(10^{-2}\) of any SAML-D account, and even pushed to
+          memorise, with 400 epochs on 300 accounts, the share of shapelets whose nearest account is a training member
+          stays at chance, with no confident claims. Their cost depends on the data. On SAML-D they are the most
+          accurate shapelet model (PR-AUC 0.957 against 0.948 for RDST). On AMLworld they trail RDST (0.39 against
+          0.57), and on Berka they reach 0.36 against 0.42.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Math video -->
+  <section class="section" id="presentation">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">The Math, Step by Step</h2>
+      <div class="prose">
+        <p>
+          The video below walks through the attack and the audit one equation at a time: how a shapelet is matched
+          against an account, where selected and learned shapelets come from, what RDST stores and gives back, the
+          re-identification rule, the realistic adversary, and why an aggregate membership audit cannot see a leak that
+          a per-explanation audit catches.
+        </p>
+      </div>
+      <figure class="sci-figure">
+        <video poster="static/videos/math_video_poster.jpg" controls playsinline preload="none"
+               aria-label="Video: the attack and the audit, step by step">
+          <source src="static/videos/math_video.webm" type="video/webm">
+          <source src="static/videos/math_video.mp4" type="video/mp4">
+          <track kind="captions" src="static/captions/math_video.vtt" srclang="en" label="English" default>
+        </video>
+      </figure>
+    </div>
+  </section>
+
+
+  <!-- Recommendations -->
+  <section class="section hero is-light" id="validators">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Recommendations</h2>
+      <div class="prose">
+        <p>
+          The mechanism is not specific to shapelets: any explanation that is a stored training record together with
+          its label, as in prototype and case-based models, raises the same question. For banks, vendors and
+          supervisors reviewing such models, we recommend:
+        </p>
+        <ol class="claim-defs">
+          <li><strong>Treat released shapelets as personal data.</strong> The shapelets, and the labels stored with
+            them, are confidential customer records.</li>
+          <li><strong>Do not rely on normalisation.</strong> Normalising shapelets or withholding their statistics
+            removes amounts, not identity.</li>
+          <li><strong>Prefer learned shapelets.</strong> They remove the leak, but check their accuracy cost on each
+            dataset.</li>
+          <li><strong>Audit each explanation.</strong> Test example-based models one explanation at a time, at low
+            false-positive rates, rather than with an aggregate membership AUC.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Limitations -->
+  <section class="section" id="limitations">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Limitations</h2>
+      <div class="prose">
+        <p>
+          Banks may not deploy shapelets for AML today. We use them as the clearest case of example-based explanation.
+          The AML benchmarks are synthetic, and their positives are true laundering rather than the investigator-filed
+          reports a bank would train on. Berka is real but uses a proxy task. Activity-matched 3:1 sampling makes
+          detection easier than at real prevalence, although the bank-scale test shows that a much larger pool of
+          normal accounts does not dilute re-identification. Our shapelet transform scores candidates by AUC rather
+          than information gain, and the realistic-adversary study samples 300 of 1,000 RDST shapelets per seed. We did
+          not run shadow-model attacks such as LiRA, since the per-explanation audit already detects the leak with no
+          false positives. Noise and learned shapelets carry no formal guarantee; differentially private shapelet
+          selection and DP-SGD training are the natural next step. SAML-D and AMLworld are synthetic, Berka is a
+          public anonymised research release, and we report only aggregate statistics.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BibTeX -->
+  <section class="section hero is-light" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" type="button" onclick="copyBibTeX()" aria-label="Copy BibTeX to clipboard">Copy</button>
+      </div>
+      <pre id="bibtex-code"><code>@inproceedings{tiku2026interpretable,
+  title     = {Interpretable by Construction, Identifiable by Construction: Privacy Leakage of Shapelet-Based Anti-Money-Laundering Models},
+  author    = {Tiku, Sarvesh and Sharma, Gauri},
+  booktitle = {ACM ICAIF 2026 Workshop on Financial AI Security, Safety, and Privacy},
+  year      = {2026}
+}</code></pre>
+    </div>
+  </section>
+</main>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license noopener" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

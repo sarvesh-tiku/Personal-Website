@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Generated from page/index.template.html by tools/build_page.py using site_config.json.
+       Edit the template or the config, not index.html. -->
+  <meta name="description" content="An audit of whether a difference-of-means risk direction in financial language models is represented, steerable, specific and actually used. Across GPT-2, Qwen2.5, Qwen3, Llama-3.1, Fin-R1 and OLMo-3, the direction is decodable and steerable but carries at most about 30% of the model&#x27;s natural response to riskier inputs.">
+  <meta name="keywords" content="mechanistic interpretability, activation steering, causal mediation analysis, concept erasure, financial language models, model risk management">
+  <meta name="author" content="Sarvesh Tiku">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Decodable, Steerable, but Used? Auditing a Latent Risk Direction in Financial Language Models">
+  <meta property="og:description" content="An audit of whether a difference-of-means risk direction in financial language models is represented, steerable, specific and actually used. Across GPT-2, Qwen2.5, Qwen3, Llama-3.1, Fin-R1 and OLMo-3, the direction is decodable and steerable but carries at most about 30% of the model&#x27;s natural response to riskier inputs.">
+  <meta property="og:image" content="static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Held-out separation of the volatility regime by depth in GPT-2 and Qwen2.5-1.5B">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Decodable, Steerable, but Used? Auditing a Latent Risk Direction in Financial Language Models">
+  <meta name="twitter:description" content="An audit of whether a difference-of-means risk direction in financial language models is represented, steerable, specific and actually used. Across GPT-2, Qwen2.5, Qwen3, Llama-3.1, Fin-R1 and OLMo-3, the direction is decodable and steerable but carries at most about 30% of the model&#x27;s natural response to riskier inputs.">
+  <meta name="twitter:image" content="static/images/social_preview.png">
+
+  <!-- Scholarly metadata (Google Scholar / Highwire) -->
+  <meta name="citation_title" content="Decodable, Steerable, but Used? Auditing a Latent Risk Direction in Financial Language Models">
+  <meta name="citation_author" content="Sarvesh Tiku">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="IAFM&#x27;26: Interpretability &amp; Alignment of Financial Models, Workshop at ACM ICAIF 2026">
+  <title>Decodable, Steerable, but Used?</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], tags: 'none' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+      chtml: { scale: 1.0 }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "Decodable, Steerable, but Used? Auditing a Latent Risk Direction in Financial Language Models",
+  "description": "An audit of whether a difference-of-means risk direction in financial language models is represented, steerable, specific and actually used. Across GPT-2, Qwen2.5, Qwen3, Llama-3.1, Fin-R1 and OLMo-3, the direction is decodable and steerable but carries at most about 30% of the model's natural response to riskier inputs.",
+  "datePublished": "2026",
+  "keywords": [
+    "mechanistic interpretability",
+    "activation steering",
+    "causal mediation analysis",
+    "financial language models",
+    "model risk management"
+  ],
+  "isAccessibleForFree": true,
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Sarvesh Tiku",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Georgia Institute of Technology"
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Decodable, Steerable, but Used? Auditing a Latent Risk Direction in Financial Language Models</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Sarvesh Tiku</span>
+            </div>
+            <div class="is-size-5 publication-authors affil">
+              <span class="author-block">Georgia Institute of Technology</span>
+            </div>
+            <div class="publication-venue-line">IAFM&#x27;26: Interpretability &amp; Alignment of Financial Models, Workshop at ACM ICAIF 2026</div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="static/pdfs/paper.pdf" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#presentation" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-video" aria-hidden="true"></i></span>
+                    <span>Video</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-quote-right" aria-hidden="true"></i></span>
+                    <span>BibTeX</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Teaser video -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" poster="static/videos/teaser_poster.jpg" data-autoplay muted loop playsinline controls
+               preload="metadata" aria-describedby="teaser-caption">
+          <source src="static/videos/teaser.webm" type="video/webm">
+          <source src="static/videos/teaser.mp4" type="video/mp4">
+          <track kind="captions" src="static/captions/teaser.vtt" srclang="en" label="English">
+        </video>
+        <h2 class="subtitle has-text-centered" id="teaser-caption">
+          A volatility direction inside Qwen2.5-1.5B is easy to decode and easy to steer. But when the model sees a
+          riskier market, almost none of its response travels through that direction.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Abstract -->
+  <section class="section hero is-light" id="abstract">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Mechanistic interpretability is increasingly proposed as a way to inspect and steer what a financial
+              language model &ldquo;believes&rdquo; about risk. A convincing risk-belief direction bundles four claims:
+              the direction represents the risk regime, intervening on it changes the output, the effect is specific to
+              the intended concept, and the model uses the direction when it responds to riskier inputs. Standard
+              pipelines can produce strong numbers for all four while establishing at most one. We audit this bundle for
+              a difference-of-means volatility direction in models reading a market context and an earnings-call
+              disclosure, from GPT-2 and Qwen2.5-1.5B to Qwen3-32B, a finance-tuned model, and OLMo-3 after each
+              post-training stage. Seven checks map to the four claims: matched and surface nulls, leave-one-firm-out
+              estimation, multiplicity correction, output-based readouts, random and competing-concept controls, an
+              input-leakage control that replaces the stated volatility with raw returns, and causal mediation and
+              erasure at every block. The naive pipeline&rsquo;s headline results, a steering effect of Cohen&rsquo;s
+              \(d\approx118\) and a perfect regime probe, re-read the steered axis and the stated number. Representation
+              survives: computed from raw returns, synthetic or real, the regime separates beyond a matched null in every
+              model, as an order-invariant aggregate of return magnitudes. Intervention survives only with
+              qualifications: steering moves an explicit High/Low risk judgement, but at the selected block only by
+              editing the positions where the answer is read, at 20&ndash;30 times the natural shift in the small
+              models, and a direction fit on non-financial &ldquo;intensity&rdquo; sentences steers as well. Use is not
+              supported. Across 16 runs with a natural effect, the direction carries at most about 30% of the
+              model&rsquo;s response to riskier inputs at any block (Qwen2.5-1.5B: 0.004 of 0.043), and erasing the
+              regime leaves at least 64% of the judgement in place, even where the reasoning steps as a whole carry the
+              effect. A representation can be decodable and steerable without being what the model uses; we translate
+              this into concrete requirements for validating representation-level explanations of financial models.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Four claims -->
+  <section class="section" id="claims">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Four Claims in One Direction</h2>
+      <div class="prose">
+        <p>
+          Interpretability is increasingly offered as evidence that a financial language model reasons soundly about
+          risk. The usual evidence is a direction in the model's activations. Contrast inputs from calm and turbulent
+          markets, take the difference of the average activations, and show that pushing the model along that
+          difference makes it talk about risk. To a model validator, this looks like the evidence of conceptual
+          soundness that supervisory guidance such as SR&nbsp;11-7 asks for.
+        </p>
+        <p>
+          We argue that such a &ldquo;risk-belief direction&rdquo; bundles four separate claims, and each one needs its
+          own evidence:
+        </p>
+        <ul class="claim-defs">
+          <li><strong>(R) Representation.</strong> The direction encodes the risk regime, not just the surface features
+            of the input that change along with it.</li>
+          <li><strong>(I) Intervention.</strong> Moving the activations along the direction changes what the model
+            outputs.</li>
+          <li><strong>(S) Specificity.</strong> The effect belongs to the intended concept, risk at a stated horizon,
+            and not to a nearby one.</li>
+          <li><strong>(U) Natural use.</strong> When the model sees a riskier input, its response actually travels
+            through the direction.</li>
+        </ul>
+        <p>
+          Natural use is the claim a validator usually wants, and the one that standard pipelines never test. A first
+          version of our own pipeline reported a steering effect of Cohen's \(d \approx 118\) and a regime probe with
+          100% accuracy. The first number re-read the axis we had just pushed along. The second read the volatility
+          figure printed in the prompt. Neither said anything about use.
+        </p>
+      </div>
+      <div class="claims" role="list">
+        <div class="claim" role="listitem">
+          <div class="claim-letter">R</div>
+          <div class="claim-name">Representation</div>
+          <p>Decodable beyond a matched null, at every block, once the model must compute the regime from returns.</p>
+          <span class="verdict yes">&#10003; Supported</span>
+        </div>
+        <div class="claim" role="listitem">
+          <div class="claim-letter">I</div>
+          <div class="claim-name">Intervention</div>
+          <p>Steering moves the risk judgement, but only at 21&times; the natural shift and at the answer position.</p>
+          <span class="verdict part">&#9680; With qualifications</span>
+        </div>
+        <div class="claim" role="listitem">
+          <div class="claim-letter">S</div>
+          <div class="claim-name">Specificity</div>
+          <p>The models' judgements ignore the horizon even when the ground truth does not.</p>
+          <span class="verdict na">? Untestable here</span>
+        </div>
+        <div class="claim" role="listitem">
+          <div class="claim-letter">U</div>
+          <div class="claim-name">Natural use</div>
+          <p>The direction carries at most about 30% of the model's response to riskier inputs, in every run.</p>
+          <span class="verdict no">&#10007; Not supported</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Method -->
+  <section class="section hero is-light" id="setting">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Finding a Risk Direction</h2>
+      <div class="prose">
+        <p>
+          We give a model a market context and an earnings-call disclosure for a firm, followed by eight
+          reasoning-step markers, and ask it to assess downside risk. Each of 16 synthetic firms appears twice: once in
+          a calm period, with daily volatility of 0.8%, and once in a turbulent one, at 2.6%. The calm-period disclosure
+          is held fixed, so only the market context changes. The context either <em>states</em> the annualised
+          volatility as a number or gives only the last 20 daily returns (<em>raw</em>). In the raw format the model has
+          to work out the regime itself.
+        </p>
+        <p>
+          Let \(\bar h_L(x)\) be the model's residual stream at block \(L\), averaged over the marker tokens. For each
+          firm we subtract the calm activation from the turbulent one, average these differences over firms, and
+          normalise:
+        </p>
+        <div class="equation-block">
+          \[
+            \delta_i^L = \bar h_L\big(x_i^{\mathrm{hi}}\big) - \bar h_L\big(x_i^{\mathrm{lo}}\big),
+            \qquad
+            L^\star = \arg\max_L \big\|\bar\delta^L\big\|,
+            \qquad
+            b = \bar\delta^{L^\star} / \big\|\bar\delta^{L^\star}\big\| .
+          \]
+        </div>
+        <p>
+          The block with the largest difference is 27 of 28 in Qwen2.5-1.5B and the last block in GPT-2. We never
+          measure an effect on the steered axis itself. Instead we append &ldquo;Final answer. Overall downside risk
+          (High or Low):&rdquo; and read the model's own judgement,
+          \(y_{\mathrm{dec}}(x) = \log p(\text{High}\mid x^{\mathrm q}) - \log p(\text{Low}\mid x^{\mathrm q})\).
+          Positive values mean the model leans towards High. Steering adds \(\alpha b\) to the residual at every token
+          from the first marker to the end of the prompt. To make \(\alpha\) interpretable, we compare it with the
+          <em>natural gap</em> \(g = \tfrac1n\sum_i \langle \delta_i^{L}, b\rangle\), the distance the regime itself
+          moves the residual along \(b\).
+        </p>
+        <p>
+          Whether the model <em>uses</em> \(b\) is a mediation question. We run the model on the calm input, but set the
+          \(b\)-coordinate of its residual to the value it takes on the turbulent input, leaving everything orthogonal
+          to \(b\) untouched. With \(P_b = bb^\top\),
+        </p>
+        <div class="equation-block">
+          \[
+            \mathrm{TE} = \mathbb E\big[y(x^{\mathrm{hi}}) - y(x^{\mathrm{lo}})\big],
+            \qquad
+            \mathrm{NIE} = \mathbb E\big[y\big(x^{\mathrm{lo}};\, P_b h \leftarrow P_b h(x^{\mathrm{hi}})\big) - y(x^{\mathrm{lo}})\big].
+          \]
+        </div>
+        <p>
+          If the model uses \(b\), the indirect effect NIE should account for most of the total effect TE. Patching the
+          whole residual instead of one coordinate gives an upper bound on what any direction at those positions could
+          carry. All \(p\)-values are firm-level permutation tests, and all intervals are firm-level bootstraps.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Results -->
+  <section class="section" id="results">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Decodable and Steerable</h2>
+      <div class="prose">
+        <p>
+          We audit GPT-2 and Qwen2.5-1.5B in full, then repeat the key checks on Qwen3-8B, -14B and -32B, Llama-3.1-8B,
+          the finance-tuned Fin-R1, and OLMo-3-7B after each post-training stage.
+        </p>
+        <h3 class="subtitle is-5">The naive evidence dissolves</h3>
+        <p>
+          Steering moves the projection on \(b\) by exactly \(\alpha\), and that is all that \(d \approx 118\) measured.
+          The localisation evidence goes next. A null that only reformats the prompt is beaten by almost any edit, so we
+          compare against a <em>matched null</em> that swaps in another firm's context from the same regime. It changes
+          as many numbers as the treatment, but not the regime. We also fit each direction with the firm under test held
+          out.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig1">
+        <picture><source srcset="static/figures/fig1_crossfit.webp" type="image/webp"><img src="static/figures/fig1_crossfit.png" width="2046" height="756" loading="lazy"
+             alt="Held-out Cohen's d against the matched null by relative depth. GPT-2 raw returns stays between 2 and 3 until late blocks; stated falls to about zero after block 2. Qwen2.5-1.5B raw returns stays above 1 at every block; stated peaks mid-network and falls to about zero at the last blocks."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 1.</span>
+          How strongly the regime is represented at each depth, beyond a matched null. Each point is the held-out
+          Cohen's \(d\) of the calm&ndash;turbulent contrast against pairs from the same regime, with directions fit
+          without the firm being scored.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          We observe that when the volatility is stated as a number, the regime signal at the steering block vanishes
+          against this null (\(d = 0.04\), \(p = 0.45\) in GPT-2; \(d = -0.12\) in Qwen). The perfect probe at block 1
+          was reading the digits of the stated number. With raw returns the model has to compute the regime, and it
+          does. Separation beyond the matched null holds at every Qwen block (\(d = 1.12\) at block 27), in two further
+          seeds, with the returns written in basis points, and with real daily returns of 16 large US stocks.
+        </p>
+        <h3 class="subtitle is-5">What is represented is a summary of return sizes</h3>
+        <p>
+          Separation alone does not show temporal reasoning, because volatility depends only on how large the returns
+          are. Two controls distinguish these readings (Figure 2B). Replacing the \(k\) most recent calm returns with
+          turbulent ones moves the representation gradually, by 18%, 30%, 44% and 59% of the full shift for
+          \(k = 1, 3, 5, 10\), so no single large return triggers it. Shuffling the turbulent returns, which destroys
+          volatility clustering, leaves it unchanged. The model represents an order-invariant summary of return
+          magnitudes. That is consistent with a volatility estimate, but it is not evidence of a model of how returns
+          depend on one another over time.
+        </p>
+        <h3 class="subtitle is-5">Steering works when pushed hard, at the answer</h3>
+        <p>
+          At block 27, steering along \(b\) moves Qwen's High/Low judgement by +0.098 at \(\alpha = 8\), against a mean
+          absolute effect of 0.050 for random directions of the same norm. Figure 2A shows the same pattern on the
+          next-token readout. Two further checks change how this number should be read. First, the regime itself moves
+          the residual along \(b\) by only \(g = 0.38\), so \(\alpha = 8\) is 21 times the natural shift. Steered by
+          \(\alpha = g\), the judgement moves by +0.005. Second, when the edit stops before the appended question,
+          steering at block 27 no longer moves the judgement at all. The effect came from writing at the positions where
+          the answer is read.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig2">
+        <picture><source srcset="static/figures/fig2_steering.webp" type="image/webp"><img src="static/figures/fig2_steering.png" width="2097" height="774" loading="lazy"
+             alt="A: change in the lexical readout against steering strength from minus 8 to 8; b and the other horizon's direction rise to about 0.14, random and orthogonal directions stay near zero. B: share of the full shift when k of 20 returns are high-regime, rising from 0 to 1 at blocks 2 and 27; shuffled windows sit near 1."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 2.</span>
+          Qwen2.5-1.5B on raw returns. (A) Steering at block 27: change in the next-token risk&minus;calm readout along
+          \(b\), the other horizon's direction, and random and orthogonal directions of equal norm. (B) Position along
+          \(b\) when the \(k\) most recent of 20 calm returns are replaced by turbulent ones, as a share of the full
+          shift, with 95% intervals; crosses mark the shuffled turbulent window.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          Nor does steering single out volatility. A direction fit on short non-financial sentences contrasting calm
+          and intense scenes (storms, crowds, engines), with cosine 0.09 to \(b\), moves the judgement further
+          (+0.136). Horizon specificity cannot be tested at all. When we build windows whose risk should differ between
+          the near and the medium term, Qwen rates them the same for both horizons (interaction \(-0.004\)
+          [\(-0.009\), 0.001]). The models' judgements do not depend on the horizon, so no direction can encode a
+          horizon-specific belief that they use.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Natural use -->
+  <section class="section hero is-light" id="use">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">But Not Used</h2>
+      <div class="prose">
+        <p>
+          Switching Qwen2.5-1.5B from calm to turbulent returns raises its High/Low judgement by
+          <strong>TE = +0.043</strong> [0.023, 0.063]. Patching only the \(b\)-coordinate carries
+          <strong>NIE = +0.004</strong> of it, about a tenth. Because the steering block is chosen by raw norm, which
+          favours late blocks, we repeat the decomposition at every block, with the direction refit there.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig3">
+        <picture><source srcset="static/figures/fig3_layers.webp" type="image/webp"><img src="static/figures/fig3_layers.png" width="2076" height="1407" loading="lazy"
+             alt="Five panels of share of the natural effect by relative depth. The effect through b_L stays below about 20 percent in every panel; the whole residual at the same positions carries more, up to about half in Qwen2.5-1.5B and more in OLMo-3-7B."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 3.</span>
+          The share of the model's natural response to riskier inputs carried at each block. Blue: through the
+          direction \(b_L\), refit at each block. Green: through the whole residual at the same positions, which bounds
+          what any direction there can carry. Orange: steering along \(b_L\) by the natural gap. Bands are 95%
+          intervals.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          We observe three things. First, no block rescues the direction. Its largest indirect effect anywhere is
+          +0.006, and steering by the natural gap tracks it closely: an edit of natural size along \(b_L\) does what the
+          direction does naturally, and no more. Second, the reasoning-step positions as a whole carry more than \(b\),
+          but far from everything. The rest of the effect reaches the answer from the context and question tokens
+          directly. Third, erasing all linearly available regime information at block 27 with LEACE leaves 86% of the
+          effect in place.
+        </p>
+      </div>
+      <figure class="sci-figure compact" id="fig4">
+        <picture><source srcset="static/figures/fig4_summary.webp" type="image/webp"><img src="static/figures/fig4_summary.png" width="2035" height="1197" loading="lazy"
+             alt="One row per run for 16 runs. The share carried through b_L at its best block lies between about 9 and 29 percent in every run; the whole residual carries 16 to over 125 percent; the effect left after LEACE erasure is between 64 and over 125 percent."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 4.</span>
+          Every run with a natural effect (TE at right). Circles: the largest share carried through \(b_L\) at any
+          block. Diamonds: through the whole residual. Triangles: the share left after LEACE erasure.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          The same picture holds in all 16 runs with a natural effect, from 1.5B to 32B parameters, in the
+          finance-tuned Fin-R1, and after each OLMo-3 post-training stage. The strongest case for use, Qwen3-14B with
+          the stated number, reaches 29%. In OLMo-3-7B and Fin-R1 with raw returns, the reasoning-step positions carry
+          86&ndash;123% of the effect at their best block, yet the direction carries only 15&ndash;22%. The regime
+          information that the judgement uses passes through those positions, but not along the difference-of-means
+          direction.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Math video -->
+  <section class="section" id="presentation">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">The Math, Step by Step</h2>
+      <div class="prose">
+        <p>
+          The video below builds each quantity in the audit from the activations up, on Qwen2.5-1.5B with raw returns:
+          how the direction is found, what steering does to the residual stream, and how patching a single coordinate
+          separates what the model <em>could</em> do with the direction from what it <em>does</em>.
+        </p>
+      </div>
+      <figure class="sci-figure">
+        <video poster="static/videos/math_video_poster.jpg" controls playsinline preload="none"
+               aria-label="Video: the audit's mathematics, step by step">
+          <source src="static/videos/math_video.webm" type="video/webm">
+          <source src="static/videos/math_video.mp4" type="video/mp4">
+          <track kind="captions" src="static/captions/math_video.vtt" srclang="en" label="English" default>
+        </video>
+      </figure>
+    </div>
+  </section>
+
+
+  <!-- Validators -->
+  <section class="section hero is-light" id="validators">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">What a Validator Can Claim</h2>
+      <div class="prose">
+        <p>
+          The audit supports a narrower statement than the naive pipeline. A validator can claim that a magnitude-based
+          volatility signal is linearly represented beyond matched surface variation, and that pushing along the
+          difference-of-means direction shifts the model's risk judgement, provided the strength and the edited positions
+          are stated. They cannot claim that this direction is how the model reaches its judgement. For a model that
+          drafts risk commentary, the practical consequence is that steering along such a direction is not a faithful
+          way to explain or correct its risk judgements: most of the judgement would be untouched.
+        </p>
+        <p>
+          None of the requirements below is new on its own. Our point is that on a realistic financial claim, each one
+          changes the conclusion. A representation-level explanation offered in model validation should come with:
+        </p>
+        <ol class="claim-defs">
+          <li><strong>Output-based readouts.</strong> Effects measured on the model's logits, in output units, never as
+            a re-projection on the steered axis.</li>
+          <li><strong>Out-of-sample directions.</strong> Directions fit with the issuer held out, with the layer search
+            corrected for multiplicity and reported at every block.</li>
+          <li><strong>Matched nulls and leakage controls.</strong> Nulls that change as much input as the treatment, and
+            a raw-input control whenever the prompt states the target quantity.</li>
+          <li><strong>Competing directions.</strong> Comparisons with concept directions fit outside finance and with
+            the absolute effect of random directions.</li>
+          <li><strong>Steering in natural units.</strong> Strength reported as a multiple of the natural shift, with
+            edits that exclude the positions where the answer is read.</li>
+          <li><strong>Mediation with bounds.</strong> Natural direct and indirect effects with intervals, bracketed by
+            the whole residual and by erasure, after showing that the natural effect exists across data draws.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Limitations -->
+  <section class="section" id="limitations">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Limitations</h2>
+      <div class="prose">
+        <p>
+          Our firms and disclosures are synthetic, with 16 firms per run. Real return windows replicate the
+          representation result and show a natural decision effect, but real earnings-call transcripts may behave
+          differently. Both readouts are single-token proxies rather than risk estimates or portfolio decisions. The
+          mediator we patch is the set of reasoning-step positions. The regime may also be carried, and used, at the
+          context tokens, which differ in length across regimes and cannot be patched one-to-one. A learned subspace or
+          a nonlinear encoding could carry more than the linear directions we test, though never more than the
+          whole-residual bound at the same positions. Testing horizon specificity requires models whose judgements
+          depend on the horizon.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BibTeX -->
+  <section class="section hero is-light" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" type="button" onclick="copyBibTeX()" aria-label="Copy BibTeX to clipboard">Copy</button>
+      </div>
+      <pre id="bibtex-code"><code>@inproceedings{tiku2026decodable,
+  title     = {Decodable, Steerable, but Used? Auditing a Latent Risk Direction in Financial Language Models},
+  author    = {Tiku, Sarvesh},
+  booktitle = {IAFM&#x27;26: Interpretability \&amp; Alignment of Financial Models, Workshop at ACM ICAIF 2026},
+  year      = {2026}
+}</code></pre>
+    </div>
+  </section>
+</main>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license noopener" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

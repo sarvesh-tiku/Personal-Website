@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threading my trading engine didn't make it faster · Sarvesh Tiku</title>
+    <meta name="description" content="Splitting Pulse's pipeline across threads didn't raise throughput. Here's why, and what threading bought instead.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<main>
+
+    <p class="crumb"><a href="../index.html">Sarvesh Tiku</a> / <a href="../blog.html">Blog</a></p>
+
+    <article class="post">
+        <h1 class="page-title">Threading my trading engine didn't make it faster</h1>
+        <p class="post-date">September 2026</p>
+
+        <p>
+            Pulse is a market data and execution engine I've been writing in C++20. A binary feed comes in, the engine rebuilds
+            order books, and strategies send orders through risk checks to a simulated exchange. The obvious next step was to split
+            that pipeline across threads: one for the feed, one for the books, one for strategy and risk, connected by lock-free
+            queues. More cores, more throughput. That was the plan.
+        </p>
+        <p>It didn't work out that way, and figuring out why taught me more than the parts that did work.</p>
+
+        <h3>The numbers</h3>
+        <p>Same workload (8 instruments, market maker running), single thread versus three threads, measured on an M1 Pro:</p>
+        <pre><code>pipeline                 batch   throughput
+inline (1 thread)          -     11.04 M events/s
+mutex + condvar            1      2.57 M/s
+mutex + condvar           64      4.17 M/s
+SPSC ring buffer           1      4.30 M/s
+SPSC ring buffer          64     11.29 M/s</code></pre>
+        <p>
+            Handing events over one at a time, the threaded version was less than half as fast as a single thread. With batches of
+            64 it only just caught up.
+        </p>
+
+        <h3>Why</h3>
+        <p>
+            Each event takes about 85 ns of real work. At that size, moving it between cores is not free. The book update I pass
+            from the book thread to the core thread is 192 bytes, which is three cache lines, and every one of them has to travel
+            from one core's cache to another's. Do that per event and the cost of the hand-off is comparable to the work itself.
+        </p>
+        <p>
+            Batching amortizes the queue overhead, which is how it gets back to parity. But the pipeline is only as fast as its
+            slowest stage, and the book stage alone takes about 40 ns per event. Three threads can't go faster than that.
+        </p>
+
+        <h3>Where the queue design mattered</h3>
+        <p>
+            The queue itself was the biggest surprise. My first lock-free ring buffer was <i>slower</i> than a plain mutex queue.
+            The producer's write index and the consumer's read index sat on the same cache line, so every push and pop fought over
+            it. Padding them onto separate cache lines made the queue 2 to 3 times faster, and caching the other side's index
+            added another 1.5x. Lock-free doesn't help much if the two threads still share a cache line.
+        </p>
+
+        <h3>What threading did buy</h3>
+        <p>
+            Throughput isn't everything. At a steady 1M messages per second, the SPSC pipeline's median latency was 0.92 &micro;s,
+            while the mutex version's was 33.5 &micro;s. The mutex consumer goes to sleep when the queue is empty, and each wake-up
+            is a trip through the kernel. Threading also isolates the feed: the feed thread keeps draining the socket even when
+            strategy code is busy, and recording and telemetry never touch the hot path.
+        </p>
+        <p>
+            So the lesson was: measure the per-item work before splitting it up. If the work is small, the hand-off dominates. The
+            next step for Pulse is sharding order books across threads by instrument, so each thread does a whole event's worth of
+            work instead of a slice of every event.
+        </p>
+    </article>
+
+    <p class="footer">
+        <a href="../blog.html">&larr; All posts</a>
+    </p>
+
+</main>
+</body>
+</html>

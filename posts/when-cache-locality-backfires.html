@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>When routing on cache locality backfires · Sarvesh Tiku</title>
+    <meta name="description" content="Sending LLM requests to the server that already has their prompt cached is a big win, until it isn't.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<main>
+
+    <p class="crumb"><a href="../index.html">Sarvesh Tiku</a> / <a href="../blog.html">Blog</a></p>
+
+    <article class="post">
+        <h1 class="page-title">When routing on cache locality backfires</h1>
+        <p class="post-date">September 2026</p>
+
+        <p>
+            When an LLM server processes a prompt, it builds a KV cache for every token. If the next request starts with the same
+            long prefix, say the same system prompt or the same document, a server that still has that cache can skip most of the
+            work. So a simple idea: route each request to whichever server already has its prefix cached.
+        </p>
+        <p>
+            I built <a href="https://github.com/sarvesh-tiku/CachePilot">CachePilot</a> to find out how much that helps, and more importantly, when it stops helping. It's a gateway that
+            fingerprints each prompt's prefix, keeps a directory of which worker holds what, and records every routing decision so
+            it can be replayed and explained.
+        </p>
+
+        <h3>When it works</h3>
+        <p>
+            On a simulation of three continuous-batching workers at 20 requests per second, with traffic that shares a lot of
+            prefixes, routing on cache locality cut median time to first token by 81% and raised throughput 18% compared to round
+            robin. Once workers are saturated, every cache hit is compute the engine gets back, so locality becomes a throughput
+            lever and not just a latency one.
+        </p>
+        <p>
+            An unexpected win was evictions. With round robin, every worker churns through every prefix. With locality, workers
+            specialize, and evictions dropped 42%.
+        </p>
+
+        <h3>When it backfires</h3>
+        <p>
+            Then I turned off the load terms and routed on cache overlap alone. The first request for a prefix pins it to one
+            worker, and every later request follows it there. On a workload where a few prefixes are very popular, that worker
+            took all the traffic. Load imbalance hit 3.0, the worst possible with three workers, and median time to first token went
+            from 219 ms to 35 seconds.
+        </p>
+        <p>
+            The fix is to price load in the same units as the cache benefit. CachePilot's router scores each worker as cache
+            overlap minus queue load, KV memory pressure, and predicted time to first token. Because the queue is priced in
+            milliseconds, the router backs off a hot worker as its queue grows, and imbalance stays around 1.05.
+        </p>
+
+        <h3>Things I didn't expect</h3>
+        <ul>
+            <li>The weights matter less than the random seed. Seed-to-seed variance was bigger than most weight changes.</li>
+            <li>Only one weight really mattered: how much to penalize load. Its best value flipped between bursty traffic and tight hotspots.</li>
+            <li>
+                The gateway's guess about what's cached held up on a real model. On a laptop running Qwen2.5-0.5B, requests the
+                gateway predicted as hits had a median time to first token of 204 ms, against 400 ms for predicted misses.
+            </li>
+        </ul>
+        <p>
+            All the multi-worker numbers here are from simulation; only the last one is from a real model. The takeaway still holds:
+            cache affinity is a great tiebreaker and a terrible sole objective.
+        </p>
+    </article>
+
+    <p class="footer">
+        <a href="../blog.html">&larr; All posts</a>
+    </p>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,61 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.750
+Mitigation of user-prompt bias in large language models.
+
+2
+00:00:03.800 --> 00:00:07.050
+A user's prompt can carry a stereotype. A language model that accepts the premise can repeat it back with authority.
+
+3
+00:00:07.100 --> 00:00:11.450
+The framework puts a bias detector in front of the model, so a stereotyped prompt is flagged before it is answered.
+
+4
+00:00:11.500 --> 00:00:16.150
+The detector learns from CrowS-Pairs: 1,508 pairs of sentences that differ only in the group they mention.
+
+5
+00:00:16.200 --> 00:00:20.650
+The pairs cover nine kinds of bias, from race and gender to age, disability and physical appearance.
+
+6
+00:00:20.700 --> 00:00:23.750
+Step one: RoBERTa's byte-pair tokenizer splits the prompt into subword pieces. 'Teenagers' becomes 'teen' plus 'agers'.
+
+7
+00:00:23.800 --> 00:00:26.150
+Step two: the RoBERTa encoder turns every token into a vector that depends on its context.
+
+8
+00:00:26.200 --> 00:00:28.950
+Step three: a recurrent network reads the vectors in order, carrying a memory of what it has read so far.
+
+9
+00:00:29.000 --> 00:00:32.150
+Step four: the last state becomes a probability that the prompt is stereotyped.
+
+10
+00:00:32.200 --> 00:00:37.050
+Three recurrent readers are compared. A plain RNN overwrites its memory at every word; an LSTM and a GRU use gates to decide what to keep.
+
+11
+00:00:37.100 --> 00:00:41.350
+Each model is trained on 80% of the data, tuned on 10%, and tested once on the remaining 10%.
+
+12
+00:00:41.400 --> 00:00:46.050
+On the held-out test split, RoBERTa with a GRU is the most accurate: 93%, with precision 0.92 and F1 0.90.
+
+13
+00:00:46.100 --> 00:00:49.050
+The plain RNN has the highest recall, 0.89, but the lowest precision.
+
+14
+00:00:49.100 --> 00:00:54.350
+The GRU's precision comes from few false alarms: it flags only 7% of non-stereotyped examples, against 10% and 12%.
+
+15
+00:00:54.400 --> 00:00:59.250
+Flag the stereotype before the model answers. Next: data beyond U.S. stereotypes, and real user prompts.

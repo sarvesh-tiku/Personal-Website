@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Generated from page/index.template.html by tools/build_page.py using site_config.json.
+       Edit the template or the config, not index.html. -->
+  <meta name="description" content="BioMuse turns researcher-curated Zotero libraries into semantic graphs and benchmark tasks for LLMs: citation-aware retrieval, tag prediction, cluster classification and abstract-faithful summarization. Removing metadata lowers every model&#x27;s retrieval accuracy.">
+  <meta name="keywords" content="large language models, benchmarking, Zotero, semantic graphs, retrieval, hallucination, computational biology, RAG">
+  <meta name="author" content="Sarvesh Tiku">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Benchmarking LLMs for Trustworthy Multimedia Retrieval in Computational Biology Using Structured Zotero Graphs">
+  <meta property="og:description" content="BioMuse turns researcher-curated Zotero libraries into semantic graphs and benchmark tasks for LLMs: citation-aware retrieval, tag prediction, cluster classification and abstract-faithful summarization. Removing metadata lowers every model&#x27;s retrieval accuracy.">
+  <meta property="og:image" content="static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Retrieval, tagging, clustering and hallucination-free scores of GPT-4, Claude 2.1, LLaMA 2 and BioMuse-RAG">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Benchmarking LLMs for Trustworthy Multimedia Retrieval in Computational Biology Using Structured Zotero Graphs">
+  <meta name="twitter:description" content="BioMuse turns researcher-curated Zotero libraries into semantic graphs and benchmark tasks for LLMs: citation-aware retrieval, tag prediction, cluster classification and abstract-faithful summarization. Removing metadata lowers every model&#x27;s retrieval accuracy.">
+  <meta name="twitter:image" content="static/images/social_preview.png">
+
+  <!-- Scholarly metadata (Google Scholar / Highwire) -->
+  <meta name="citation_title" content="Benchmarking LLMs for Trustworthy Multimedia Retrieval in Computational Biology Using Structured Zotero Graphs">
+  <meta name="citation_author" content="Sarvesh Tiku">
+  <meta name="citation_publication_date" content="2025">
+  <meta name="citation_conference_title" content="2025 IEEE 8th International Conference on Multimedia Information Processing and Retrieval (MIPR)">
+  <meta name="citation_doi" content="10.1109/MIPR67560.2025.00023">
+  <title>BioMuse: Benchmarking LLMs with Structured Zotero Graphs</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], tags: 'none' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+      chtml: { scale: 1.0 }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "Benchmarking LLMs for Trustworthy Multimedia Retrieval in Computational Biology Using Structured Zotero Graphs",
+  "description": "BioMuse turns researcher-curated Zotero libraries into semantic graphs and benchmark tasks for LLMs: citation-aware retrieval, tag prediction, cluster classification and abstract-faithful summarization. Removing metadata lowers every model's retrieval accuracy.",
+  "datePublished": "2025",
+  "keywords": [
+    "large language models",
+    "benchmarking",
+    "Zotero",
+    "knowledge graphs",
+    "retrieval",
+    "hallucination",
+    "computational biology"
+  ],
+  "isAccessibleForFree": true,
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Sarvesh Tiku",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Georgia Institute of Technology"
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Benchmarking LLMs for Trustworthy Multimedia Retrieval in Computational Biology Using Structured Zotero Graphs</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Sarvesh Tiku</span>
+            </div>
+            <div class="is-size-5 publication-authors affil">
+              <span class="author-block">Georgia Institute of Technology</span>
+            </div>
+            <div class="publication-venue-line">2025 IEEE 8th International Conference on Multimedia Information Processing and Retrieval (MIPR)</div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://doi.org/10.1109/MIPR67560.2025.00023" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></span>
+                    <span>Paper (IEEE)</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#presentation" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-video" aria-hidden="true"></i></span>
+                    <span>Video</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-quote-right" aria-hidden="true"></i></span>
+                    <span>BibTeX</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Teaser video -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" poster="static/videos/teaser_poster.jpg" data-autoplay muted loop playsinline controls
+               preload="metadata" aria-describedby="teaser-caption">
+          <source src="static/videos/teaser.webm" type="video/webm">
+          <source src="static/videos/teaser.mp4" type="video/mp4">
+          <track kind="captions" src="static/captions/teaser.vtt" srclang="en" label="English">
+        </video>
+        <h2 class="subtitle has-text-centered" id="teaser-caption">
+          A researcher&rsquo;s Zotero library already says which papers belong together. BioMuse turns it into a
+          graph, generates benchmark tasks from it, and tests whether LLMs respect that structure. Removing the
+          metadata lowers every model&rsquo;s retrieval accuracy.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Abstract -->
+  <section class="section hero is-light" id="abstract">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Large language models (LLMs) are entering scientific workflows for document retrieval, summarisation
+              and hypothesis generation, but evaluating their accuracy, domain alignment and retrieval ability in
+              these settings remains difficult. We introduce BioMuse, a benchmarking framework that assesses the
+              structured retrieval and reasoning of LLMs using metadata from researcher-curated Zotero libraries.
+              BioMuse converts collections, tags, notes and related-item links into semantic graphs and document
+              clusters, and from them generates intent-aligned tasks: citation-aware retrieval, semantic tag
+              prediction, cluster classification and abstract-consistent summarisation. The implementation comprises
+              a Zotero metadata parser, a standardised LLM testing interface and an evaluation engine that measures
+              retrieval accuracy, tag F1, citation fidelity and hallucination. Evaluations of GPT-4, Claude 2.1,
+              LLaMA 2 and a small graph-aware retrieval-augmented model across three computational biology domains
+              reveal performance differences that standard QA benchmarks do not show. BioMuse provides a reusable
+              pipeline for evaluating LLMs in structured scientific contexts and a foundation for adding multimedia
+              content such as figures, images and tables.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Motivation -->
+  <section class="section" id="problem">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">The Library Already Knows the Answer</h2>
+      <div class="prose">
+        <p>
+          Researchers in computational biology increasingly ask LLMs to find papers, summarise them and suggest
+          connections. Whether a model does this well depends on things that general QA benchmarks do not test: does
+          it return the papers a specialist would group together, does it use the field&rsquo;s own vocabulary, and
+          does its summary say only what the paper says?
+        </p>
+        <p>
+          A reference manager such as Zotero already holds the answers. Over months of reading, a researcher sorts
+          papers into <strong>collections</strong>, labels them with <strong>tags</strong>, writes
+          <strong>notes</strong>, and links <strong>related items</strong>. This metadata records the
+          researcher&rsquo;s intent: which papers belong together and why. BioMuse uses it twice, as context that can
+          help a model and as ground truth to score it against.
+        </p>
+        <p>
+          We ask three questions:
+        </p>
+        <ol class="claim-defs">
+          <li><strong>Accuracy.</strong> How well do current LLMs retrieve, tag, classify and summarise papers when
+            judged against a curated library?</li>
+          <li><strong>Structure.</strong> How much of their retrieval accuracy depends on the library&rsquo;s
+            metadata?</li>
+          <li><strong>Trust.</strong> How often do their summaries add claims the paper does not make?</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Method -->
+  <section class="section hero is-light" id="setting">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">From a Zotero Library to a Benchmark</h2>
+      <div class="prose">
+        <p>
+          BioMuse is a four-stage pipeline:
+        </p>
+        <ol class="claim-defs">
+          <li><strong>Semantic graph extractor.</strong> A Python parser reads the Zotero RDF/XML export into JSON
+            and builds a directed multigraph in NetworkX.</li>
+          <li><strong>Task generator.</strong> Prompts are generated automatically from the graph, so the same
+            procedure scales to any collection.</li>
+          <li><strong>LLM interaction layer.</strong> Standardised prompt templates are sent to hosted APIs and
+            local models, and every output is time-stamped and logged.</li>
+          <li><strong>Evaluation engine.</strong> Outputs are scored against the graph with ranking, overlap and
+            semantic-similarity metrics.</li>
+        </ol>
+        <p>
+          In the graph \(G = (V, E)\), each node \(v_i \in V\) is a paper carrying its title, abstract, tags
+          \(T_i\) and notes. An edge joins two papers that share tags, sit in the same collection, or are linked as
+          related items. Edge weights combine the cosine similarity of the two abstracts&rsquo; embeddings
+          \(e_i, e_j\) with the number of shared tags:
+        </p>
+        <div class="equation-block">
+          \[
+            w_{ij} \;=\; f\big(\cos(e_i, e_j),\ |T_i \cap T_j|\big),
+            \qquad \cos(e_i, e_j) = \frac{e_i^\top e_j}{\|e_i\|\,\|e_j\|}.
+          \]
+        </div>
+        <p>
+          <strong>Data.</strong> We built three Zotero collections, one for each subdomain: cancer evolution,
+          protein structure prediction and gene regulatory networks. Each holds 25&ndash;40 papers, gathered with
+          targeted PubMed (MeSH) and arXiv queries and filtered for domain specificity, citation density and
+          structured abstracts. Every paper was annotated with a controlled tag set developed iteratively by domain
+          experts (merging, for example, &ldquo;TF binding motif&rdquo; and &ldquo;TF site prediction&rdquo;), a
+          short manual summary in its note, and links to conceptually related papers.
+        </p>
+        <h3 class="subtitle is-5">Four tasks</h3>
+        <ul class="claim-defs">
+          <li><strong>Citation-aware retrieval.</strong> Given a short description, return the matching papers. The
+            ground truth is the paper&rsquo;s graph neighbourhood: high tag overlap, shared collection, or a
+            related-item link. Queries are manual paraphrases of real abstracts or cluster centroids projected back
+            into text; there are 50 per domain. Scored by top-3 accuracy, precision and recall.</li>
+          <li><strong>Tag prediction.</strong> From the title and abstract alone, assign 3&ndash;5 tags from the
+            curated tag set. Scored by macro-averaged F1, micro-averaged precision and recall, and Jaccard
+            similarity.</li>
+          <li><strong>Cluster classification.</strong> Assign each paper to its subdomain. Scored by accuracy and
+            the adjusted Rand index.</li>
+          <li><strong>Abstract-faithful summarisation.</strong> Write a two-sentence summary. Scored by ROUGE-L,
+            BERTScore and an embedding-based hallucination detector, with manual annotation of fabrication,
+            omission and overgeneralisation.</li>
+        </ul>
+        <div class="equation-block">
+          \[
+            \text{Acc@}3 = \frac{1}{|Q|} \sum_{q \in Q} \mathbf{1}\big[\,\mathrm{top}_3(q) \cap N_G(q) \neq \emptyset\,\big],
+            \qquad
+            J(\hat T, T) = \frac{|\hat T \cap T|}{|\hat T \cup T|}.
+          \]
+        </div>
+        <h3 class="subtitle is-5">Systems compared</h3>
+        <ul class="claim-defs">
+          <li><strong>GPT-4</strong> (gpt-4-0125-preview) and <strong>Claude 2.1</strong> through their APIs, both
+            at temperature 0.2.</li>
+          <li><strong>LLaMA 2 13B</strong>, 4-bit quantised and fine-tuned with LoRA on 6,000 domain-specific
+            abstracts, with greedy decoding.</li>
+          <li><strong>BioMuse-RAG</strong>, our retrieval-augmented system: Sentence-BERT retrieval over titles and
+            tags returns the top 5 abstracts, which a distilled BioGPT generator conditions on.</li>
+          <li><strong>BM25</strong>, a classical ranking baseline, on the retrieval queries.</li>
+        </ul>
+        <p>
+          Every system answers the same pre-generated task instances, in randomised order, with identical prompt
+          phrasing, in both a closed-book setting (abstract only) and an open-book setting (abstract, notes and
+          tags). Differences are tested with paired t-tests.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Results -->
+  <section class="section" id="results">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Results</h2>
+      <div class="prose">
+        <h3 class="subtitle is-5">GPT-4 leads every task, and a small graph-aware model keeps up on trust</h3>
+      </div>
+      <figure class="sci-figure" id="fig1">
+        <picture><source srcset="static/figures/fig1_results.webp" type="image/webp"><img src="static/figures/fig1_results.png" width="2157" height="687" loading="lazy"
+             alt="Table I. Top-3 retrieval: GPT-4 82.4, Claude 2.1 76.1, LLaMA 2 51.2, BioMuse-RAG 71.6, BM25 58.2 percent. Tag F1: 0.74, 0.66, 0.52, 0.61, BM25 0.30. Cluster accuracy: 92.1, 88.4, 79.6, 84.9 percent. Hallucination-free summaries: 89.0, 73.0, 59.0, 86.2 percent."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 1.</span>
+          Performance on the four BioMuse tasks (Table I of the paper). BM25 is a ranking method, so it is scored
+          only on retrieval and tag prediction.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          We observe that <strong>GPT-4</strong> is the strongest system on all four tasks: 82.4% top-3 retrieval,
+          tag F1 0.74, 92.1% cluster accuracy and 89.0% hallucination-free summaries. The more telling comparisons
+          are further down.
+        </p>
+        <p>
+          <strong>LLaMA 2 13B does not beat BM25.</strong> Its 51.2% top-3 retrieval is below the classical
+          baseline&rsquo;s 58.2%, and the difference is not significant (paired t-test, \(p = 0.12\)). At this scale,
+          fine-tuning an open model brings no clear gain over keyword ranking.
+        </p>
+        <p>
+          <strong>Trust does not follow accuracy.</strong> Claude 2.1 is second on retrieval, tagging and
+          clustering, but only 73.0% of its summaries are hallucination-free. BioMuse-RAG is third on retrieval yet
+          second on summaries (86.2%), close to GPT-4. Grounding generation in retrieved abstracts buys faithfulness
+          that a larger model does not get for free.
+        </p>
+
+        <h3 class="subtitle is-5">Retrieval depends on the library&rsquo;s structure</h3>
+        <p>
+          To test how much the models rely on the curated metadata, we remove it in stages: first the related-item
+          links, then the tags, and finally everything but the title.
+        </p>
+      </div>
+      <figure class="sci-figure compact" id="fig2">
+        <picture><source srcset="static/figures/fig2_ablation.webp" type="image/webp"><img src="static/figures/fig2_ablation.png" width="1857" height="807" loading="lazy"
+             alt="Top-3 retrieval accuracy as metadata is removed. GPT-4: full context 82.4, no related items 77.0, no tags 69.5, title only 59.3 percent. Claude 2.1: 76.1, 70.2, 63.4, 53.0. BioMuse-RAG: 71.6, 68.0, 60.3, 50.1. BM25 baseline: 58.2."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 2.</span>
+          Top-3 retrieval accuracy as Zotero metadata is removed (Fig. 3 of the paper). The dashed line is BM25 with
+          its standard input.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          We observe that every model loses accuracy at every step, and the order of the models never changes.
+          GPT-4 falls from 82.4% to 69.5% once related items and tags are gone, a drop the paper reports as
+          significant (paired t-test, \(p = 0.03\)). With titles alone, all three models end near or below BM25
+          (59.3%, 53.0% and 50.1% against 58.2%). Much of what looks like model skill in retrieval is the
+          researcher&rsquo;s curation, carried into the prompt.
+        </p>
+
+        <h3 class="subtitle is-5">How the models fail</h3>
+        <ul class="claim-defs">
+          <li><strong>Retrieval.</strong> GPT-4 handles synonyms and unusual phrasing well. Claude overweights
+            frequent terms and returns generic hits. BioMuse-RAG surfaces papers that are central in the graph even
+            when their terms are rare.</li>
+          <li><strong>Tagging.</strong> LLaMA 2 and Claude merge distinct concepts, such as &ldquo;chromatin
+            accessibility&rdquo; and &ldquo;open chromatin dynamics&rdquo;. GPT-4 sometimes proposes tags that are
+            too broad, such as &ldquo;machine learning&rdquo;. BioMuse-RAG, trained on tag&ndash;document
+            associations, produces the most compact tag sets.</li>
+          <li><strong>Summaries.</strong> GPT-4 fabricates in 11% of summaries, for example inventing an <em>in
+            vivo</em> validation. Claude&rsquo;s errors are mostly semantic drift, such as swapping RNA-seq for
+            ChIP-seq. LLaMA 2 hallucinates in 41% of cases. BioMuse-RAG has the lowest fabrication rate but
+            sometimes says too little.</li>
+          <li><strong>Structure.</strong> GPT-4 and Claude often write correct summaries yet ignore the
+            collection-level hierarchy when they classify or rank papers. BioMuse-RAG follows the graph&rsquo;s
+            topology despite far fewer parameters.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Math video -->
+  <section class="section hero is-light" id="presentation">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">The Math, Step by Step</h2>
+      <div class="prose">
+        <p>
+          The video below builds the benchmark one equation at a time: the library as a graph, edge weights, how a
+          retrieval query and its ground truth come from the graph, top-\(k\) accuracy, tag F1 and Jaccard overlap,
+          the hallucination check, the paired t-test, and the metadata ablation.
+        </p>
+      </div>
+      <figure class="sci-figure">
+        <video poster="static/videos/math_video_poster.jpg" controls playsinline preload="none"
+               aria-label="Video: the benchmark, step by step">
+          <source src="static/videos/math_video.webm" type="video/webm">
+          <source src="static/videos/math_video.mp4" type="video/mp4">
+          <track kind="captions" src="static/captions/math_video.vtt" srclang="en" label="English" default>
+        </video>
+      </figure>
+    </div>
+  </section>
+
+
+  <!-- Takeaways -->
+  <section class="section" id="validators">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Takeaways</h2>
+      <div class="prose">
+        <ol class="claim-defs">
+          <li><strong>Evaluate against the researcher&rsquo;s own structure.</strong> A curated library gives
+            ground truth for retrieval, tagging and classification without new annotation.</li>
+          <li><strong>Report faithfulness separately from accuracy.</strong> Claude 2.1 is the second-best retriever,
+            but its summaries are hallucination-free less often than those of the much smaller BioMuse-RAG; one
+            score cannot rank models for scientific use.</li>
+          <li><strong>Pass the metadata in.</strong> Tags and related-item links are worth more than ten points of
+            retrieval accuracy for every model tested.</li>
+          <li><strong>Graph awareness can substitute for scale.</strong> A small model that retrieves over the
+            graph nearly matches GPT-4 on hallucination-free summaries.</li>
+        </ol>
+        <p>
+          Next, BioMuse will add figures and tables for multimodal reasoning, extend to domains such as neuroscience
+          and environmental modelling, and release an open-source Zotero-to-BioMuse conversion toolkit.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Limitations -->
+  <section class="section hero is-light" id="limitations">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Limitations</h2>
+      <div class="prose">
+        <p>
+          The benchmark is small: three collections of 25&ndash;40 papers and 50 retrieval queries per domain, so
+          differences of a few points between models should be read with care. The ground truth reflects one
+          group&rsquo;s curation, and another researcher would organise the same papers differently. BioMuse-RAG is
+          trained on tag&ndash;document associations of the kind the benchmark scores, which favours it on tagging.
+          The hosted models are versioned snapshots queried at low temperature, and their behaviour may change between versions. Finally, the current tasks are
+          text-only; the multimedia content that motivates the framework, such as figures, images and tables, is
+          left to future work.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BibTeX -->
+  <section class="section hero is-light" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" type="button" onclick="copyBibTeX()" aria-label="Copy BibTeX to clipboard">Copy</button>
+      </div>
+      <pre id="bibtex-code"><code>@inproceedings{tiku2025biomuse,
+  title     = {Benchmarking LLMs for Trustworthy Multimedia Retrieval in Computational Biology Using Structured Zotero Graphs},
+  author    = {Tiku, Sarvesh},
+  booktitle = {2025 IEEE 8th International Conference on Multimedia Information Processing and Retrieval (MIPR)},
+  year      = {2025},
+  doi       = {10.1109/MIPR67560.2025.00023}
+}</code></pre>
+    </div>
+  </section>
+</main>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license noopener" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The interesting failures were between the agents · Sarvesh Tiku</title>
+    <meta name="description" content="What I learned building SwarmGuard, a tool that traces how behaviour spreads through AI agent swarms and finds the smallest place to cut it.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<main>
+
+    <p class="crumb"><a href="../index.html">Sarvesh Tiku</a> / <a href="../blog.html">Blog</a></p>
+
+    <article class="post">
+        <h1 class="page-title">The interesting failures were between the agents</h1>
+        <p class="post-date">October 2026</p>
+
+        <p>
+            Most AI safety tooling watches one agent at a time: score this action, flag that output. At the AI Swarm Dynamics
+            Hackathon (AI Village &times; Grove Research) I wanted to try the opposite. When many agents share a world, the
+            behaviour worth catching often isn't inside any one of them. It's in what moves between them.
+        </p>
+        <p>
+            <a href="https://swarm-guard.com/">SwarmGuard</a> reads the logs a swarm leaves behind, reconstructs which action may
+            have led to which, and for each episode ranks interventions by how much of the inferred spread they cut versus how much
+            unrelated activity they disturb. I ran it on AI Village (eighteen months of frontier-model agents, fully logged) and on
+            the wiki swarm (agents that used old German wikis as a message board). Here's what stuck with me.
+        </p>
+
+        <h3>No single edit was the problem</h3>
+        <p>
+            On 16 June 2026, in 46 minutes, 24 differently named agents writing from 24 different network blocks edited one wiki
+            page. Read in order, the edits look like separate runs of a timed task trading round timings and answers so later runs
+            could get ahead. One run tags another by name and asks it to "fast-forward and post R3."
+        </p>
+        <p>
+            None of those edits is anomalous alone. Each is a short note on a wiki page. What's anomalous is the shape: 345
+            candidate interactions per hour against a dataset median of 19, all flowing through one page. A per-agent monitor would
+            have seen nothing. A graph sees a hub.
+        </p>
+        <p>
+            That's also where the most practical use turned out to be: evaluation integrity. These look like separate test runs
+            contaminating each other through a public page nobody was watching. Flagging runs that become linked through an
+            outside channel is a job eval teams need done today.
+        </p>
+
+        <h3>Real data broke almost every assumption</h3>
+        <p>
+            SwarmGuard passed my synthetic swarm (known source, planted confounder) on every seed. Then I pointed it at real logs,
+            and most of the design came from what broke:
+        </p>
+        <ul>
+            <li>
+                <b>Every lag was zero.</b> Microsecond timestamps were being read as nanoseconds, so my two-hour lookback window
+                behaved like 83 days. Nothing crashed. The output just looked plausible and was wrong.
+            </li>
+            <li>
+                <b>Names are everywhere.</b> AI Village agents mention each other constantly, so "A addressed B" fired on 89% of
+                pairs. I narrowed it to direct replies and first responses.
+            </li>
+            <li>
+                <b>Reading isn't influence.</b> Two agents searching the same chat history were being linked. A shared resource now
+                only counts if the earlier agent wrote to it.
+            </li>
+            <li>
+                <b>My checker was too generous.</b> Early on, every episode got flagged. A detector that always fires tells you
+                nothing, so I tightened thresholds and now report where a check doesn't discriminate.
+            </li>
+        </ul>
+        <p>
+            Synthetic benchmarks are good for catching logic bugs. They are bad at telling you what the world actually looks like.
+        </p>
+
+        <h3>Time has to flow forward</h3>
+        <p>
+            Ordinary back-and-forth chat makes everyone reachable from everyone, so "where did this start?" stops meaning anything.
+            The fix was to only count a path A &rarr; B &rarr; C if B's onward action happened <i>after</i> B was reached. That one
+            rule did more for source attribution than any amount of weight tuning.
+        </p>
+
+        <h3>Narrow controls win if you price collateral</h3>
+        <p>
+            Each candidate control (lock a page, gate external writes, isolate a memory, pause an agent) is applied to a copy of
+            the graph and scored as paths removed minus penalties for collateral, thin evidence and irreversibility. Once collateral
+            is in the objective, broad controls stop looking attractive.
+        </p>
+        <p>
+            On the AI Village "Village Hub" episode, restricting writes to one shared site removed 54% of inferred paths while
+            touching 0.3% of unrelated activity. Requiring approval for all external writes removed more (69%) but hit 18.8% of
+            everything else. On the wiki, locking the relay page removed 97% of inferred paths at roughly zero collateral. The
+            administrator's actual response was deleting 5,217 pages.
+        </p>
+
+        <h3>Agreement is weak evidence</h3>
+        <p>
+            The wiki export includes what the administrator really did, so I could compare. In 34 of the 37 episodes where
+            SwarmGuard's top recommendation was a single page, the admin later deleted that same page. That sounded great until I
+            checked the base rate: the admin deleted about 77% of all agent-written pages. Almost any recommendation would have
+            "agreed."
+        </p>
+        <p>
+            The comparison that matters is timing and selectivity. The deletions came a median of 10 days after each episode, with
+            666 more writes landing in between. SwarmGuard's recommendation exists while the episode is happening and targets one
+            page. Whether an earlier lock would have held is open: agents recreated deleted pages.
+        </p>
+
+        <h3>Say what you can't conclude</h3>
+        <p>
+            The wiki shows only self-chosen names and half an IP address. "Twenty-four names wrote to one page" is solid; "agent X
+            influenced agent Y" is thin. So every edge ships with its evidence and the alternatives that compete with it: common
+            cause, indirect path, shared upstream, possibly one operator.
+        </p>
+        <p>
+            That's what I'd carry forward: a possible link is not proof of influence, and unusual coordination is not unsafe
+            behaviour. The tool's job is to hand a person a map and a few reversible moves fast, not to decide who's dangerous.
+        </p>
+        <p>
+            The full write-up and interactive app are at <a href="https://swarm-guard.com/">swarm-guard.com</a>, and the code is
+            on <a href="https://github.com/sarvesh-tiku/Swarm-Guard">GitHub</a>.
+        </p>
+    </article>
+
+    <p class="footer">
+        <a href="../blog.html">&larr; All posts</a>
+    </p>
+
+</main>
+</body>
+</html>
