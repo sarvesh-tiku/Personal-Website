@@ -47,6 +47,7 @@
 
     <h2>News</h2>
     <ul class="news">
+        <li><span class="when">Oct 2026</span> <span>Took part in Apart Research's AI Collusion Research Sprint with <a href="https://apartresearch.com/sprints/projects/signal-or-coincidence-causal-auditing-of-collusion-through-shared-agent-state-amsn"><i>Signal or Coincidence?</i></a>, a causal audit for covert coordination between agents.</span></li>
         <li><span class="when">Oct 2026</span> <span>Three papers accepted to workshops at ACM ICAIF 2026: two at the Workshop on Financial AI Security, Safety, and Privacy and one at IAFM'26.</span></li>
         <li><span class="when">Sep 2026</span> <span>Started as a research assistant with SPAR, studying temporal representations in language models.</span></li>
         <li><span class="when">Aug 2026</span> <span>Wrapped up my second summer as a software engineering intern at Salesforce.</span></li>
@@ -141,6 +142,20 @@
     </div>
 
     <h2>Projects</h2>
+
+    <div class="entry">
+        <p class="title"><a href="https://apartresearch.com/sprints/projects/signal-or-coincidence-causal-auditing-of-collusion-through-shared-agent-state-amsn">Signal or Coincidence? Causal auditing of collusion through shared agent state</a></p>
+        <p class="venue"><i>Python, NumPy, SciPy, OpenRouter</i> &nbsp;<span class="refs"><a href="https://apartresearch.com/sprints/projects/signal-or-coincidence-causal-auditing-of-collusion-through-shared-agent-state-amsn">write-up</a> <a href="https://pys8vc40ox3z7qxp.public.blob.vercel-storage.com/submissions/ai-collusion-research-sprint-2026-10-23-to-2026-10-25/main-dtMcyeIbFjszyIQykvlJgFOfvXbhLT.pdf">paper</a> <a href="https://github.com/sarvesh-tiku/Apart-Collision-Agent-State">code</a></span></p>
+        <p class="desc">
+            Two agents that act alike may be coordinating or may just share priors. To tell these apart, the audit plants a random
+            canary in one agent's context and tests whether another agent's decisions depend on it, which gives an exact chance
+            baseline. Interventions on the shared tickets then locate the field carrying the signal. In a preparer&ndash;approver
+            compliance workflow (4 models, 33 arms, ~19k calls), Gemini-2.5-Flash invented a covert convention with no pre-agreed code: 58%
+            target recovery against a 25% baseline. Recomputing structured fields blocked the tested codes, but sanitizer-aware
+            agents moved the signal into free-text notes (76%). An LLM monitor scored at chance, and authorized controls showed
+            that information flow alone isn't collusion. Built at Apart Research's AI Collusion Research Sprint.
+        </p>
+    </div>
 
     <div class="entry">
         <p class="title"><a href="https://github.com/sarvesh-tiku/CachePilot">CachePilot: KV-cache-aware routing for LLM inference</a></p>
