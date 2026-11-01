@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Agent benchmarks that run on simulated systems take for granted that the simulator behaves correctly. In a small banking environment we switch off one workflow rule at a time and check two common graders against a separately written specification, then audit τ-bench and AppWorld.">
+  <meta name="keywords" content="agent evaluation, benchmark validity, stateful environments, financial agents, mutation testing, τ-bench, AppWorld">
+  <meta name="author" content="Gauri Sharma, Sarvesh Tiku">
+  <meta name="robots" content="noindex, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How State-Transition Fidelity Affects Financial Agent Evaluation">
+  <meta property="og:description" content="Switching off one workflow rule in a banking simulator made graders fail correct agents, pass double charges, and reorder five GPT models.">
+  <meta property="og:image" content="static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="True and measured success of GPT-5 and GPT-4.1 in the reference environment and with the approval rule omitted">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How State-Transition Fidelity Affects Financial Agent Evaluation">
+  <meta name="twitter:description" content="Switching off one workflow rule in a banking simulator made graders fail correct agents, pass double charges, and reorder five GPT models.">
+  <meta name="twitter:image" content="static/images/social_preview.png">
+
+  <title>State-Transition Fidelity</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], tags: 'none' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+      chtml: { scale: 1.0 }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">How State-Transition Fidelity Affects Financial Agent Evaluation</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Gauri Sharma<sup>*</sup>,</span>
+              <span class="author-block">Sarvesh Tiku<sup>*</sup></span>
+            </div>
+            <div class="is-size-5 publication-authors affil">
+              <span class="author-block">Georgia Institute of Technology</span>
+            </div>
+            <div class="status-note"><sup>*</sup>Corresponding authors</div>
+            <div class="publication-venue-line">Under consideration at the Agent Evaluation Science Workshop</div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="static/pdfs/paper.pdf" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://github.com/sarvesh-tiku/Financial-Sandbox-Agent-Eval-Science" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github" aria-hidden="true"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#teaser" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-video" aria-hidden="true"></i></span>
+                    <span>Video</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-quote-right" aria-hidden="true"></i></span>
+                    <span>BibTeX</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Teaser video -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" poster="static/videos/teaser_poster.jpg" data-autoplay muted loop playsinline controls
+               preload="metadata" aria-describedby="teaser-caption">
+          <source src="static/videos/teaser.webm" type="video/webm">
+          <source src="static/videos/teaser.mp4" type="video/mp4">
+          <track kind="captions" src="static/captions/teaser.vtt" srclang="en" label="English">
+        </video>
+        <h2 class="subtitle has-text-centered" id="teaser-caption">
+          Switch off one workflow rule in a banking simulator, and the graders fail correct agents, pass double charges,
+          and put the most reliable model below two others.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Abstract -->
+  <section class="section hero is-light" id="abstract">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Agent benchmarks that run on simulated systems take for granted that the simulator behaves correctly. We
+              wanted to know how much that assumption matters. In a small banking environment, we switched off one
+              workflow rule at a time (freezes that stop pending payments, edits that void approvals, retries that do not
+              charge twice) and checked two common graders against a separately written specification. An outcome grader
+              failed all 87 correct live episodes when the freeze rule was gone, and a grader that replays a gold
+              trajectory passed 50 retries that charged customers twice. Removing the approval rule also changed how the
+              models behaved. GPT-4.1 and GPT-5 mini trusted a stale &ldquo;approved&rdquo; status and paid in 19 of 20
+              runs, both graders passed them, and rank agreement with the specification fell from 1.0 to 0.22 (bootstrap
+              95% interval 0.11&ndash;0.44), an effect that comes from a single task. In &tau;-bench, full reward survives
+              a refused prohibited write appended to any of the 115 retail tasks, 14 rewarded GPT-4o episodes contain a
+              policy violation we confirmed by hand, and one gold trajectory contains a prohibited action. Under the
+              mutations we tested, &tau;-bench&rsquo;s same-environment gold replay failed to identify changes in the
+              reference outcome, whereas AppWorld&rsquo;s evaluation pipeline detected every affected no-op mutation
+              through failed assertions. The two benchmarks received different mutations, so this is not a controlled
+              comparison.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Motivation -->
+  <section class="section" id="motivation">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">The Simulator Is Part of the Instrument</h2>
+      <div class="prose">
+        <p>
+          Suppose a fraud team asks an agent to freeze a customer&rsquo;s account, and the agent does. In a real bank, the
+          pending transfers out of that account would stop as a side effect. In a benchmark, that side effect exists only
+          if someone remembered to implement it. If they did not, a grader that checks for blocked transfers will fail an
+          agent that did exactly the right thing, and an agent that went on to push one of those transfers through may
+          look fine.
+        </p>
+        <p>
+          Benchmarks such as &tau;-bench, AppWorld and WebArena score agents by what their actions do to a simulated
+          system. That makes the simulator part of the measuring instrument. Our question is narrow: when the environment
+          gets a state transition wrong, which evaluation conclusions change, and what would have caught the error? The
+          method borrows from mutation testing, building environment variants that each drop exactly one rule, and from
+          differential testing, judging each episode against a separate implementation of the specification rather than
+          against the environment being tested.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Testbed -->
+  <section class="section hero is-light" id="testbed">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Testbed and Audit Protocol</h2>
+      <div class="prose">
+        <p>
+          The testbed is a SQLite database of accounts, transfers, approvals, payments and a ledger, exposed through nine
+          tools: <code>get_account</code>, <code>list_transfers</code>, <code>freeze_account</code>,
+          <code>create_transfer</code>, <code>edit_transfer</code>, <code>approve_transfer</code>,
+          <code>cancel_transfer</code>, <code>execute_transfer</code> and <code>submit_payment</code>. We study three
+          rules:
+        </p>
+        <ul class="claim-defs">
+          <li><strong>R1.</strong> Freezing an account blocks its pending and approved outflows.</li>
+          <li><strong>R2.</strong> Changing a transfer&rsquo;s payee or amount voids its approval and sends it back to
+            pending.</li>
+          <li><strong>R3.</strong> Resubmitting a payment with an idempotency key that was already used returns the
+            original result instead of charging again.</li>
+        </ul>
+        <p>
+          Each rule is enforced in exactly one place; <code>execute_transfer</code>, for instance, only checks the
+          transfer&rsquo;s status and relies on R1 and R2 to have set it. Turning a rule off therefore removes the
+          protection completely. Everything else (tasks, starting data, tools and the policy text given to agents) is
+          identical across the four environments. Four tasks exercise a rule and five are controls, three of them near
+          misses that run the same code path without triggering it.
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table class="sci-table text-table">
+          <caption>Transition specification. t.appr is the (payee, amount) pair an approval covers. P: refusal is a
+            prohibited attempt.</caption>
+          <thead>
+            <tr><th>Tool</th><th>Precondition</th><th>Effect</th><th>Rule</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>freeze_account(a)</code></td><td>a exists</td><td>a frozen; every pending or approved transfer from a becomes blocked</td><td>R1</td></tr>
+            <tr><td><code>create_transfer</code></td><td>accounts exist, amount &gt; 0; source active (P)</td><td>new pending transfer, no approval</td><td>&ndash;</td></tr>
+            <tr><td><code>edit_transfer(t)</code></td><td>t pending or approved</td><td>payee/amount updated; t.appr cleared; t pending</td><td>R2</td></tr>
+            <tr><td><code>approve_transfer(t)</code></td><td>t pending</td><td>t approved; t.appr &larr; (payee, amount)</td><td>&ndash;</td></tr>
+            <tr><td><code>cancel_transfer(t)</code></td><td>t pending or approved</td><td>t cancelled; t.appr cleared</td><td>&ndash;</td></tr>
+            <tr><td><code>execute_transfer(t)</code></td><td>source active (P); t.appr equals current (payee, amount) (P); t approved; funds</td><td>debit, credit, ledger entries; t executed</td><td>R1, R2</td></tr>
+            <tr><td><code>submit_payment</code></td><td>key unused, else no-op returning the first result; source active (P); funds</td><td>debit, credit, ledger, record (invoice, key); a second key for a paid invoice is accepted but is a policy violation</td><td>R3</td></tr>
+            <tr><td><code>get_account</code>, <code>list_transfers</code></td><td>&ndash;</td><td>none (read only)</td><td>&ndash;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prose">
+        <h3 class="subtitle is-5">The specification oracle and the graders under audit</h3>
+        <p>
+          The oracle is a reference model written in plain Python that shares no code with the environment. Given a
+          starting state and an action log, it replays each action and flags the ones the specification forbids, compares
+          expected and actual state after every step, and checks invariants over the actual state history, attributing
+          each violation to the agent or to the environment. An episode passes if the task&rsquo;s goal, written as intent
+          rather than as one expected sequence of actions, holds in the expected final state and the agent attempted
+          nothing prohibited.
+        </p>
+        <p>
+          The <strong>outcome grader</strong> checks a fixed predicate on the actual final state, such as &ldquo;account A
+          is frozen and transfer 1 is blocked.&rdquo; The <strong>state-match grader</strong> works the way &tau;-bench
+          does: it replays the gold trajectory in the same environment and passes the episode if the two final states
+          match. Against the oracle we count false passes (FP), false failures (FF), and silent violations, meaning passes
+          on episodes where the environment itself caused a violation.
+        </p>
+        <p>
+          In the correct environment, expected and actual state agree at every step of every script. We also ran every
+          sequence of up to four actions from a 12-action alphabet (22,620 sequences) through each environment and the
+          oracle: the correct environment agrees at all 88,428 steps, and each variant first diverges only at an action
+          its missing rule governs. This check also found a bug in our own environment, since fixed.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Scripted audit -->
+  <section class="section" id="scripted">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Scripted Audit</h2>
+      <div class="prose">
+        <p>
+          We ran all 15 scripts in all four environments. The action sequence in each row is fixed, so anything that
+          changes along a row is the environment&rsquo;s doing.
+        </p>
+      </div>
+      <figure class="sci-figure" id="figA1">
+        <picture><source srcset="static/figures/figA1_verdicts.webp" type="image/webp"><img src="static/figures/figA1_verdicts.png" width="2627" height="855" loading="lazy"
+             alt="Grid of grader verdicts for eight rule-task scripts across the reference environment and the three variants, for the outcome and state-match graders. False passes are orange, false failures blue."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 1.</span>
+          Each grader&rsquo;s verdict on every rule-task script, by environment, compared with the oracle. Control scripts
+          (not shown) agree with the oracle in every cell.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          <strong>Graders cannot see refused attempts.</strong> Even in the correct environment, both graders pass the two
+          scripts in which the agent tries a prohibited execution that the environment refuses. Its final state is the
+          same as a careful agent&rsquo;s, and only the action log shows the attempt.
+        </p>
+        <p>
+          <strong>Effects of each missing rule.</strong> Without R1, the outcome grader fails both careful scripts, because
+          the transfer is never marked blocked and the queue never empties, and it passes the script that drains the
+          queue, frozen account included. The state-match grader behaves the opposite way: the missing rule lets the
+          prohibited execution go through, so the mistake shows up in the final state and the grader catches it. Without
+          R2, both graders pass an execution that skipped re-approval, since the gold trajectory&rsquo;s own re-approval
+          is refused too. Without R3, the outcome grader fails the correct same-key retry and the state-match grader
+          passes it, double charge and all.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Live agents -->
+  <section class="section hero is-light" id="live">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Live Agents</h2>
+      <div class="prose">
+        <p>
+          We ran five GPT models through the same tools and policy text with function calling. GPT-4o mini, GPT-4.1 mini,
+          GPT-5 mini, GPT-4.1 and GPT-5 each did every task in every environment 10 times (1,800 episodes, at most 15
+          tool calls each, about $5.91 in API cost). In the retry task, the first payment went through but the agent was
+          told it had timed out.
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table class="sci-table">
+          <caption>Live agents, five models pooled, on the tasks each missing rule affects (all four rule tasks for the
+            correct environment). Silent: passes on episodes where the environment caused a violation. None of the 1,000
+            control episodes produced a discrepancy or a grader error.</caption>
+          <thead>
+            <tr><th>Environment</th><th>n</th><th>Oracle pass</th><th>Outcome FP</th><th>Outcome FF</th><th>State-match FP</th><th>State-match FF</th><th>Silent (Out.)</th><th>Silent (S.-m.)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Correct</td><td>200</td><td>183</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>R1 missing</td><td>100</td><td>87</td><td>0</td><td class="hl">87</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>R2 missing</td><td>50</td><td>27</td><td class="hl">21</td><td>14</td><td class="hl">21</td><td>14</td><td>13</td><td>13</td></tr>
+            <tr><td>R3 missing</td><td>50</td><td>50</td><td>0</td><td class="hl">50</td><td>0</td><td>0</td><td>0</td><td class="hl">50</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prose">
+        <p>
+          In the correct environment neither grader made a mistake on 200 rule-task episodes, and no model tried anything
+          prohibited. Without R1, every model froze the account and none tried to move its money, yet the outcome grader
+          failed all 87 correct episodes (Wilson 95% interval 0.96&ndash;1.00), for every model separately. Every model
+          retried the timed-out payment with the same key, in all 200 retry episodes. Without R3, the outcome grader
+          failed every one of those correct retries, and the state-match grader passed every one despite the double
+          charge (50/50, interval 0.93&ndash;1.00).
+        </p>
+        <h3 class="subtitle is-5">Agents respond to the missing approval rule</h3>
+        <p>
+          Without R2, editing a transfer leaves it marked approved, and the models read that status differently. GPT-4.1
+          (10 of 10 runs) and GPT-5 mini (9 of 10) took it at face value and paid without asking for a new approval,
+          something neither did once in the correct environment, and both graders passed all 19. GPT-4.1 mini usually
+          tried to re-approve, was refused because the transfer was not pending, and paid anyway (8 of 10). GPT-5 asked
+          for re-approval every time; when refused, it cancelled the transfer and created a properly approved replacement
+          in 6 of 10 runs. GPT-4o mini built a replacement in 8 of 10. Building the replacement is what the policy asks
+          for, and both graders failed it. A scripted replay cannot show this, since the bug matters only through what
+          the agent reads in the tool&rsquo;s response.
+        </p>
+      </div>
+      <figure class="sci-figure compact" id="fig2">
+        <picture><source srcset="static/figures/fig1_ranking.webp" type="image/webp"><img src="static/figures/fig1_ranking.png" width="2542" height="1505" loading="lazy"
+             alt="Slope chart of true and measured success on the four rule tasks. In the reference environment true and measured match for every model. With R2 omitted, GPT-5 falls from 1.0 true to about 0.85 measured, and GPT-4.1 rises from 0.5 true to 0.75 measured."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 2.</span>
+          True and measured success of each model on the four rule tasks (outcome grader; the state-match grader gives
+          the same values here). In the correct environment the two match, and three models sit together at 1.0. With R2
+          missing, GPT-5, actually the most reliable model, is ranked below two others, and GPT-4.1, actually the least
+          reliable, climbs above GPT-4o mini.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <h3 class="subtitle is-5">Ranking stability</h3>
+        <p>
+          Kendall&rsquo;s \(\tau_b\) between measured and true task-averaged success falls from 1.0 to 0.22. Resampling
+          episodes within each cell 5,000 times gives a 95% interval of 0.11&ndash;0.44; every resample stays below 0.5
+          and ranks GPT-5 below two models although its true success is the highest. Leaving out a task shows where the
+          effect comes from: without the payee-change task, \(\tau_b\) returns to 1.0, and without the queue task it falls
+          to &minus;0.50. The reversal is a property of one task under one missing rule, and we make no claim about how
+          often such tasks occur.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig3">
+        <picture><source srcset="static/figures/figE1_live.webp" type="image/webp"><img src="static/figures/figE1_live.png" width="2377" height="1088" loading="lazy"
+             alt="Dot plot of true (hollow) and measured (filled) success per model and grader for each missing rule. Under R1 the outcome grader measures zero for every model; under R3 the state-match grader matches true success while the outcome grader measures zero."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 3.</span>
+          Live agents: true (hollow) and measured (filled) success on the tasks each missing rule affects, per model and
+          grader; \(n\) episodes per cell.
+        </figcaption>
+      </figure>
+      <div class="table-wrap">
+        <table class="sci-table">
+          <caption>Grader error rates with Wilson 95% intervals (five models pooled).</caption>
+          <thead>
+            <tr><th>Environment</th><th class="l">Error</th><th>Count</th><th>Interval</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>R1 missing</td><td class="l">outcome FF among correct episodes</td><td>87 / 87</td><td>0.96&ndash;1.00</td></tr>
+            <tr><td>R2 missing</td><td class="l">both graders FP among incorrect episodes</td><td>21 / 23</td><td>0.73&ndash;0.98</td></tr>
+            <tr><td>R2 missing</td><td class="l">both graders FF among correct episodes</td><td>14 / 27</td><td>0.34&ndash;0.69</td></tr>
+            <tr><td>R2 missing</td><td class="l">silent violations passed, both graders</td><td>13 / 50</td><td>0.16&ndash;0.40</td></tr>
+            <tr><td>R3 missing</td><td class="l">outcome FF among correct episodes</td><td>50 / 50</td><td>0.93&ndash;1.00</td></tr>
+            <tr><td>R3 missing</td><td class="l">state-match silent double charges passed</td><td>50 / 50</td><td>0.93&ndash;1.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prose">
+        <p>
+          The live runs also caught a mistake in our own oracle. Its payee-change goal originally required transfer 1
+          itself to be executed, which wrongly failed agents that cancelled it and paid through a new, properly approved
+          transfer. We rewrote the goal as intent and re-scored every stored log. Under the original goal, \(\tau_b\)
+          would be 0.53 instead of 0.22, with false passes unchanged.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Public benchmarks -->
+  <section class="section" id="benchmarks">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Auditing Public Benchmarks</h2>
+      <div class="prose">
+        <p>
+          &tau;-bench scores an episode by hashing the final database and comparing it with the hash it gets by replaying
+          the gold actions in the same environment. We audited its retail and airline test splits (115 and 50 tasks),
+          reproduced its database reward on separately loaded copies of the data, and made no model calls.
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table class="sci-table text-table">
+          <caption>Audit of &tau;-bench&rsquo;s database reward and AppWorld&rsquo;s evaluation. (A) A prohibited write that
+            the tool refuses is appended to each gold trajectory. (B) Violations in &tau;-bench&rsquo;s published GPT-4o
+            trajectories (4 trials per task), after manual adjudication of every flagged write. (C) Gold trajectories
+            checked with the same status rule. (D) Seeded bugs, each removing one state change from a retail tool. (E)
+            Tasks whose gold trajectory changes nothing. (F) A different, coarser mutation in AppWorld.</caption>
+          <thead>
+            <tr><th></th><th>Check</th><th>Result</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>(A)</td><td>Refused prohibited attempt appended; full database reward kept</td><td>115 / 115 retail tasks</td></tr>
+            <tr><td>(B)</td><td>Rewarded GPT-4o episodes with a confirmed policy violation</td><td>12 / 278 retail, 2 / 84 airline</td></tr>
+            <tr><td>(C)</td><td>Gold trajectories containing a prohibited attempt</td><td>1 / 115 retail (task 64)</td></tr>
+            <tr><td>(D)</td><td>Cancellation does not refund</td><td>gold state differs in 18 / 18 tasks; verdict changed in 0</td></tr>
+            <tr><td></td><td>Item modification leaves the order pending</td><td>differs in 35 / 35; changed in 0</td></tr>
+            <tr><td></td><td>Return leaves the order delivered</td><td>differs in 31 / 32; changed in 0</td></tr>
+            <tr><td>(E)</td><td>Gold changes nothing and no output is required</td><td>7 / 115 retail, 19 / 50 airline</td></tr>
+            <tr><td>(F)</td><td>AppWorld: a POST, PATCH, or DELETE request reports success but is not applied</td><td>assertions failed in 114 / 114 affected runs (unmodified: 147 / 147 pass)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prose">
+        <p>
+          <strong>Refused attempts.</strong> The retail policy allows cancelling only pending orders and returning only
+          delivered ones. For every retail test task we appended one such forbidden, unrequested write to the gold
+          trajectory. The tools refused all 115, the database did not change, and every one kept full reward. As in our
+          testbed, a grader that reads only the final state cannot see a violation that the environment refused to carry
+          out.
+        </p>
+        <p>
+          <strong>Real agents.</strong> In &tau;-bench&rsquo;s published GPT-4o trajectories, we flagged writes under two
+          rules that leave no trace in the database (the status rule, and the requirement to get explicit user
+          confirmation before any change) and read all 44 flagged writes in rewarded episodes by hand. All 7 status flags
+          are genuine; only 11 of the 37 confirmation flags are clear violations, with 4 more technical ones. After
+          adjudication, 12 of 278 rewarded retail episodes and 2 of 84 rewarded airline episodes break a policy rule and
+          still receive full reward. These counts are lower bounds, and the labels are one annotator&rsquo;s.
+        </p>
+        <p>
+          <strong>A flawed gold trajectory.</strong> Retail test task 64&rsquo;s gold actions first try to exchange items
+          from an order that is still pending, which the policy forbids and the tool refuses, and only then modify the
+          order.
+        </p>
+        <p>
+          <strong>Seeded bugs.</strong> Removing one state change from a retail tool changes the correct final state in
+          nearly every task that uses the tool, and none changes a verdict on the gold trajectory. This holds by
+          construction: the reference outcome comes from replaying the gold actions through the same tools, so a
+          transition bug appears on both sides of the comparison.
+        </p>
+        <p>
+          <strong>AppWorld</strong> does not replay a gold solution; its hand-written assertions compare the database before
+          and after the episode. In all 114 runs where a no-op mutation reached a task, assertions failed on the
+          ground-truth solution. The mutations differ, so this is not a controlled comparison, but it shows that checks
+          written independently of the tool code can expose transition bugs that a same-environment replay cannot.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Limitations -->
+  <section class="section hero is-light" id="limitations">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Limitations and Conclusion</h2>
+      <div class="prose">
+        <p>
+          The live study uses five models from one provider and nine fixed tasks covering three rules in one domain, so its
+          intervals say nothing about other tasks, and the ranking result rests on one task. &ldquo;True&rdquo; success is
+          defined by our specification, which can itself be wrong, as the goal we corrected shows. The &tau;-bench
+          adjudication is one annotator&rsquo;s, and the two public benchmarks received different mutations. We tested
+          only the workflow we specified and cannot say how these results carry over to production banking systems or to
+          regulatory compliance.
+        </p>
+        <p>
+          In our testbed, getting one workflow rule wrong was enough to change which agents looked good: graders failed
+          correct agents, passed violations, and, because the models themselves reacted to the bug, reordered them.
+          Final-state grading cannot see refused or unconfirmed actions, and gold replay through the same tools cannot
+          reveal a transition bug. A per-step comparison with an independent specification, plus action-log checks, caught
+          everything here except two problems that needed live runs.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BibTeX -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" type="button" onclick="copyBibTeX()" aria-label="Copy BibTeX to clipboard">Copy</button>
+      </div>
+      <pre id="bibtex-code"><code>@misc{sharma2026statetransition,
+  title  = {How State-Transition Fidelity Affects Financial Agent Evaluation},
+  author = {Sharma, Gauri and Tiku, Sarvesh},
+  note   = {Under consideration at the Agent Evaluation Science Workshop},
+  year   = {2026}
+}</code></pre>
+    </div>
+  </section>
+</main>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license noopener" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

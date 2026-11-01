@@ -1,0 +1,33 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.950
+When the pipeline is wrong: auditing the evaluation of scientific agents.
+
+2
+00:00:04.000 --> 00:00:11.450
+A benchmark that marks a conclusion correct makes three claims at once: it is true, the agent's experiment supports it, and the grader credited it for that reason. A conclusion can be true but unsupported, or supported but false.
+
+3
+00:00:11.500 --> 00:00:19.450
+Across 420 reference traces, 271 conclusions are true and supported, 30 are supported but false, and 1 is true but unsupported. 114 of 116 false discoveries fall on two null tasks whose held-out split contains a significant exposure.
+
+4
+00:00:19.500 --> 00:00:28.450
+Dropping the evidence check raises credit by 4.5 points. Of the 19 newly credited traces, 8 contradict their own test, 10 are consistent but used the wrong label, and 1 has a failed script. In v2, answer-only credit still adds 3.1 points, all from untested "no discovery" claims.
+
+5
+00:00:28.500 --> 00:00:37.450
+One confirmation call is not one test. 10.9% of confirmation scripts fit a separate model for each candidate on held-out data. Taking the minimum p over ten tests discovers on 39.4% of null tasks, against 4.8% for one locked test.
+
+6
+00:00:37.500 --> 00:00:46.450
+In fresh runs, the v1 faults lowered success by 3.6 to 5.0 points. Replaying the same actions in the faulted environment barely moved the grade: the fault touched the cited confirmation in 2 of 420 replays.
+
+7
+00:00:46.500 --> 00:00:53.950
+In v2 the harness runs one locked test and each decision cites an immutable record. Every confirmed decision matched its evidence.
+
+8
+00:00:54.000 --> 00:01:00.000
+Generate the evidence in the harness, bind each decision to an immutable record, and report truth, evidence, and credit separately.

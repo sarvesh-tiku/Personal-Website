@@ -1,0 +1,33 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:04.450
+How state-transition fidelity affects financial agent evaluation: what happens to agent scores when the simulator gets one rule wrong.
+
+2
+00:00:04.500 --> 00:00:12.450
+A small SQLite bank behind nine tools, with three rules. R1: freezing an account blocks its outflows. R2: editing a transfer voids its approval. R3: reusing an idempotency key does not charge twice. We switch off one rule at a time and keep everything else identical.
+
+3
+00:00:12.500 --> 00:00:19.450
+Two common graders, an outcome grader and a state-match grader that replays the gold trajectory, are judged against a separately written specification oracle.
+
+4
+00:00:19.500 --> 00:00:27.450
+With live GPT models, the outcome grader failed all 87 correct episodes without R1 and all 50 correct retries without R3. The state-match grader passed all 50 double charges. In the correct environment, neither grader made a mistake.
+
+5
+00:00:27.500 --> 00:00:35.450
+Without R2, an edited transfer stays marked approved. GPT-4.1 and GPT-5 mini paid on the stale approval in 19 of 20 runs, and both graders passed them. Models that built a properly approved replacement were failed.
+
+6
+00:00:35.500 --> 00:00:42.950
+Rank agreement with the specification fell from 1.0 to 0.22. GPT-5, actually the most reliable model, was ranked below two others. The reversal comes from a single task.
+
+7
+00:00:43.000 --> 00:00:51.950
+In tau-bench, a refused prohibited write kept full reward on all 115 retail tasks, 14 rewarded GPT-4o episodes contain a confirmed policy violation, and seeded transition bugs changed no gold-replay verdict. AppWorld's assertions caught all 114 affected mutations.
+
+8
+00:00:52.000 --> 00:00:59.500
+Final-state grading cannot see refused actions, and gold replay through the same tools cannot reveal a transition bug. A per-step check against an independent specification caught everything here except two problems that needed live runs.

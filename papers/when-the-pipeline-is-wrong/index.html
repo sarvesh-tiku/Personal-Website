@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An audit of how scientific-agent benchmarks grade conclusions. Truth, evidential support and grader credit are measured separately with a frozen statistical oracle; one permitted confirmation call often hid many tests, an answer-only grader credited untested null claims, and environment faults mattered only when they reached the agent.">
+  <meta name="keywords" content="scientific agents, agent evaluation, evidential validity, grader design, fault injection, reproducibility">
+  <meta name="author" content="Sarvesh Tiku, Gauri Sharma">
+  <meta name="robots" content="noindex, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="When the Pipeline Is Wrong: Auditing the Evaluation of Scientific Agents">
+  <meta property="og:description" content="Truth, evidence and credit are different quantities. A frozen oracle shows where scientific-agent graders reward the wrong thing.">
+  <meta property="og:image" content="static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Paired change in success under each pipeline fault, and the v1 traces credited only without a provenance check">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="When the Pipeline Is Wrong: Auditing the Evaluation of Scientific Agents">
+  <meta name="twitter:description" content="Truth, evidence and credit are different quantities. A frozen oracle shows where scientific-agent graders reward the wrong thing.">
+  <meta name="twitter:image" content="static/images/social_preview.png">
+
+  <title>When the Pipeline Is Wrong</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], tags: 'none' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+      chtml: { scale: 1.0 }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">When the Pipeline Is Wrong: Auditing the Evaluation of Scientific Agents</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Sarvesh Tiku,</span>
+              <span class="author-block">Gauri Sharma</span>
+            </div>
+            <div class="is-size-5 publication-authors affil">
+              <span class="author-block">Georgia Institute of Technology</span>
+            </div>
+            <div class="publication-venue-line">Preprint, 2026</div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="static/pdfs/paper.pdf" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#teaser" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-video" aria-hidden="true"></i></span>
+                    <span>Video</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-quote-right" aria-hidden="true"></i></span>
+                    <span>BibTeX</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Teaser video -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" poster="static/videos/teaser_poster.jpg" data-autoplay muted loop playsinline controls
+               preload="metadata" aria-describedby="teaser-caption">
+          <source src="static/videos/teaser.webm" type="video/webm">
+          <source src="static/videos/teaser.mp4" type="video/mp4">
+          <track kind="captions" src="static/captions/teaser.vtt" srclang="en" label="English">
+        </video>
+        <h2 class="subtitle has-text-centered" id="teaser-caption">
+          A benchmark that marks a scientific agent&rsquo;s conclusion &ldquo;correct&rdquo; is claiming three things at
+          once. With a known generating process and a frozen oracle, we measure them separately and find where graders
+          reward the wrong one.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Abstract -->
+  <section class="section hero is-light" id="abstract">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              A benchmark that credits a scientific agent&rsquo;s conclusion conflates three things: whether the conclusion
+              is true, whether the agent&rsquo;s experiment supports it, and whether the grader checked. We measure these
+              separately in hypothesis-testing tasks with known ground truth, using a frozen statistical oracle that
+              recomputes confirmatory evidence independently of the agent. Re-executing the 1,665 confirmation scripts from
+              a 1,680-run experiment shows that 10.9% of them used a single permitted confirmation call to fit separate
+              models for several candidate hypotheses on held-out data. Removing the evidence check from the grader raised
+              credit by 4.5 points, but most of that gap came from decisions the strict grader rejected for their output
+              format rather than for lacking evidence. When the harness instead runs one locked test and each decision must
+              cite its record, every confirmed decision matched its evidence, yet an answer-only grader still credited
+              &ldquo;no discovery&rdquo; claims made without any test. Scientific-agent benchmarks should generate evidence
+              in the harness and report truth, evidence, and credit as separate quantities.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Framework -->
+  <section class="section" id="framework">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Truth, Evidence, and Credit</h2>
+      <div class="prose">
+        <p>
+          A scientific-agent benchmark that marks a conclusion &ldquo;correct&rdquo; makes three claims at once: the
+          conclusion agrees with how the data were generated, the agent&rsquo;s experiment supports it, and the grader
+          credited it for that reason. A conclusion can be true but unsupported, as when an agent ignores a significant
+          confirmatory result and the effect happens to be absent. It can be supported but untrue, as when the confirmation
+          sample contains a chance association.
+        </p>
+        <p>
+          Each task gives an observational dataset with an outcome, ten candidate exposures, and a four-level site variable,
+          and asks which exposure, if any, has a direct effect on the outcome after accounting for site. One decoy exposure
+          is confounded by site, and in effect tasks one exposure has a direct effect \(\beta \in [0.15, 0.25]\).
+          Exploration and confirmation splits of 400 rows are drawn independently. A Monte Carlo study of 10,000 dataset
+          pairs confirms that the fixed confirmatory test rejects at 5.0% under the null.
+        </p>
+        <p>
+          The hidden truth is \(Z \in \{\varnothing, x_1, \dots, x_{10}\}\). The agent locks a hypothesis \(H\), obtains
+          evidence, and submits \(D \in \{\mathrm{disc}(x), \mathrm{ncd}, \mathrm{abstain}\}\), where ncd means &ldquo;no
+          confirmed discovery&rdquo;. With \(p_H\) the p-value of the frozen oracle test of \(H\) on the confirmation split
+          (OLS of the outcome on \(H\) and site indicators, two-sided at \(\alpha = 0.05\)):
+        </p>
+        <div class="equation-block">
+          \[
+            \mathrm{TRUTH} = \mathbb{1}[D = \mathrm{disc}(Z)] \;\text{or}\; \mathbb{1}[D = \mathrm{ncd} \wedge Z = \varnothing],
+            \qquad
+            \mathrm{EVID} = \mathbb{1}[D = \mathrm{disc}(H) \wedge p_H < \alpha] \;\text{or}\; \mathbb{1}[D = \mathrm{ncd} \wedge p_H \ge \alpha].
+          \]
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="sci-table text-table">
+          <caption>Glossary of named quantities and conditions.</caption>
+          <thead>
+            <tr><th>Name</th><th>Meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>TRUTH</td><td>Decision agrees with the generating process (discovery of the true exposure, or &ldquo;no confirmed discovery&rdquo; on a null task)</td></tr>
+            <tr><td>EVID</td><td>Oracle&rsquo;s locked test supports the decision (p &lt; &alpha; for a discovery, p &ge; &alpha; otherwise)</td></tr>
+            <tr><td>CONS</td><td>Decision equals the one the locked evidence implies</td></tr>
+            <tr><td>PROTO</td><td>Exactly one confirmation, and the decision cites its record</td></tr>
+            <tr><td>Joint valid success</td><td>TRUTH &and; EVID &and; PROTO; the v2 reference score</td></tr>
+            <tr><td>Replay-graded success</td><td>v1 reference score: truth-correct and consistent with a re-run of the agent&rsquo;s own script</td></tr>
+            <tr><td>REF</td><td>Reference pipeline, all safeguards on (v1 and v2)</td></tr>
+            <tr><td>LEAK (v1)</td><td>Held-out split readable and repeated confirmation allowed</td></tr>
+            <tr><td>SILENT (v1)</td><td>Every run reported as successful; errors hidden</td></tr>
+            <tr><td>STALE (v1)</td><td>Results cached by a script&rsquo;s first three lines</td></tr>
+            <tr><td>PROV / PROV_GRADE</td><td>Grader credits TRUTH alone (v1 / v2; same traces, no new runs)</td></tr>
+            <tr><td>SEP_READ (v2)</td><td>Held-out split readable; confirmation still one-shot</td></tr>
+            <tr><td>INT_MASK (v2)</td><td>Only failed runs reported as successful</td></tr>
+            <tr><td>FRESH_CACHE (v2)</td><td>Results cached by a script&rsquo;s first 256 characters</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Protocols -->
+  <section class="section hero is-light" id="protocols">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Two Protocols</h2>
+      <div class="prose">
+        <p>
+          In the original protocol (v1), <code>confirm(code)</code> ran an agent-written script on the confirmation split.
+          The script printed a JSON answer, estimate, and p, and <code>submit</code> restated them. The grader credited
+          truth-correct submissions that matched a re-execution of the cited script. That certifies that a script
+          reproducibly printed a claim, not that the claim follows from the intended test: a script that only prints
+          <code>{"answer":"x","p_value":0.001}</code> passes.
+        </p>
+        <p>
+          In the trusted protocol (v2), <code>confirm(exposure)</code> accepts one candidate name and nothing else. The
+          first accepted call locks \(H\). The harness runs the oracle on a split that is never in the agent&rsquo;s
+          workspace and returns an <code>analysis_id</code> bound by SHA-256 to the dataset hash and the result.
+          <code>submit(decision, analysis_id)</code> cites the record and restates no numbers.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig1">
+        <picture><source srcset="static/figures/fig1_pipeline.webp" type="image/webp"><img src="static/figures/fig1_pipeline.png" width="2617" height="1303" loading="lazy"
+             alt="Diagram of the v2 pipeline. Agent-controlled steps (exploration split, run_python, lock hypothesis with confirm, decision with submit) sit below trusted infrastructure (server-private held-out split, fixed OLS test, immutable evidence record, validator, credit). Numbered markers show where the separation, integrity, freshness and provenance faults act."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 1.</span>
+          Trusted-confirmation pipeline (v2) and fault locations. The agent explores freely but can only name one exposure
+          for confirmation. A fixed test runs on server-private data and writes an immutable record. The decision cites
+          that record, and the validator checks it against the truth manifest before credit is assigned.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          Each fault mutates one boundary. In v1, LEAK exposed the split and allowed repeated confirmation, SILENT rewrote
+          every run&rsquo;s status to &ldquo;ok&rdquo;, and STALE keyed a cache on a script&rsquo;s first three lines. The
+          v2 operators each change one thing: SEP_READ makes the split readable but keeps confirmation one-shot, INT_MASK
+          shows only failed runs as exit code 0, and FRESH_CACHE keys the cache on a script&rsquo;s first 256 characters.
+          PROV and PROV_GRADE credit TRUTH alone.
+        </p>
+        <p>
+          In v1, seven OpenRouter models ran 20 tasks with 3 repeats under REF, LEAK, SILENT, and STALE: 1,680 runs for
+          $35.60. We re-executed all 1,665 cited confirmation scripts under instrumentation. For v2, forty new tasks ran
+          once per task with four of the v1 models under REF, SEP_READ, INT_MASK, and FRESH_CACHE: 640 runs for $2.94.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Results -->
+  <section class="section" id="results">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Results</h2>
+      <div class="prose">
+        <h3 class="subtitle is-5">Truth and evidence diverge in both directions</h3>
+        <p>
+          Applying the oracle to every recoverable hypothesis in the 420 v1 reference traces gives 271 conclusions that are
+          true and supported, 30 that are supported but false, and 1 that is true but unsupported. Another 118 have no
+          evidential status because no single hypothesis was locked. Of 116 v1 false discoveries, 114 fall on two null tasks
+          whose confirmation split contains an oracle-significant exposure, and the deterministic reference agent errs on
+          both. Excluding them lowers the null false-discovery rate from 13.8% to 0.3%. False discoveries on a fixed
+          benchmark should be reported against a trusted baseline on the same datasets, counting datasets rather than runs.
+        </p>
+        <h3 class="subtitle is-5">What an answer-only grader credits</h3>
+        <p>
+          Dropping the evidence check from the v1 grader raises credit on identical traces by +4.5 pp [+1.9, +7.9]. Eight of
+          the newly credited traces contradict their own evidence. Ten are correct readings of non-significant tests that
+          broke the output contract: a typical DeepSeek script printed <code>{"answer":"nitrate", "p_value":0.2015}</code>,
+          and the agent submitted &ldquo;none&rdquo;. One has a failed script. So 2.6 of the 4.5 pp reflects format
+          compliance, not evidence violations.
+        </p>
+        <p>
+          v2 removes the label problem, because decisions cite records, but PROV_GRADE still adds +3.1 pp [+0.6, +5.6]. All
+          5 newly credited runs are Haiku declaring &ldquo;no confirmed discovery&rdquo; on null tasks without calling
+          <code>confirm</code>. When half the tasks are null, &ldquo;no discovery&rdquo; is a free answer unless credit
+          requires evidence.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig2">
+        <picture><source srcset="static/figures/fig2_fault_effects.webp" type="image/webp"><img src="static/figures/fig2_fault_effects.png" width="2622" height="943" loading="lazy"
+             alt="(a) Paired change versus the reference pipeline for each fault in v1 and v2, with 95% intervals; provenance regrades are positive, v1 separation, integrity and freshness faults are negative, v2 fault intervals cross zero. (b) Stacked bars of the 19 v1 traces credited only without provenance, by model, split into contradicts own test, consistent with label off-format, and script failed."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 2.</span>
+          (a) Paired change vs. the reference pipeline with 95% task-cluster bootstrap intervals. Diamonds regrade identical
+          traces (change in credit); circles are fresh runs. v1 and v2 use different success constructs, so magnitudes are
+          not comparable across blocks. (b) The 19 v1 reference traces credited only by the answer-only grader, by what the
+          agent&rsquo;s own confirmation output showed.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <h3 class="subtitle is-5">One confirmation call is not one test</h3>
+        <p>
+          The v1 harness enforced one <code>confirm</code> call, but each call executed arbitrary code on the confirmation
+          split. Logging every statsmodels and SciPy fit inside the re-executed scripts shows what that call actually did.
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table class="sci-table">
+          <caption>v1 confirmation scripts by inferential structure (all 1,665 cited confirmation scripts across REF, LEAK,
+            SILENT, STALE). Null disc.: discoveries on null tasks (all false). Min-p: discoveries whose reported exposure is
+            the smallest-p candidate among those fitted. Correction: script text contains a multiplicity-correction pattern;
+            a lexical indicator, not a verified procedure.</caption>
+          <thead>
+            <tr><th>Structure</th><th>Scripts</th><th>%</th><th>Discoveries</th><th>Null disc.</th><th>Min-p</th><th>Correction</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Single candidate</td><td>935</td><td>56.2</td><td>556</td><td>50</td><td>0</td><td>3</td></tr>
+            <tr><td>Several candidates, one model structure</td><td>522</td><td>31.4</td><td>329</td><td>44</td><td>292</td><td>44</td></tr>
+            <tr><td>Separate per-candidate fits</td><td>182</td><td>10.9</td><td>47</td><td>18</td><td>46</td><td>126</td></tr>
+            <tr><td>No identifiable fit</td><td>26</td><td>1.6</td><td>11</td><td>4</td><td>0</td><td>3</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prose">
+        <p>
+          Separate per-candidate fits are a screen on held-out data. Locking a hypothesis on exploration data and testing it
+          once discovers on 4.8% of nulls; taking the minimum p over ten confirmation tests discovers on 39.4%, close to
+          \(1 - 0.95^{10} = 40.1\%\) for independent tests. Single-test scripts matched the oracle&rsquo;s significance call in
+          793 of 794 cases: the arithmetic was right, but the mapping from tool call to inferential act was not fixed.
+        </p>
+        <p>
+          v2 fixes it, since <code>confirm</code> takes a name, runs one test, and locks the hypothesis. Under v2, every
+          confirmed decision equalled the decision its record implied, against 8 contradictions among v1 reference traces.
+          Pre-registration has to constrain the hypothesis and the analysis, not the number of tool invocations.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Faults -->
+  <section class="section hero is-light" id="faults">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Faults Matter Only When They Manifest</h2>
+      <div class="table-wrap">
+        <table class="sci-table">
+          <caption>Paired change vs. the reference pipeline (pp; 95% task-cluster bootstrap CI, B = 20,000). Regrade rows
+            change only credit on identical traces; fresh rows change replay-graded success (v1) or joint valid success
+            (v2), which are different constructs. Visible: share of faulted runs in which a faulty observation reached the
+            agent. LOMO: range when each model is left out.</caption>
+          <thead>
+            <tr><th>Fault</th><th>Comparison</th><th>&Delta;</th><th>95% CI</th><th>Visible</th><th>LOMO range</th></tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="6"><em>Original protocol: agent-authored confirm script; 20 tasks, 7 models, 3 repeats</em></td></tr>
+            <tr><td>PROV</td><td>same-trace regrade</td><td>+4.5</td><td>[+1.9, +7.9]</td><td>&mdash;</td><td>[+2.8, +5.3]</td></tr>
+            <tr><td>LEAK</td><td>fresh runs</td><td>&minus;3.6</td><td>[&minus;5.5, &minus;1.4]</td><td>89%</td><td>[&minus;4.4, &minus;1.4]</td></tr>
+            <tr><td>SILENT</td><td>fresh runs</td><td>&minus;5.0</td><td>[&minus;7.4, &minus;2.6]</td><td>28%</td><td>[&minus;5.8, &minus;3.6]</td></tr>
+            <tr><td>STALE</td><td>fresh runs</td><td>&minus;5.0</td><td>[&minus;7.4, &minus;2.6]</td><td>44%</td><td>[&minus;6.1, &minus;2.2]</td></tr>
+            <tr><td colspan="6"><em>Trusted one-shot confirmation: 40 new tasks, 4 models, 1 repeat</em></td></tr>
+            <tr><td>PROV_GRADE</td><td>same-trace regrade</td><td>+3.1</td><td>[+0.6, +5.6]</td><td>&mdash;</td><td>[+0.0, +4.2]</td></tr>
+            <tr><td>SEP_READ</td><td>fresh runs</td><td>+0.6</td><td>[&minus;2.5, +4.4]</td><td>88%</td><td>[+0.0, +1.7]</td></tr>
+            <tr><td>INT_MASK</td><td>fresh runs</td><td>&minus;1.9</td><td>[&minus;5.6, +2.5]</td><td>15%</td><td>[&minus;3.3, &minus;0.8]</td></tr>
+            <tr><td>FRESH_CACHE</td><td>fresh runs</td><td>&minus;1.2</td><td>[&minus;4.4, +1.9]</td><td>19%</td><td>[&minus;2.5, +0.8]</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prose">
+        <p>
+          In v1 the three faults lowered success in fresh runs, with Holm-adjusted p = 0.023, 0.006, and 0.006. The losses
+          are concentrated: Qwen lost up to 21.7 pp and DeepSeek up to 16.7 pp, while the other models moved by at most
+          3.3 pp. Re-executing the 420 reference action sequences unchanged in each faulted environment moved the grade by
+          0, 0, and &minus;0.5 pp, even though 26.7% of the sequences contained an error that SILENT would hide and 42.1% hit a
+          stale entry under STALE. A fault changes the grade of fixed behaviour only if it touches the cited confirmation,
+          which happened in 2 of 420 replays.
+        </p>
+        <p>
+          A scheduled fault is not a delivered treatment: masking needs a failing run, and staleness needs two scripts
+          sharing a key prefix. In v2 a masked failure reached the agent in 15% of INT_MASK runs and a stale output in 19%
+          of FRESH_CACHE runs. The held-out file was visible in 88% of SEP_READ runs but read in 4%, never before the lock.
+          The v2 contrasts are a power-limited null, not evidence of no effect: with 40 tasks, four models, and one repeat,
+          each interval spans about &plusmn;4 pp.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig3">
+        <picture><source srcset="static/figures/fig3_manifestation.webp" type="image/webp"><img src="static/figures/fig3_manifestation.png" width="2489" height="1096" loading="lazy"
+             alt="Horizontal bars for six faults showing the share of runs in which the fault was scheduled, triggered, visible to the agent, and used. LEAK and SEP_READ are visible in most runs but rarely used; SILENT, STALE, INT_MASK and FRESH_CACHE trigger in 15 to 44 percent of runs."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 3.</span>
+          Fault manifestation funnel (unit: run; share of the condition&rsquo;s runs). &ldquo;Used&rdquo; follows
+          operational definitions that differ by fault, so bar lengths are not comparable across fault families as
+          measures of severity.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+
+  <!-- Discussion -->
+  <section class="section" id="discussion">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Discussion</h2>
+      <div class="prose">
+        <p>
+          <strong>Scientific truth does not validate scientific process.</strong> Among v1 reference traces, 30 conclusions
+          were supported and false, and 8 were true but contradicted their own evidence. Agreement with the generating
+          process alone cannot separate a well-run non-replication from a lucky guess. Benchmarks should report TRUTH and
+          EVID separately and judge false discoveries against a trusted agent run on the same datasets.
+        </p>
+        <p>
+          <strong>Grader strictness is not grader correctness.</strong> 11 of the v1 grader&rsquo;s 21 rejections in REF were
+          decisions consistent with a non-significant test whose answer field named the tested candidate. The check
+          enforced format under the name of evidence, and the answer-only grader erred the other way. A grader must encode
+          the decision rule, as v2 does with typed decisions and record lookup.
+        </p>
+        <p>
+          <strong>Infrastructure defines the measured capability.</strong> Under unrestricted confirmation, correct
+          inference, a screen of held-out data, and a lucky answer earn the same score. A v2 score certifies hypothesis
+          selection and decision discipline, not statistical programming.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Limitations -->
+  <section class="section hero is-light" id="limitations">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Limitations</h2>
+      <div class="prose">
+        <p>
+          Our results come from one linear-inference family, 20 (v1) and 40 (v2) datasets, four v2 models with one repeat,
+          and one implementation per fault. v1 used router defaults, and its sandbox let 2 of 1,680 runs read the held-out
+          file. v1 and v2 differ in fault semantics, model panel, inference settings, repeats, and tasks, so the smaller v2
+          fault effects cannot be attributed to the trusted protocol.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BibTeX -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" type="button" onclick="copyBibTeX()" aria-label="Copy BibTeX to clipboard">Copy</button>
+      </div>
+      <pre id="bibtex-code"><code>@misc{tiku2026pipeline,
+  title  = {When the Pipeline Is Wrong: Auditing the Evaluation of Scientific Agents},
+  author = {Tiku, Sarvesh and Sharma, Gauri},
+  note   = {Preprint},
+  year   = {2026}
+}</code></pre>
+    </div>
+  </section>
+</main>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license noopener" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
