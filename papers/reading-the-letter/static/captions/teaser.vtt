@@ -1,0 +1,33 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.950
+Reading the letter, not the horizon: a construct-validity audit of temporal-preference probes.
+
+2
+00:00:04.000 --> 00:00:12.450
+The probe data pairs a short-horizon and a long-horizon continuation of the same stem. Every short-horizon option is marked (A) and every long-horizon option (B), in both released sets. So the letter alone predicts the label.
+
+3
+00:00:12.500 --> 00:00:18.950
+Trained on the released prompts, the probe for OLMo 3 Instruct reaches 0.97 to 1.00 on held-out pairs and transfers at 0.97 to a second dataset.
+
+4
+00:00:19.000 --> 00:00:26.950
+Swap (A) and (B) at test time and it falls far below chance: 0.04 to 0.06 in blocks 26 to 31. The probe follows the letter, at every OLMo stage. A bag-of-words classifier with no model does just as well.
+
+5
+00:00:27.000 --> 00:00:35.450
+With the letters removed, a weaker signal survives. It transfers to the second set at 0.85 to 0.87, against at most 0.60 for bag-of-words baselines. It may still encode the scope of the action rather than time.
+
+6
+00:00:35.500 --> 00:00:42.950
+The signal is already present in the Base model. Post-training leaves its peak transfer within 0.02 and lowers it in the final block.
+
+7
+00:00:43.000 --> 00:00:51.950
+Steering along it raises the long-horizon choice by at most 0.10, and the letter-confounded direction does the same; at block 16, so does a random direction.
+
+8
+00:00:52.000 --> 00:00:59.500
+The letter-free probe survives the artifact, but it is not yet shown to be about time or to drive choices. High probe accuracy can be evidence for the wrong construct.

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A construct-validity audit of temporal-preference probes. In the probe dataset, every short-horizon option is (A) and every long-horizon option (B); swapping the letters drops a near-perfect probe far below chance across the OLMo 3 training stages. A weaker letter-free signal survives, is present in Base, and does not selectively steer choices.">
+  <meta name="keywords" content="construct validity, linear probes, interpretability, dataset artifacts, intertemporal choice, oversight, OLMo 3">
+  <meta name="author" content="Sarvesh Tiku">
+  <meta name="robots" content="noindex, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Reading the Letter, Not the Horizon: A Construct-Validity Audit of Temporal-Preference Probes">
+  <meta property="og:description" content="A near-perfect temporal-preference probe reads the option letter, not the horizon. Swapping (A) and (B) drops it far below chance at every OLMo 3 training stage.">
+  <meta property="og:image" content="static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Probe accuracy by decoder block in OLMo 3 Instruct, with and without the option letters swapped">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Reading the Letter, Not the Horizon: A Construct-Validity Audit of Temporal-Preference Probes">
+  <meta name="twitter:description" content="A near-perfect temporal-preference probe reads the option letter, not the horizon. Swapping (A) and (B) drops it far below chance at every OLMo 3 training stage.">
+  <meta name="twitter:image" content="static/images/social_preview.png">
+
+  <title>Reading the Letter, Not the Horizon</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], tags: 'none' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+      chtml: { scale: 1.0 }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Reading the Letter, Not the Horizon: A Construct-Validity Audit of Temporal-Preference Probes</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Sarvesh Tiku</span>
+            </div>
+            <div class="is-size-5 publication-authors affil">
+              <span class="author-block">Georgia Institute of Technology</span>
+            </div>
+            <div class="publication-venue-line">Under consideration at the MERe AI 2026 Workshop</div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="static/pdfs/paper.pdf" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#teaser" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-video" aria-hidden="true"></i></span>
+                    <span>Video</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-quote-right" aria-hidden="true"></i></span>
+                    <span>BibTeX</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Teaser video -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" poster="static/videos/teaser_poster.jpg" data-autoplay muted loop playsinline controls
+               preload="metadata" aria-describedby="teaser-caption">
+          <source src="static/videos/teaser.webm" type="video/webm">
+          <source src="static/videos/teaser.mp4" type="video/mp4">
+          <track kind="captions" src="static/captions/teaser.vtt" srclang="en" label="English">
+        </video>
+        <h2 class="subtitle has-text-centered" id="teaser-caption">
+          A probe for short- versus long-horizon choices scores near-perfectly in every OLMo&nbsp;3 training stage.
+          Swap the option letters and it falls far below chance: it was reading &ldquo;(A)&rdquo; and &ldquo;(B)&rdquo;.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Abstract -->
+  <section class="section hero is-light" id="abstract">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Linear probes on a language model&rsquo;s activations are proposed as oversight tools for decision-relevant
+              distinctions that a model&rsquo;s final answer may not reveal. A probe&rsquo;s accuracy, however, is evidence
+              about the intended construct only if nothing else in the data predicts the label. We audit probes for
+              short- versus long-horizon choices, a distinction that bears on many normatively significant trade-offs,
+              across the released training stages of OLMo&nbsp;3&nbsp;7B (Base, RL-Zero, SFT, DPO, Instruct) and in
+              Qwen3-4B-Instruct. In the probe dataset we use, every short-horizon option is marked &ldquo;(A)&rdquo; and
+              every long-horizon option &ldquo;(B)&rdquo;. Probes trained on the original prompts reach 0.97&ndash;1.00
+              held-out accuracy, but swapping the two letters at test time reduces them to 0.03&ndash;0.11 in OLMo blocks
+              26&ndash;31, at every stage; a text classifier with no model reproduces the original scores. With the
+              letters removed, a weaker signal survives: it transfers zero-shot to a second, explicit-horizon dataset at
+              0.85&ndash;0.87, against at most 0.60 for bag-of-words baselines. This signal is already present in Base;
+              post-training leaves its peak transfer within 0.02 and lowers its final-block transfer by 0.04&ndash;0.06.
+              Activation steering with it does not change forced choices more selectively than norm-matched random
+              directions. We argue that representation-based oversight claims need artifact controls, discrimination
+              from correlated constructs and causal tests, and report which of these our evidence meets.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Motivation -->
+  <section class="section" id="motivation">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Decodable Is Not the Same as Valid</h2>
+      <div class="prose">
+        <p>
+          A model&rsquo;s final answer often under-determines the considerations behind it, which makes internal
+          measurements attractive for oversight: a decision-relevant distinction read from activations could be tracked
+          even when the output looks appropriate. Intertemporal trade-offs are a natural target. Many decisions with
+          ethical weight set an immediate benefit against delayed costs, and how a system weighs them is rarely stated.
+          A short horizon is not, by itself, the worse choice, so the construct of interest is not &ldquo;moral
+          correctness&rdquo; but whether and how a model represents the horizon of its options.
+        </p>
+        <p>
+          High probe accuracy shows that a label is linearly decodable, not that the model encodes the intended
+          construct, and still less that it uses it. If some incidental property of the inputs predicts the label, a
+          probe can learn that property instead. We study this in a concrete case: a recent study localised a
+          temporal-preference signal in Qwen3-4B-Instruct with probes, attribution and patching, and we set out to ask at
+          which OLMo&nbsp;3 training stage such a signal forms. The probe accuracies were near-perfect and transferred
+          almost perfectly to a second dataset. Both facts turned out to have a simple cause.
+        </p>
+      </div>
+      <div class="claims" role="list">
+        <div class="claim" role="listitem">
+          <div class="claim-letter">A</div>
+          <div class="claim-name">Artifact robustness</div>
+          <p>The original probe fails letter counterbalancing. A probe trained without letters passes by construction.</p>
+          <span class="verdict part">&#9680; Letter-free probe only</span>
+        </div>
+        <div class="claim" role="listitem">
+          <div class="claim-letter">G</div>
+          <div class="claim-name">Generalisation</div>
+          <p>0.85&ndash;0.87 zero-shot transfer, beating every bag-of-words baseline, but to a set from the same study.</p>
+          <span class="verdict part">&#9680; Partly</span>
+        </div>
+        <div class="claim" role="listitem">
+          <div class="claim-letter">C</div>
+          <div class="claim-name">Construct</div>
+          <p>Horizon co-varies with the scope and abstractness of the action; the two are not yet separated.</p>
+          <span class="verdict na">? Not tested</span>
+        </div>
+        <div class="claim" role="listitem">
+          <div class="claim-letter">U</div>
+          <div class="claim-name">Causal use</div>
+          <p>Steering along the signal moves forced choices no more selectively than random directions.</p>
+          <span class="verdict no">&#10007; Not shown</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Setup -->
+  <section class="section hero is-light" id="setting">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Setup and Controls</h2>
+      <div class="prose">
+        <p>
+          We use the two publicly released sets from that study. The <em>implicit</em> set has 300 pairs: a stem and two
+          continuations, one immediate and one long-term, with almost no temporal vocabulary (&ldquo;When the system fails,
+          the first priority becomes (A) containing the spreading damage before it escalates&rdquo; versus &ldquo;&hellip;
+          (B) redesigning the architecture to prevent recurrence&rdquo;). The <em>explicit</em> set has 500 pairs with
+          stated horizons (&ldquo;(A) What we can deliver in the next 30 days&rdquo; versus &ldquo;(B) What position we want
+          in 10 years&rdquo;). Each continuation is a separate prompt, labelled 1 if long-term.
+        </p>
+        <p>
+          We read the residual stream at the output of every block at the last token of the option, across the five
+          OLMo&nbsp;3&nbsp;7B checkpoints (Base, RL-Zero, SFT, DPO, Instruct) and Qwen3-4B-Instruct as a cross-model check.
+          The probe is an \(\ell_2\)-regularised logistic regression on standardised features,
+          \[
+            \min_{w,b}\; C\sum_i \ell_{\mathrm{BCE}}\big(w^\top z_i + b,\; y_i\big) + \tfrac12\lVert w\rVert^2,
+            \qquad C = 0.1,
+          \]
+          fitted on five 80/20 splits grouped by pair. <em>Implicit accuracy</em> is measured on held-out pairs;
+          <em>explicit transfer</em> applies the implicit-trained probe, unchanged, to all 1,000 explicit prompts.
+        </p>
+        <p>Three controls do most of the work:</p>
+        <ul class="claim-defs">
+          <li><strong>Letter swap.</strong> &ldquo;(A)&rdquo; and &ldquo;(B)&rdquo; are exchanged in each prompt with the content
+            unchanged, and the original-format probe is evaluated on the result.</li>
+          <li><strong>Letter removal.</strong> The markers are deleted, and a <em>letter-free probe</em> is trained and
+            evaluated without them.</li>
+          <li><strong>Lexical baselines.</strong> Bag-of-words logistic regressions with no model, 12 settings, reporting the
+            best one chosen on the evaluation data, which favours the baseline.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Results: confound -->
+  <section class="section" id="results">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">A Near-Perfect Probe Reads the Letter</h2>
+      <div class="prose">
+        <p>
+          Trained on the released prompts, the probe for the Instruct model reaches 0.97&ndash;1.00 on held-out implicit
+          pairs from block 7 on and transfers at 0.97 to the explicit set. Because the two sets share little vocabulary
+          (Jaccard similarity 0.21), that transfer would ordinarily count against a lexical explanation. But in both sets
+          the option letter determines the label in every prompt: 300/0 and 0/300 in the implicit set, 500/0 and 0/500 in
+          the explicit set.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig1">
+        <picture><source srcset="static/figures/fig1_letter_confound.webp" type="image/webp"><img src="static/figures/fig1_letter_confound.png" width="2380" height="920" loading="lazy"
+             alt="Two line plots of probe accuracy against decoder block for OLMo 3 Instruct. The original-format probe is near 1.0 from block 5 on; the same probe with letters swapped falls below chance at block 17 and to about 0.05 by block 26; the letter-free probe stays between 0.9 and 0.96 on implicit pairs and peaks near 0.86 on the explicit set."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 1.</span>
+          Option-letter confound, OLMo&nbsp;3 Instruct, chat format. (a) Held-out implicit pairs; (b) the same probes
+          applied zero-shot to the explicit set. The original-format probe (solid) is near-perfect, but evaluating it with
+          (A)/(B) swapped (dash-dot) drops it below chance from block 17. A probe trained without letters (dashed; band:
+          &plusmn;1 sd over five grouped splits) keeps a weaker signal. Grey dashed: best letter-free bag-of-words
+          baseline; dotted: chance.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          Swapping the letters leaves early blocks close to their original accuracy, drops the probe below chance from
+          block 17, and leaves it at 0.04&ndash;0.06 on implicit pairs in blocks 26&ndash;31. Far-below-chance accuracy
+          means the probe&rsquo;s decision follows the letter, not that the activations contain nothing else: the same
+          layers support a good letter-free probe.
+        </p>
+        <p>
+          The pattern holds at every stage and in both formats: under the swap, the original-format probe scores
+          0.03&ndash;0.11 in blocks 26&ndash;31 for Base, RL-Zero, SFT, DPO and Instruct. It is a property of the dataset
+          and needs no model at all. A bag-of-words classifier that keeps the letter tokens scores 1.00 on implicit pairs
+          and 0.99 on the explicit set. Qwen3-4B-Instruct shows the same failure with a different depth profile: at layer
+          26, where the original study&rsquo;s probe peaked, our original-format probe scores 0.99, but 0.29 with letters
+          swapped. Unlike in OLMo, a letter-free probe there remains strong (0.95 implicit, 0.87 explicit), so in Qwen the
+          confound inflates the late-layer probe rather than accounting for all of it.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Results: letter-free and stages -->
+  <section class="section hero is-light" id="stages">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">What Survives Without the Letters</h2>
+      <div class="prose">
+        <p>
+          With the letters removed, the probe separates held-out implicit pairs at 0.95&ndash;0.97, only modestly above
+          the best bag-of-words baseline (0.89). Transfer is more informative: lexical baselines trained on implicit items
+          reach at most 0.60 on the explicit set, while the letter-free probe transfers at 0.85&ndash;0.87 at its best
+          block in every OLMo checkpoint. It captures something shared across the two sets that word identity does not.
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table class="sci-table">
+          <caption>Letter-free probe by checkpoint (implicit: held-out accuracy at the best block; explicit: zero-shot
+            transfer at the best block and at the final block), and the original-format probe with letters swapped.
+            Means over five grouped splits. Best letter-free bag-of-words baselines: 0.89 implicit, 0.60 explicit.</caption>
+          <thead>
+            <tr><th>Checkpoint, format</th><th>Implicit</th><th>Explicit</th><th>Best block</th><th>Explicit, block 31</th><th>Original, swapped</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>OLMo 3 Base, plain</td><td>0.97</td><td>0.86</td><td>10</td><td>0.78</td><td>0.05</td></tr>
+            <tr><td>OLMo 3 RL-Zero, plain</td><td>0.97</td><td>0.86</td><td>10</td><td>0.78</td><td>0.04</td></tr>
+            <tr><td>OLMo 3 SFT, plain</td><td>0.96</td><td>0.86</td><td>15</td><td>0.74</td><td>0.11</td></tr>
+            <tr><td>OLMo 3 DPO, plain</td><td>0.96</td><td>0.87</td><td>15</td><td>0.73</td><td>0.11</td></tr>
+            <tr><td>OLMo 3 Instruct, plain</td><td>0.97</td><td>0.87</td><td>15</td><td>0.72</td><td>0.08</td></tr>
+            <tr><td>OLMo 3 SFT, chat</td><td>0.96</td><td>0.85</td><td>15</td><td>0.71</td><td>0.08</td></tr>
+            <tr><td>OLMo 3 DPO, chat</td><td>0.96</td><td>0.86</td><td>15</td><td>0.69</td><td>0.07</td></tr>
+            <tr><td>OLMo 3 Instruct, chat</td><td>0.96</td><td>0.86</td><td>15</td><td>0.69</td><td>0.06</td></tr>
+            <tr><td>Qwen3-4B Instruct, chat</td><td>0.97</td><td>0.89</td><td>21</td><td>0.82</td><td>0.29</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prose">
+        <p>
+          What that shared property is, is less clear. The implicit set contrasts <em>courses of action</em> and almost
+          never states a horizon (1% of prompts contain a time expression, versus 42% of short and 66% of long options in
+          the explicit set). A direction that separates the implicit options could encode time horizon, but equally the
+          scope, abstractness or ambition of the action, all of which co-vary with horizon in both sets. We therefore call
+          the signal <em>horizon-correlated</em>: robust to the letter artifact and to lexical overlap, not yet
+          discriminated from correlated constructs.
+        </p>
+        <h3 class="subtitle is-5">Post-training changes late-layer readout more than peak transfer</h3>
+      </div>
+      <figure class="sci-figure" id="fig2">
+        <picture><source srcset="static/figures/fig2_stages.webp" type="image/webp"><img src="static/figures/fig2_stages.png" width="2380" height="920" loading="lazy"
+             alt="Line plots of letter-free explicit-set transfer by block for five OLMo 3 checkpoints in plain-text format. Curves overlap up to block 20 and peak near 0.86; after block 20, SFT, DPO and Instruct fall below Base and RL-Zero, ending near 0.72 to 0.74 versus 0.78."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 2.</span>
+          Letter-free probe, zero-shot transfer to the explicit set, OLMo&nbsp;3 checkpoints in plain-text format (mean
+          &plusmn;1 sd over five grouped splits). (a) All blocks; (b) blocks 20&ndash;31 enlarged. Base and RL-Zero
+          coincide. From SFT on, transfer is lower in the final blocks; the peak is unchanged.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          All OLMo checkpoints peak at 0.85&ndash;0.87, within 0.02 of one another, and their curves overlap up to block
+          20. The final blocks differ: compared with Base on the same split, block-31 transfer is lower for SFT by 0.041 on
+          average (lower in all five splits), with smaller further decreases for DPO and Instruct. RL-Zero and Base differ
+          by at most 0.007 at any block. The checkpoints are observational snapshots, so we can locate the change but not
+          attribute it to a mechanism. Within these limits, the signal is present before post-training, which mainly
+          lowers its linear readability in the last blocks.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Steering -->
+  <section class="section" id="steering">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Steering Does Not Establish Control</h2>
+      <div class="prose">
+        <p>
+          We add \(k\,d\) to every position at the output of block \(L \in \{8, 12, 16, 20, 26\}\) of the Instruct model
+          while it answers an explicit-set pair as a forced choice (&ldquo;Answer with just the letter A or B&rdquo;), asked
+          with both letter orders. Here \(d\) is the class-mean difference of letter-free activations on the implicit set,
+          \[
+            d = \mathbb{E}\big[h_L(x) \mid \text{long}\big] - \mathbb{E}\big[h_L(x) \mid \text{short}\big],
+          \]
+          and a letter-confounded direction and a Gaussian random direction are rescaled to \(\lVert d\rVert\), so \(k\)
+          is in units of class separation.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig3">
+        <picture><source srcset="static/figures/fig3_steering.webp" type="image/webp"><img src="static/figures/fig3_steering.png" width="2380" height="1100" loading="lazy"
+             alt="Grid of ten small line plots: five blocks by two metrics, probability of the long-horizon option and probability of letter B, against steering strength k for three directions. The three directions move the long-horizon probability by at most 0.1 and similarly; letter-B probability moves more. Hollow markers indicate interventions where the model stops answering with A or B."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 3.</span>
+          Steering OLMo&nbsp;3 Instruct at one block with strength \(k\) (A/B forced choice on the explicit set, both
+          letter orders, 1,000 prompts). Top: P(long-horizon option); bottom: P(&ldquo;B&rdquo;); both conditional on
+          answering &ldquo;A&rdquo; or &ldquo;B&rdquo;. Hollow markers: A+B mass &lt; 0.9, not interpreted. Dotted: unsteered.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          Unsteered, the model chooses the long-horizon option with mean probability 0.50. The largest increase is 0.10
+          (\(k = +2\), blocks 8 and 12), and the letter-confounded direction produces the same increase; at block 16 the
+          random direction moves the choice as much as the letter-free one (0.58 for both); at blocks 20 and 26 no
+          direction moves it by more than 0.02. What changes more is the letter: P(&ldquo;B&rdquo;) ranges from 0.17 to
+          0.82, and the random direction moves it as much as the others.
+        </p>
+        <p>
+          We read this as no evidence of selective control under this readout, not as evidence that the representation
+          is unused: the counterbalanced forced choice averages to exactly indifference, and may not elicit this
+          model&rsquo;s preference at all.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Implications -->
+  <section class="section hero is-light" id="implications">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">What a Probe Audit Can Claim</h2>
+      <div class="prose">
+        <p>
+          A probe result can back claims at six levels. Each one rests on the levels before it, so a probe that fails
+          one supports nothing after it.
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table class="sci-table text-table">
+          <caption>A graded view of the evidence a probe-based audit can provide, and what this study shows at each level.</caption>
+          <thead>
+            <tr><th>Level</th><th>Question</th><th>This study</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1. Predictive validity</td><td>Does the probe predict the label on held-out items?</td><td>Yes (0.97&ndash;1.00), but satisfied by the letter alone.</td></tr>
+            <tr><td>2. Artifact robustness</td><td>Does it survive counterbalancing of irrelevant format features?</td><td>Original probe: no. Letter-free probe: yes, by construction.</td></tr>
+            <tr><td>3. Construct discrimination</td><td>Does it separate the construct from plausible correlates?</td><td>Not tested; horizon co-varies with action scope and abstractness.</td></tr>
+            <tr><td>4. Generalisation</td><td>Does it transfer across datasets and contexts?</td><td>Partly: 0.85&ndash;0.87 to a second set from the same study.</td></tr>
+            <tr><td>5. Causal relevance</td><td>Does intervening on it change behaviour selectively?</td><td>Not shown under the A/B readout.</td></tr>
+            <tr><td>6. Oversight utility</td><td>Does it predict decision-relevant failures better than simpler monitors?</td><td>Not tested.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Limitations -->
+  <section class="section" id="limitations">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Limitations</h2>
+      <div class="prose">
+        <p>
+          Horizon is confounded with action scope and abstractness; a design that crosses horizon with scope at matched
+          stems and counterbalanced order would test it. Both datasets share one study and template. The stage analysis
+          rests on one model family, and released snapshots cannot isolate a training mechanism. The A/B readout averages
+          to indifference; free-text continuations scored for horizon, per-prompt paired tests against random directions,
+          and concept erasure would allow a real causal test. We use one token position and one linear probe.
+        </p>
+        <p>
+          A strong internal score was, in this case, evidence for the wrong construct. The signal that survives is real,
+          robust to the artifact and present from pretraining on, but not yet shown to be about time or to drive choices.
+        </p>
+        <p>
+          This work was carried out as part of the Supervised Program for Alignment Research (SPAR).
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BibTeX -->
+  <section class="section hero is-light" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" type="button" onclick="copyBibTeX()" aria-label="Copy BibTeX to clipboard">Copy</button>
+      </div>
+      <pre id="bibtex-code"><code>@misc{tiku2026reading,
+  title  = {Reading the Letter, Not the Horizon: A Construct-Validity Audit of Temporal-Preference Probes},
+  author = {Tiku, Sarvesh},
+  note   = {Under consideration at the MERe AI 2026 Workshop},
+  year   = {2026}
+}</code></pre>
+    </div>
+  </section>
+</main>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license noopener" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
