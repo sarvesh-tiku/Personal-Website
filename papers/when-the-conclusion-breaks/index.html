@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A benchmark for selective claim revision in scientific agents: 72 matched pairs of executable studies in which a conclusion-preserving and a conclusion-breaking correction share their text, magnitude and aggregate effect.">
+  <meta name="keywords" content="scientific agents, claim revision, benchmark validity, matched corrections, evidential standards, agent evaluation">
+  <meta name="author" content="Sarvesh Tiku, Gauri Sharma">
+  <meta name="robots" content="noindex, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="When the Conclusion Breaks: Evaluating Claim Revision in Scientific Agents">
+  <meta property="og:description" content="Two corrections share their text and magnitude and move the headline number equally, but only one removes the evidence for a conclusion. Can scientific agents tell which?">
+  <meta property="og:image" content="static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A matched pair of corrections: every claim is preserved under one, while the minority-population claim becomes insufficient under the other">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="When the Conclusion Breaks: Evaluating Claim Revision in Scientific Agents">
+  <meta name="twitter:description" content="Two corrections share their text and magnitude and move the headline number equally, but only one removes the evidence for a conclusion. Can scientific agents tell which?">
+  <meta name="twitter:image" content="static/images/social_preview.png">
+
+  <title>When the Conclusion Breaks</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], tags: 'none' },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+      chtml: { scale: 1.0 }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">When the Conclusion Breaks: Evaluating Claim Revision in Scientific Agents</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Sarvesh Tiku,</span>
+              <span class="author-block">Gauri Sharma</span>
+            </div>
+            <div class="is-size-5 publication-authors affil">
+              <span class="author-block">Georgia Institute of Technology</span>
+            </div>
+            <div class="publication-venue-line">Poster at the Agent Evaluation Science Workshop, 2026</div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="static/pdfs/paper.pdf" target="_blank" rel="noopener" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf" aria-hidden="true"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#teaser" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-video" aria-hidden="true"></i></span>
+                    <span>Video</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-quote-right" aria-hidden="true"></i></span>
+                    <span>BibTeX</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Teaser video -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" poster="static/videos/teaser_poster.jpg" data-autoplay muted loop playsinline controls
+               preload="metadata" aria-describedby="teaser-caption">
+          <source src="static/videos/teaser.webm" type="video/webm">
+          <source src="static/videos/teaser.mp4" type="video/mp4">
+          <track kind="captions" src="static/captions/teaser.vtt" srclang="en" label="English">
+        </video>
+        <h2 class="subtitle has-text-centered" id="teaser-caption">
+          Two corrections can share their text and magnitude and move the headline number equally, while only one removes
+          the evidence for a conclusion.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Abstract -->
+  <section class="section hero is-light" id="abstract">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              After a correction, a scientific agent must tell a correction that only moves the numbers from one that
+              removes the support for a conclusion, and then preserve, qualify, retract or mark as insufficient each claim
+              accordingly. We build a benchmark for this selective claim revision: 72 matched pairs of executable studies
+              (144 scenarios, 432 claims) in six families. In each pair, a conclusion-preserving and a conclusion-breaking
+              correction share their text and magnitude and cause the same aggregate change. A predeclared four-class
+              evidential standard fixes every reference label. All scenarios pass eight automated validity checks, and a
+              text-only classifier separates the members of only 3% of pairs. Across 9 models and 5,328 runs, seven of nine
+              models reach a macro recall of at least 0.95 (range 0.95&ndash;1.00), while Mistral Small 3.2 reaches 0.54 and
+              Llama 4 Maverick reaches 0.23 when they can execute code and the standard is explicit. Without execution,
+              macro recall falls to 0.23&ndash;0.34. With the standard described only in words, agents over-revise claims
+              that remain supported, and recall changes by &minus;0.18 to &minus;0.37 for the capable models. A numbers-only
+              pipeline passes conventional numerical scoring while retaining every unsupported claim. The tasks are synthetic
+              and the labels are relative to one standard. Within that scope, claim-level scoring separates agents that
+              numerical scoring treats as equivalent.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Motivation -->
+  <section class="section" id="motivation">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">The Same Number, a Different Conclusion</h2>
+      <div class="prose">
+        <p>
+          Suppose a team reports that a new sepsis early-warning model is more accurate than the deployed one, both overall
+          and in a smaller population of encounters. An audit then re-adjudicates 53 labels, and the overall accuracy gain
+          falls by 2.5 percentage points; whether the subgroup claim survives depends on where those labels sit. Spread
+          across both populations, every claim still holds. Concentrated in the smaller population, the subgroup advantage
+          is no longer distinguishable from zero, while the overall claim holds as before. The headline number moves by the
+          same amount in both cases. An agent that reruns the analysis and updates the table is computationally correct in
+          both, but scientifically correct only if it also revises the subgroup claim in the second.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig1">
+        <picture><source srcset="static/figures/fig1_matched_pair.webp" type="image/webp"><img src="static/figures/fig1_matched_pair.png" width="2647" height="789" loading="lazy"
+             alt="Forest plots of accuracy differences for all records, the minority population and the majority population under a conclusion-preserving and a conclusion-breaking correction. Every claim is labelled preserve under the first. Under the second, the minority population's interval reaches below zero and its claim is labelled insufficient."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 1.</span>
+          A matched pair from family A. Both corrections re-adjudicate the same number of labels and shift the overall
+          accuracy difference by the same amount (gray: original, blue: corrected, with 95% CIs; dashed: claim threshold
+          \(m\)). Only the breaking correction, concentrated in the minority population, removes the evidence for the
+          subgroup claim. Labels at right are the reference decisions under the evidential standard.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <p>
+          Benchmarks for scientific agents mostly reward the first kind of success: executing an analysis and producing the
+          right number, program or hypothesis. Science, however, is a set of claims whose support has to be tracked as
+          evidence changes. Corrections, re-analyses and retractions are routine, and the useful response to one is
+          selective: retract or qualify what no longer follows, and keep what does. Retracting everything is as unreliable
+          as defending everything. We study whether agents can make this distinction.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Benchmark design -->
+  <section class="section hero is-light" id="design">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Benchmark Design</h2>
+      <div class="prose">
+        <p>
+          A study consists of data \(D\), an executable analysis \(A\), and claims \(C = \{c_1, c_2, c_3\}\). Each claim
+          asserts that an estimand \(\theta_i\) of \(A\) is at least a stated smallest effect size of interest \(m_i &gt; 0\).
+          A correction \(\delta\) maps \((D, A)\) to \((D', A')\). Every original claim starts as <em>preserve</em>. Given the
+          study, the claims and \(\delta\), the agent must return the evidential status of every claim under the corrected
+          data and analysis, together with the corrected estimates, a revised wording and the tool run supporting each
+          decision.
+        </p>
+        <h3 class="subtitle is-5">The evidential standard</h3>
+        <p>With point estimate \(t\) and 95% Wald interval \([L, U]\) from \(A'(D')\):</p>
+        <p>
+          \[
+          E =
+          \begin{cases}
+            \textsf{preserve} &amp; L &gt; 0,\ t \ge m \\
+            \textsf{qualify} &amp; L &gt; 0,\ t &lt; m \\
+            \textsf{retract} &amp; L \le 0,\ U &lt; m \\
+            \textsf{insufficient} &amp; L \le 0,\ U \ge m
+          \end{cases}
+          \]
+        </p>
+        <p>
+          The regions partition the plane. A non-significant result alone never forces retraction: retraction requires the
+          interval to exclude the claimed magnitude, as in equivalence testing. Every original and corrected label must
+          remain unchanged when \(t\), \(L\) and \(U\) are each perturbed by &plusmn;0.15 reference SE. This guards against
+          labels that depend on harmless implementation choices, such as a \(z\) or \(t\) quantile, or HC0 or HC1 standard
+          errors. Draws that fail are rejected.
+        </p>
+        <h3 class="subtitle is-5">Families and matched pairs</h3>
+        <p>
+          Five families break conclusions through different mechanisms, and a sixth supplies controls. Each study has a
+          headline claim, a focal claim and a secondary claim, with randomized order and identifiers.
+        </p>
+        <ul class="claim-defs">
+          <li><strong>A, subgroup reversal.</strong> Re-adjudicated labels in a two-population classifier comparison.</li>
+          <li><strong>B, confounding.</strong> An omitted pre-exposure covariate is added to the adjusted model. The
+            unadjusted association claim must be preserved while the adjusted effect claim may fail.</li>
+          <li><strong>C, measurement.</strong> A device calibration offset is removed in a randomized trial.</li>
+          <li><strong>D, missingness.</strong> Outcomes recovered for previously missing participants enter the
+            complete-case analysis.</li>
+          <li><strong>E, inference.</strong> Cluster-randomized data first analyzed with independence (HC1) standard errors
+            is re-analyzed with cluster-robust CR1 errors; point estimates do not move at all.</li>
+          <li><strong>F, robust controls.</strong> The A, C and D mechanisms at a small and a three-times-larger magnitude;
+            the focal claim must survive both.</li>
+        </ul>
+      </div>
+      <div class="table-wrap">
+        <table class="sci-table text-table">
+          <caption>Benchmark composition (v1). n: records per study. P/Q/R/I: preserve/qualify/retract/insufficient labels
+            over all claims in the family. The matched quantities are equal by construction; the diagnostics are recomputed
+            from the generated data.</caption>
+          <thead>
+            <tr><th>Family</th><th>Pairs</th><th>n</th><th>Breaking focal label</th><th>P/Q/R/I</th><th>Matching diagnostic</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>A Subgroup reversal</td><td>12</td><td>3613&ndash;4335</td><td>4 retr., 4 insuf., 4 qual.</td><td>46/18/4/4</td><td>&Delta; headline equal (gap 0.00 SE)</td></tr>
+            <tr><td>B Confounding</td><td>12</td><td>554&ndash;1555</td><td>4 retr., 4 insuf., 4 qual.</td><td>60/4/4/4</td><td>&Delta;R<sup>2</sup> equal (gap 0.0%)</td></tr>
+            <tr><td>C Measurement</td><td>12</td><td>515&ndash;1759</td><td>4 retr., 4 insuf., 4 qual.</td><td>48/7/9/8</td><td>&Delta; headline equal (gap 0.00 SE)</td></tr>
+            <tr><td>D Missingness</td><td>12</td><td>457&ndash;1566</td><td>4 retr., 4 insuf., 4 qual.</td><td>49/5/9/9</td><td>&Delta; headline equal (gap 0.00 SE)</td></tr>
+            <tr><td>E Inference</td><td>12</td><td>910&ndash;1379</td><td>12 insuf.</td><td>60/0/0/12</td><td>orig. estimates equal; SE ratio 0.95&ndash;1.07</td></tr>
+            <tr><td>F Robust controls</td><td>12</td><td>1008&ndash;4563</td><td>&ndash;</td><td>72/0/0/0</td><td>large = 3.0&times; small &Delta; headline</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prose">
+        <p>
+          Each A&ndash;E pair has a conclusion-preserving and a conclusion-breaking correction. The two use the same text
+          template and the same magnitude, and they are matched on a predeclared aggregate quantity. In A, C and D the
+          members share the original study and differ only in which records the correction touches, so the headline estimate
+          moves by exactly the same amount. In B the preserving covariate is prognostic, orthogonal to the exposure
+          in-sample, and adds the same \(R^2\) as the confounder. In E the members are different studies with identical
+          original estimates, differing only in intra-cluster correlation. Parameters come from a deterministic grid scan,
+          14 draws were rejected, and generation never reads agent outputs.
+        </p>
+        <h3 class="subtitle is-5">Validation and leakage</h3>
+        <p>
+          All 144 scenarios pass eight automated checks, among them seed reproducibility, script&ndash;reference agreement,
+          agreement with an independent <code>statsmodels</code>/<code>scipy</code> implementation, corrections that change
+          exactly what they describe, robust rule-conformant labels, README&ndash;file consistency, and no leaked labels or
+          corrected values. A text-only classifier (TF-IDF plus logistic regression, cross-validated by pair) reaches 0.38
+          balanced accuracy over the four labels (chance 0.25) from family-level label rates, but separates the members of
+          only 3% of pairs and solves 0%. Labels are imbalanced by design (78% preserve), so we report macro-averaged recall.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Experimental setup -->
+  <section class="section" id="setup">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Experimental Setup</h2>
+      <div class="prose">
+        <p>
+          The agent receives the study README and a workspace containing \(D\), \(D'\), the correction log and the original
+          analysis script. A <code>run_python</code> tool executes each script in a fresh process under a macOS
+          <code>sandbox-exec</code> profile: no network, writes confined to the workspace, reads outside the workspace and
+          the interpreter denied, a scrubbed environment, and a 60 s limit. A <code>submit</code> tool records estimates for
+          every estimand and, for every claim, a decision, a revised wording, a cited <code>run_id</code> and a reasoning
+          summary. Each run allows at most 16 tool calls.
+        </p>
+        <h3 class="subtitle is-5">Conditions</h3>
+        <ul class="claim-defs">
+          <li><strong>Structured (main).</strong> As above.</li>
+          <li><strong>Narrative.</strong> Claims appear in a prose paragraph, with no mapping from claims to estimands and
+            no list of corrected estimands.</li>
+          <li><strong>Implicit standard.</strong> The four categories are defined in words, but the numeric standard is
+            withheld.</li>
+          <li><strong>Oracle numbers.</strong> No tools; the verified corrected estimates are given.</li>
+          <li><strong>No tools.</strong> The README, the original results and the first 40 rows of the correction log.</li>
+          <li><strong>Numbers only.</strong> The agent reruns the analysis with tools and reports estimates, and the claims
+            are carried forward unchanged, as in a pipeline that updates tables but not text.</li>
+          <li><strong>Preserve all</strong> and <strong>retract all.</strong> Deterministic baselines.</li>
+        </ul>
+        <p>
+          We evaluate nine models through OpenRouter: DeepSeek V3.2, Gemini 3.7 Flash, Qwen3.8 Flash, Claude Haiku 5.5,
+          GPT-5-mini, Claude Sonnet 5.5, Qwen3.5-9B, Mistral Small 3.2 and Llama 4 Maverick. Four inexpensive models were run
+          in every condition, Claude Sonnet 5.5 and DeepSeek V3.2 also in the implicit condition, and Haiku 5.5, GPT-5-mini
+          and Mistral Small 3.2 three times in the structured condition.
+        </p>
+        <h3 class="subtitle is-5">Scoring and statistics</h3>
+        <p>
+          A claim is correct when the decision equals the reference label. End-to-end metrics count every claim of a failed
+          run as incorrect. A run passes the conventional score if its output is valid and every estimate and interval bound
+          lies within 0.25 reference SE, which is what an execution-and-answer benchmark checks. Intervals are percentile
+          bootstraps over the 72 pairs (4,000 resamples), because the pair is the independent unit. The confirmatory
+          comparisons and the Holm adjustment were fixed in an analysis plan before the main run; everything else is
+          exploratory.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Results -->
+  <section class="section hero is-light" id="results">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Results</h2>
+      <div class="prose">
+        <h3 class="subtitle is-5">With computation and an explicit standard, most agents revise selectively</h3>
+        <p>
+          In the structured condition, seven of nine models reach a macro recall of at least 0.95 (range 0.95&ndash;1.00),
+          while Mistral Small 3.2 reaches 0.54 and Llama 4 Maverick reaches 0.23. The capable agents keep the claims that
+          should survive, including in the robust-control family F, and change the claims that should change. Every model
+          except Llama 4 Maverick beats carrying claims forward (Holm \(p = 0.013\), the smallest value attainable with 4,000
+          resamples and 27 tests; Llama: &minus;0.02, \(p = 1.000\)). For these models, verified numbers add almost nothing:
+          +0.01 [+0.00, +0.01] for Haiku 5.5 and +0.01 for GPT-5-mini. Removing the claim-to-estimand mapping costs little:
+          +0.01 and &minus;0.04. Across three repetitions, 97% (Haiku) and 99% (GPT-5-mini) of claim decisions were identical
+          in every repetition.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig2">
+        <picture><source srcset="static/figures/fig2_macro_recall.webp" type="image/webp"><img src="static/figures/fig2_macro_recall.png" width="2643" height="1330" loading="lazy"
+             alt="Dot plots by model and condition. Left: macro recall over four reference decisions. Right: share of matched pairs with both members fully correct. Structured agents cluster near 1.0 except Mistral Small 3.2 and Llama 4 Maverick; implicit-standard agents sit lower, and no-tools runs sit near the baselines."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 2.</span>
+          Claim-revision performance by model and condition (points: estimates; bars: 95% pair-cluster bootstrap CIs). Left:
+          macro recall over the four reference decisions. Right: share of matched A&ndash;E pairs with both members fully
+          correct. Gray lines: deterministic baselines (preserve-all and retract-all both score 0.25 macro recall and 0 joint
+          success).
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <h3 class="subtitle is-5">Without computation, agents hedge rather than discriminate</h3>
+        <p>
+          The correction text does not reveal which pair member breaks a conclusion, and the no-tools condition confirms it.
+          Macro recall falls to 0.23&ndash;0.34 (structured minus no tools: +0.69 for Haiku, Holm \(p = 0.013\)), and joint
+          pair success to 0.02. On breaking members, agents kept the focal claim 59% of the time and called it insufficient
+          28% of the time. On preserving members they revised it 44% of the time. They almost never chose qualify or retract
+          (9% of claims).
+        </p>
+        <h3 class="subtitle is-5">Without the numeric standard, agents over-revise</h3>
+        <p>
+          Withholding the numeric standard, while still defining the categories in words, has the largest effect of any
+          ablation. The change in macro recall is &minus;0.24 [&minus;0.29, &minus;0.19] for Haiku, &minus;0.18 for
+          GPT-5-mini, &minus;0.27 for Qwen3.8 Flash, &minus;0.27 for Sonnet and &minus;0.37 for DeepSeek (all Holm
+          \(p = 0.013\)). Mistral, already low, is unchanged (&minus;0.01). The disagreements run in one direction. Of 606
+          wrong decisions, 45% qualify a claim that still clears its threshold, and 21% retract or suspend a claim whose
+          direction is established but whose magnitude fell below the claim. Only 3% defend a claim the standard would revise.
+          Left to their own judgment, agents treat a smaller or less certain estimate as grounds for revision. They track how
+          far the numbers moved rather than whether the evidence still meets the claim. The structured ceiling therefore
+          reflects <em>applying</em> a given standard more than a calibrated default notion of support.
+        </p>
+      </div>
+      <figure class="sci-figure" id="fig3">
+        <picture><source srcset="static/figures/figA2_confusion.webp" type="image/webp"><img src="static/figures/figA2_confusion.png" width="2647" height="1053" loading="lazy"
+             alt="Three confusion matrices of reference label against agent decision for the structured, implicit-standard and no-tools conditions. The structured matrix is strongly diagonal. The implicit-standard matrix shifts preserve claims toward qualify. The no-tools matrix concentrates in the preserve column."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 3.</span>
+          Reference label (rows) versus decision (columns), pooled over the four models run in every condition and all
+          repetitions. Shading: row share; numbers: claim counts.
+        </figcaption>
+      </figure>
+      <div class="prose">
+        <h3 class="subtitle is-5">Weaker agents fail at different steps</h3>
+        <p>
+          Mistral Small 3.2 reaches 0.54 macro recall, and 0.70 even with verified numbers. When its own numbers were correct,
+          27% of its decisions still contradicted the standard applied to them, and it revised 31% of the robust-control
+          claims. Llama 4 Maverick often wrote code as text instead of calling the tool (valid-output rate 0.67).
+        </p>
+        <h3 class="subtitle is-5">Numerical and claim-level scores diverge where the claim step is skipped or done badly</h3>
+        <p>
+          The numbers-only pipeline passes the conventional score in 100% (Haiku) and 98% (GPT-5-mini) of scenarios. It also
+          retains every unsupported claim and solves no matched pair. Among structured runs, 157 of the 1813 conventional
+          passes still get a claim wrong, mostly through mapping errors in weaker models. Another 124 runs revise every claim
+          correctly while failing the conventional score, usually because a number falls outside tolerance without crossing a
+          decision boundary.
+        </p>
+      </div>
+      <figure class="sci-figure compact" id="fig4">
+        <picture><source srcset="static/figures/figA1_conventional.webp" type="image/webp"><img src="static/figures/figA1_conventional.png" width="1601" height="1328" loading="lazy"
+             alt="Dot plot of conventional pass rate against the share of scenarios with every claim correct, by model. Numbers-only pipelines pass nearly all scenarios conventionally but have every claim correct in about half of them."></picture>
+        <figcaption>
+          <span class="fig-label">Figure 4.</span>
+          Conventional pass rate (open) versus the share of scenarios with every claim correct (filled), structured condition
+          and numbers-only pipelines. Numbers-only runs get full numerical credit but fail every scenario in which a claim
+          should change (54% of scenarios are all-preserve).
+        </figcaption>
+      </figure>
+      <div class="table-wrap">
+        <table class="sci-table" id="results-table">
+          <caption>Main results, end to end (failed runs count as incorrect). Macro recall with 95% pair-cluster bootstrap CI
+            over 72 pairs. Unsup. ret.: share of claims needing revision that were preserved. Unnec. rev.: share of claims
+            that should be preserved that were changed. Pair joint: share of A&ndash;E pairs with both members fully correct.
+            Conv. pass: valid output with all estimates within 0.25 SE. Models with three repetitions of the structured
+            condition pool them.</caption>
+          <thead>
+            <tr><th class="l">Model</th><th class="l">Condition</th><th>Macro recall [95% CI]</th><th>Acc.</th><th>Unsup. ret. &darr;</th><th>Unnec. rev. &darr;</th><th>Pair joint</th><th>Conv. pass</th><th>Valid</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="l">DeepSeek V3.2</td><td class="l">Agent, structured</td><td>1.00 [1.00, 1.00]</td><td>1.00</td><td>0.00</td><td>0.00</td><td>1.00</td><td>0.99</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">Agent, implicit standard</td><td>0.63 [0.57, 0.68]</td><td>0.76</td><td>0.00</td><td>0.17</td><td>0.22</td><td>0.99</td><td>1.00</td></tr>
+            <tr><td class="l">Gemini 3.7 Flash</td><td class="l">Agent, structured</td><td>1.00 [1.00, 1.00]</td><td>1.00</td><td>0.00</td><td>0.00</td><td>1.00</td><td>1.00</td><td>1.00</td></tr>
+            <tr><td class="l">GPT-5-mini</td><td class="l">Agent, structured</td><td>0.99 [0.97, 1.00]</td><td>1.00</td><td>0.02</td><td>0.00</td><td>0.98</td><td>0.97</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">Agent, narrative</td><td>0.95 [0.89, 0.99]</td><td>0.99</td><td>0.06</td><td>0.00</td><td>0.93</td><td>0.91</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">Agent, implicit standard</td><td>0.80 [0.74, 0.86]</td><td>0.84</td><td>0.02</td><td>0.14</td><td>0.32</td><td>0.98</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">Oracle numbers</td><td>1.00 [1.00, 1.00]</td><td>1.00</td><td>0.00</td><td>0.00</td><td>1.00</td><td>0.00</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">No tools</td><td>0.30 [0.26, 0.35]</td><td>0.57</td><td>0.51</td><td>0.33</td><td>0.00</td><td>0.03</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">Numbers only (carry-forward)</td><td>0.25 [0.25, 0.25]</td><td>0.78</td><td>1.00</td><td>0.00</td><td>0.00</td><td>0.98</td><td>1.00</td></tr>
+            <tr><td class="l">Claude Haiku 5.5</td><td class="l">Agent, structured</td><td>0.99 [0.99, 1.00]</td><td>0.99</td><td>0.00</td><td>0.01</td><td>0.94</td><td>1.00</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">Agent, narrative</td><td>1.00 [1.00, 1.00]</td><td>1.00</td><td>0.00</td><td>0.00</td><td>1.00</td><td>1.00</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">Agent, implicit standard</td><td>0.75 [0.70, 0.81]</td><td>0.78</td><td>0.00</td><td>0.20</td><td>0.22</td><td>0.98</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">Oracle numbers</td><td>1.00 [1.00, 1.00]</td><td>1.00</td><td>0.00</td><td>0.00</td><td>0.98</td><td>0.00</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">No tools</td><td>0.30 [0.26, 0.35]</td><td>0.68</td><td>0.76</td><td>0.17</td><td>0.02</td><td>0.10</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">Numbers only (carry-forward)</td><td>0.25 [0.25, 0.25]</td><td>0.78</td><td>1.00</td><td>0.00</td><td>0.00</td><td>1.00</td><td>1.00</td></tr>
+            <tr><td class="l">Llama 4 Maverick</td><td class="l">Agent, structured</td><td>0.23 [0.18, 0.28]</td><td>0.53</td><td>0.45</td><td>0.03</td><td>0.00</td><td>0.15</td><td>0.67</td></tr>
+            <tr><td class="l">Mistral Small 3.2</td><td class="l">Agent, structured</td><td>0.54 [0.49, 0.59]</td><td>0.67</td><td>0.20</td><td>0.27</td><td>0.17</td><td>0.55</td><td>0.99</td></tr>
+            <tr><td class="l"></td><td class="l">Agent, narrative</td><td>0.49 [0.39, 0.58]</td><td>0.67</td><td>0.33</td><td>0.24</td><td>0.13</td><td>0.37</td><td>0.99</td></tr>
+            <tr><td class="l"></td><td class="l">Agent, implicit standard</td><td>0.53 [0.45, 0.61]</td><td>0.64</td><td>0.16</td><td>0.30</td><td>0.15</td><td>0.55</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">Oracle numbers</td><td>0.70 [0.62, 0.77]</td><td>0.64</td><td>0.01</td><td>0.38</td><td>0.18</td><td>0.00</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">No tools</td><td>0.23 [0.19, 0.27]</td><td>0.58</td><td>0.72</td><td>0.24</td><td>0.00</td><td>0.02</td><td>0.98</td></tr>
+            <tr><td class="l"></td><td class="l">Numbers only (carry-forward)</td><td>0.24 [0.22, 0.25]</td><td>0.73</td><td>0.98</td><td>0.00</td><td>0.00</td><td>0.49</td><td>0.95</td></tr>
+            <tr><td class="l">Qwen3.5-9B</td><td class="l">Agent, structured</td><td>0.95 [0.91, 0.99]</td><td>0.95</td><td>0.00</td><td>0.00</td><td>0.88</td><td>0.92</td><td>0.95</td></tr>
+            <tr><td class="l">Qwen3.8 Flash</td><td class="l">Agent, structured</td><td>1.00 [1.00, 1.00]</td><td>1.00</td><td>0.00</td><td>0.00</td><td>1.00</td><td>1.00</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">Agent, narrative</td><td>1.00 [1.00, 1.00]</td><td>1.00</td><td>0.00</td><td>0.00</td><td>1.00</td><td>0.99</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">Agent, implicit standard</td><td>0.73 [0.68, 0.79]</td><td>0.78</td><td>0.00</td><td>0.19</td><td>0.17</td><td>1.00</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">Oracle numbers</td><td>1.00 [1.00, 1.00]</td><td>1.00</td><td>0.00</td><td>0.00</td><td>1.00</td><td>0.00</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">No tools</td><td>0.34 [0.30, 0.40]</td><td>0.73</td><td>0.72</td><td>0.12</td><td>0.00</td><td>0.06</td><td>1.00</td></tr>
+            <tr><td class="l"></td><td class="l">Numbers only (carry-forward)</td><td>0.25 [0.25, 0.25]</td><td>0.78</td><td>1.00</td><td>0.00</td><td>0.00</td><td>1.00</td><td>1.00</td></tr>
+            <tr><td class="l">Claude Sonnet 5.5</td><td class="l">Agent, structured</td><td>0.98 [0.95, 1.00]</td><td>0.99</td><td>0.00</td><td>0.00</td><td>0.97</td><td>0.99</td><td>0.99</td></tr>
+            <tr><td class="l"></td><td class="l">Agent, implicit standard</td><td>0.71 [0.70, 0.72]</td><td>0.79</td><td>0.00</td><td>0.16</td><td>0.23</td><td>1.00</td><td>1.00</td></tr>
+            <tr><td class="l">Baseline</td><td class="l">Preserve all</td><td>0.25 [0.25, 0.25]</td><td>0.78</td><td>1.00</td><td>0.00</td><td>0.00</td><td>&ndash;</td><td>1.00</td></tr>
+            <tr><td class="l">Baseline</td><td class="l">Retract all</td><td>0.25 [0.25, 0.25]</td><td>0.06</td><td>0.00</td><td>1.00</td><td>0.00</td><td>&ndash;</td><td>1.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Failure analysis -->
+  <section class="section" id="failures">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Failure Analysis</h2>
+      <div class="prose">
+        <p>
+          Each wrong decision is assigned to one cause: no output, no estimate, wrong numbers, or a decision contradicting the
+          agent&rsquo;s own numbers. Three representative cases illustrate different failures.
+        </p>
+        <ul class="claim-defs">
+          <li><strong>Silent analysis on the wrong data</strong> (GPT-5-mini, family D, breaking member). The agent ran the
+            script through Python&rsquo;s <code>exec</code>, which falls back to its default
+            <code>data/original.csv</code>. It then reported the original estimates as corrected, applied the rule correctly
+            to them, and preserved every claim. The claim error is purely an execution error, which only a numerical check
+            exposes.</li>
+          <li><strong>Over-revision against its own rule</strong> (Claude Haiku 5.5, family C, preserving member). The agent
+            wrote &ldquo;by the stated standard this is preserve (L&gt;0 and t&gt;=m)&rdquo; (estimate 6.07, threshold 4), yet
+            submitted qualify because &ldquo;the original magnitude of 10.02 was materially overstated.&rdquo; This pattern
+            accounts for 13 of Haiku&rsquo;s 15 structured-condition errors and dominates the implicit-standard condition.</li>
+          <li><strong>Decisions without analysis</strong> (Llama 4 Maverick). The agent narrated plans and wrote code as text
+            instead of calling the tool. Of 144 runs, 47 never produced a valid submission and 67 submitted decisions without
+            any successful code execution.</li>
+        </ul>
+      </div>
+      <div class="table-wrap">
+        <table class="sci-table" id="errors-table">
+          <caption>Decomposition of incorrect claim decisions (all repetitions). Wrong numbers and rule not followed apply only
+            to runs that reported an estimate. In the implicit-standard condition, &ldquo;rule not followed&rdquo; measures
+            disagreement with a standard the agent was not shown.</caption>
+          <thead>
+            <tr><th class="l">Model</th><th class="l">Condition</th><th>Claims</th><th>Wrong</th><th>No output</th><th>No estimate</th><th>Wrong numbers</th><th>Rule not followed</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="l">DeepSeek V3.2</td><td class="l">Agent, structured</td><td>432</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td class="l">DeepSeek V3.2</td><td class="l">Agent, implicit standard</td><td>432</td><td>103</td><td>0</td><td>0</td><td>1</td><td>102</td></tr>
+            <tr><td class="l">Gemini 3.7 Flash</td><td class="l">Agent, structured</td><td>432</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td class="l">Qwen3.8 Flash</td><td class="l">Agent, structured</td><td>432</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td class="l">Qwen3.8 Flash</td><td class="l">Oracle numbers</td><td>432</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td class="l">Qwen3.8 Flash</td><td class="l">No tools</td><td>432</td><td>118</td><td>0</td><td>14</td><td>97</td><td>7</td></tr>
+            <tr><td class="l">Qwen3.8 Flash</td><td class="l">Agent, implicit standard</td><td>432</td><td>95</td><td>0</td><td>0</td><td>0</td><td>95</td></tr>
+            <tr><td class="l">Claude Haiku 5.5</td><td class="l">Agent, structured</td><td>1296</td><td>15</td><td>0</td><td>0</td><td>0</td><td>15</td></tr>
+            <tr><td class="l">Claude Haiku 5.5</td><td class="l">Oracle numbers</td><td>432</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+            <tr><td class="l">Claude Haiku 5.5</td><td class="l">No tools</td><td>432</td><td>140</td><td>0</td><td>2</td><td>83</td><td>55</td></tr>
+            <tr><td class="l">Claude Haiku 5.5</td><td class="l">Agent, implicit standard</td><td>432</td><td>95</td><td>0</td><td>0</td><td>0</td><td>95</td></tr>
+            <tr><td class="l">GPT-5-mini</td><td class="l">Agent, structured</td><td>1296</td><td>5</td><td>0</td><td>0</td><td>5</td><td>0</td></tr>
+            <tr><td class="l">GPT-5-mini</td><td class="l">Oracle numbers</td><td>432</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td class="l">GPT-5-mini</td><td class="l">No tools</td><td>432</td><td>186</td><td>0</td><td>95</td><td>75</td><td>16</td></tr>
+            <tr><td class="l">GPT-5-mini</td><td class="l">Agent, implicit standard</td><td>432</td><td>70</td><td>0</td><td>0</td><td>2</td><td>68</td></tr>
+            <tr><td class="l">Claude Sonnet 5.5</td><td class="l">Agent, structured</td><td>432</td><td>4</td><td>3</td><td>0</td><td>0</td><td>1</td></tr>
+            <tr><td class="l">Claude Sonnet 5.5</td><td class="l">Agent, implicit standard</td><td>432</td><td>89</td><td>0</td><td>0</td><td>0</td><td>89</td></tr>
+            <tr><td class="l">Qwen3.5-9B</td><td class="l">Agent, structured</td><td>432</td><td>22</td><td>21</td><td>0</td><td>1</td><td>0</td></tr>
+            <tr><td class="l">Mistral Small 3.2</td><td class="l">Agent, structured</td><td>1296</td><td>427</td><td>12</td><td>0</td><td>93</td><td>322</td></tr>
+            <tr><td class="l">Mistral Small 3.2</td><td class="l">Oracle numbers</td><td>432</td><td>156</td><td>0</td><td>156</td><td>0</td><td>0</td></tr>
+            <tr><td class="l">Mistral Small 3.2</td><td class="l">No tools</td><td>432</td><td>181</td><td>9</td><td>71</td><td>50</td><td>51</td></tr>
+            <tr><td class="l">Mistral Small 3.2</td><td class="l">Agent, implicit standard</td><td>432</td><td>154</td><td>0</td><td>0</td><td>25</td><td>129</td></tr>
+            <tr><td class="l">Llama 4 Maverick</td><td class="l">Agent, structured</td><td>432</td><td>203</td><td>141</td><td>0</td><td>50</td><td>12</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Limitations -->
+  <section class="section hero is-light" id="limitations">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Limitations and Conclusion</h2>
+      <div class="prose">
+        <p>
+          The studies are short synthetic analyses with one correction and three claims each. Real errata involve several
+          errors, ambiguous scope and interdependent claims, so ceiling performance here does not transfer to them. Labels are
+          correct relative to one standard: Wald intervals, one threshold per claim, and no multiplicity adjustment. The
+          implicit-standard condition therefore measures agreement with our standard, not absolute correctness. Matching in
+          A&ndash;D holds the matched quantity equal by construction; other nuisance quantities, such as the change in the
+          focal SE, are not matched, and in E the two members are different studies. We test one prompt version and one
+          temperature, and not every model was run in every condition. Per-family results rest on 12 pairs and are exploratory,
+          and family E has only one breaking label. Numbers-only carries claims forward by construction, and no-tools is
+          uninformative by design; both measure default behavior, not achievable ceilings.
+        </p>
+        <p>
+          On 72 validated matched pairs, capable agents with code execution and an explicit evidential standard revise claims
+          selectively and almost perfectly. Without execution they cannot see which corrections matter, without the numeric
+          standard they over-revise supported claims, and conventional scoring fully credits a pipeline that never revises a
+          claim. Evaluations of scientific agents should score the claims an agent asserts, not only the numbers it computes,
+          and should state the standard those claims are held to.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BibTeX -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" type="button" onclick="copyBibTeX()" aria-label="Copy BibTeX to clipboard">Copy</button>
+      </div>
+      <pre id="bibtex-code"><code>@misc{tiku2026conclusion,
+  title  = {When the Conclusion Breaks: Evaluating Claim Revision in Scientific Agents},
+  author = {Tiku, Sarvesh and Sharma, Gauri},
+  note   = {Poster at the Agent Evaluation Science Workshop},
+  year   = {2026}
+}</code></pre>
+    </div>
+  </section>
+</main>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license noopener" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

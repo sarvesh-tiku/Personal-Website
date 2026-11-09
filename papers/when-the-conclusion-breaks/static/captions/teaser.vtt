@@ -1,0 +1,33 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:03.950
+When the conclusion breaks: evaluating claim revision in scientific agents.
+
+2
+00:00:04.000 --> 00:00:11.950
+Two matched corrections share their text and magnitude and change the headline number equally. Only the breaking correction removes the evidence for the subgroup claim. An agent that reruns the analysis and updates the table is computationally correct in both.
+
+3
+00:00:12.000 --> 00:00:19.950
+A predeclared standard labels every claim as preserve, qualify, retract or insufficient, from the estimate, its 95 percent interval and the claim's threshold. A non-significant result alone never forces retraction.
+
+4
+00:00:20.000 --> 00:00:27.450
+The benchmark has 72 matched pairs, 144 scenarios and 432 claims in six families. All scenarios pass eight automated validity checks, and a text-only classifier separates the members of only 3 percent of pairs.
+
+5
+00:00:27.500 --> 00:00:35.450
+With code execution and an explicit standard, seven of nine models reach a macro recall of at least 0.95. Mistral Small 3.2 reaches 0.54 and Llama 4 Maverick reaches 0.23.
+
+6
+00:00:35.500 --> 00:00:43.450
+Claude Haiku 5.5 falls from 0.99 to 0.75 with the standard in words only, 0.30 with no tools and 0.25 when claims are carried forward. Of 606 wrong decisions without the numeric standard, 45 percent qualify a claim that still clears its threshold.
+
+7
+00:00:43.500 --> 00:00:51.450
+A numbers-only pipeline passes the conventional score in 100 percent of scenarios for Haiku and 98 percent for GPT-5-mini, while retaining every unsupported claim and solving no matched pair.
+
+8
+00:00:51.500 --> 00:00:59.500
+Score the claims an agent asserts, not only the numbers it computes, and state the standard those claims are held to. The tasks are synthetic and the labels are relative to one standard.
